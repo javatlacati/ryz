@@ -1,0 +1,8 @@
+/*
+className: load.test.First
+attributes: i:int
+methods: i:int
+classFile: load/test/First.class
+*/
+load.test.Spec {
+}

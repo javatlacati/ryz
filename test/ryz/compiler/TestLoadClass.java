@@ -1,39 +1,38 @@
 package ryz.compiler;
 
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 /**
- * Created by IntelliJ IDEA.
+ * Basic test case. It makes sure the tests themselves may load dynamically
+ * a .class file created during the tests.
+ *
  * User: oscarryz
  * Date: Sep 7, 2010
  * Time: 11:33:18 AM
- * To change this template use File | Settings | File Templates.
  */
 @Test
 public class TestLoadClass {
 
 
-    private RyzC ryzc;
-    private File output;
+    private TestUtil testUtil;
 
-    @BeforeTest
-    void init(){
-        ryzc = RyzC.getCompiler();
-        ryzc.sourceDirs(new File("./resources/loading/"));
-        output = new File("./resources/classes/");
-        ryzc.outDir(output);
+    @BeforeMethod
+    void init() throws MalformedURLException {
+        testUtil = TestUtil.createWith(new File("./test-resources/00.loading/"),
+                                       new File("./test-resources/output/"));
     }
 
-    @AfterTest
+    @AfterMethod
     void cleanUp() {
-        new File( output.getPath()+"/load/test/First.class").deleteOnExit();
+        testUtil.deleteFromOutput("/load/test/First.class");
     }
 
     /**
@@ -44,9 +43,9 @@ public class TestLoadClass {
      */
     public void loadClass() throws MalformedURLException, ClassNotFoundException {
 
+        // hello.world.Hello compiled class is in resources/output directory
         String className = "hello.world.Hello";
-        assertMissing(className);
-        assertExists(className);
+        testUtil.assertExists(className);
 
     }
 
@@ -61,7 +60,7 @@ public class TestLoadClass {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         System.setErr(new PrintStream(baos));
 
-        ryzc.compile("NonExisting.ryz");
+        testUtil.compile("NonExisting.ryz");
 
         assert baos.toString().equals("RyzC: file not found NonExisting.ryz\n");
 
@@ -74,32 +73,10 @@ public class TestLoadClass {
      */
     public void compileAndLoad() throws IOException, ClassNotFoundException {
         String className = "load.test.First";
-        assertMissing(className);
-        ryzc.compile("First.ryz");
-
-        assertExists(className);
-
-    }
-
-
-    private void assertExists(String className)
-            throws MalformedURLException,
-                    ClassNotFoundException {
-
-        URL[] urls = new URL[]{new URL(output.toURI().toString())};
-        assert new URLClassLoader(urls).loadClass(className) != null;
+        testUtil.assertMissing(className);
+        testUtil.compile("First.ryz");
+        testUtil.assertExists(className);
 
     }
-
-    private void assertMissing(String className) {
-        try {
-            // hello.world.Hello class is in resources directory
-            ClassLoader.getSystemClassLoader().loadClass(className);
-            throw new AssertionError("Should have throw ClassNotFoundException");
-        } catch (ClassNotFoundException e) {
-            // ok, that was expected
-        }
-    }
-    
 
 }

@@ -1,18 +1,28 @@
 package ryz.compiler;
 
-import javax.tools.*;
+
+
 import java.io.File;
+import java.util.Arrays;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
+
+import javax.tools.JavaCompiler;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.StandardLocation;
+import javax.tools.ToolProvider;
 
 import static java.lang.System.err;
+
+
 /**
- * Created by IntelliJ IDEA.
+ * This class represents the Ryz compiler, that will be eventually used
+ * to create .class files from .ryz files.
+ *
+ *
  * User: oscarryz
  * Date: Sep 7, 2010
  * Time: 9:42:07 PM
- * To change this template use File | Settings | File Templates.
  */
 public class RyzC {
 
@@ -25,6 +35,7 @@ public class RyzC {
         return new RyzC();
     }
 
+    private RyzC(){}
     /**
      * Where to find .ryz source class default to current directory
      */
@@ -63,7 +74,10 @@ public class RyzC {
 
         writer.write(
                 "package load.test;\n" +
-                "public class First{}"
+                "public class First{" +
+                "    private int i = 0;" +
+                "    public int i(){ return i;}" +
+                "}"
         );
         writer.close();
 
