@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="36296a06-84e0-411b-b5b5-827a5c8b4c69" name="Default" comment="" />
-    <ignored path="ryz.iws" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="ryz.iws" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,6 +11,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="Commander">
+    <leftPanel />
+    <rightPanel />
+    <splitter proportion="0.5" />
+  </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
     <option name="REVERSE_PATCH" value="false" />
@@ -63,10 +68,35 @@
       <file leaf-file-name="TestCompiler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="18" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="158" column="8" selection-start="4839" selection-end="4839" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ThirdSpec.ryz" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test-resources/00.loading/ThirdSpec.ryz">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="32" selection-start="86" selection-end="86" vertical-scroll-proportion="0.125">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="readme.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/readme.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="0" selection-start="691" selection-end="691" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="First.ryz" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/00.loading/First.ryz">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="0" selection-start="82" selection-end="82" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -75,9 +105,7 @@
         <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestLoadClass.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="28" column="0" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -85,10 +113,8 @@
       <file leaf-file-name="TestUtil.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="20" selection-start="401" selection-end="401" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="57" column="16" selection-start="1685" selection-end="1685" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -97,9 +123,7 @@
         <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="25" column="0" selection-start="497" selection-end="497" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -113,10 +137,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SecondSpec.ryz" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SecondSpec.ryz" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test-resources/00.loading/SecondSpec.ryz">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="0" selection-start="66" selection-end="66" vertical-scroll-proportion="0.1486068">
+            <state line="1" column="26" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestSpec.ryz" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/00.loading/TestSpec.ryz">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="34" selection-start="74" selection-end="95" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -136,20 +169,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test/ryz/compiler/RyzC.java" />
         <option value="$PROJECT_DIR$/resources/loading/load/test/First.ryz" />
         <option value="$PROJECT_DIR$/resources/loading/Hello.java" />
         <option value="$PROJECT_DIR$/resources/loading/First.ryz" />
         <option value="$PROJECT_DIR$/test-resources/loading/First.ryz" />
         <option value="$PROJECT_DIR$/test/ryz/compiler/TestCompilation.java" />
         <option value="$PROJECT_DIR$/test/ryz/compiler/LoadUtil.java" />
-        <option value="$PROJECT_DIR$/test-resources/00.loading/TestSpec.ryz" />
-        <option value="$PROJECT_DIR$/test-resources/00.loading/SecondSpec.ryz" />
-        <option value="$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java" />
         <option value="$PROJECT_DIR$/test/ryz/compiler/TestLoadClass.java" />
         <option value="$PROJECT_DIR$/test/ryz/compiler/TestUtil.java" />
         <option value="$PROJECT_DIR$/src/ryz/compiler/RyzC.java" />
         <option value="$PROJECT_DIR$/test-resources/test-roadmap.txt" />
+        <option value="$PROJECT_DIR$/test/ryz/compiler/TestTest.java" />
+        <option value="$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java" />
+        <option value="$PROJECT_DIR$/test-resources/00.loading/SecondSpec.ryz" />
+        <option value="$PROJECT_DIR$/test-resources/00.loading/TestSpec.ryz" />
+        <option value="$PROJECT_DIR$/test-resources/readme.txt" />
+        <option value="$PROJECT_DIR$/test-resources/00.loading/ThirdSpec.ryz" />
       </list>
     </option>
   </component>
@@ -263,54 +298,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="output" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="load" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test-resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="output" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hello" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="world" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test-resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="00.loading" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -380,9 +367,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -796,10 +783,10 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3295626" sideWeight="0.49076518" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969835" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21116139" sideWeight="0.44459102" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.54617417" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -838,11 +825,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/src.jar!/src/javax/tools/ToolProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="20" selection-start="970" selection-end="970" vertical-scroll-proportion="0.25514403" />
-      </provider>
-    </entry>
     <entry file="jar:///System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/src.jar!/src/javax/tools/JavaFileObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="17" selection-start="925" selection-end="925" vertical-scroll-proportion="0.21536352" />
@@ -863,80 +845,76 @@
         <state line="172" column="8" selection-start="6062" selection-end="6062" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/00.loading/First.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="82" selection-end="82" vertical-scroll-proportion="0.03292181">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/src.jar!/src/java/util/Arrays.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3356" column="0" selection-start="136304" selection-end="136304" vertical-scroll-proportion="0.14128944">
-          <folding />
-        </state>
+        <state line="3356" column="0" selection-start="136304" selection-end="136304" vertical-scroll-proportion="0.14128944" />
       </provider>
     </entry>
     <entry file="jar:///System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home/src.jar!/src/java/util/Properties.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="930" column="18" selection-start="36506" selection-end="36506" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/00.loading/TestSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="12" selection-start="75" selection-end="75" vertical-scroll-proportion="0.06584362">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="18" selection-start="561" selection-end="561" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestLoadClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="0" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="20" selection-start="401" selection-end="401" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="930" column="18" selection-start="36506" selection-end="36506" vertical-scroll-proportion="0.33333334" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="497" selection-end="497" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="25" column="0" selection-start="497" selection-end="497" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="16" selection-start="1685" selection-end="1685" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/00.loading/First.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="82" selection-end="82" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/test-roadmap.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="7" selection-start="131" selection-end="131" vertical-scroll-proportion="0.0">
+        <state line="6" column="7" selection-start="131" selection-end="131" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="158" column="8" selection-start="4839" selection-end="4839" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestLoadClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/readme.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="691" selection-end="691" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/00.loading/SecondSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="66" selection-end="66" vertical-scroll-proportion="0.1486068">
+        <state line="1" column="26" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/00.loading/TestSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="34" selection-start="74" selection-end="95" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/00.loading/ThirdSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="32" selection-start="86" selection-end="86" vertical-scroll-proportion="0.125">
           <folding />
         </state>
       </provider>
