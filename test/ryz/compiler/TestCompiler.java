@@ -33,8 +33,7 @@ public class TestCompiler {
 
     @BeforeMethod
     void init() throws MalformedURLException {
-        testUtil = TestUtil.createWith(new File("./test-resources/00.loading/"),
-                                       new File("./test-resources/output/"));
+        testUtil = TestUtil.createWith( new File("./test-resources/output/"));
     }
 
     @AfterMethod
@@ -48,8 +47,11 @@ public class TestCompiler {
     @Test(dataProvider="sourceFiles")
     public void runTests(Properties spec) throws IOException, ClassNotFoundException {
 
-        String className = spec.getProperty("className");
-        String testFile = spec.getProperty("fileName");
+        String className  = spec.getProperty("className");
+        String testFile   = spec.getProperty("fileName");
+        String sourcePath = spec.getProperty("sourcePath");
+
+        testUtil.addSourceDir(new File("./test-resources/"+sourcePath+"/"));
 
         try {
 
@@ -61,13 +63,13 @@ public class TestCompiler {
             assertMethods(spec, testFile, clazz);
 
         } finally {
-            testUtil.deleteFromOutput(className);
+            testUtil.deleteFromOutput(spec.getProperty("classFile"));
         }
 
     }
 
 
-        @DataProvider(name="sourceFiles")
+    @DataProvider(name="sourceFiles")
     private Object [][] loadSourceFiles() throws IOException {
 
         // collect all source files
@@ -157,6 +159,7 @@ public class TestCompiler {
             } catch (IOException ioe ){}
         }
         p.setProperty("fileName", testFile.getName());
+        p.setProperty("sourcePath", testFile.getParentFile().getName());
         return p;
 
     }

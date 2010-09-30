@@ -18,14 +18,13 @@ class TestUtil {
     private final ClassLoader classPath;
     private final File output;
 
-    public static TestUtil createWith(File sourceDir, File output )
+    public static TestUtil createWith( File output )
                 throws MalformedURLException {
-        return new TestUtil(sourceDir, output);
+        return new TestUtil( output);
     }
-    private TestUtil(File sourceDir, File output ) throws MalformedURLException {
+    private TestUtil( File output ) throws MalformedURLException {
         this.output = output;
         ryzc = RyzC.getCompiler();
-        ryzc.sourceDirs(sourceDir);
         ryzc.outDir(this.output);
         this.classPath = new URLClassLoader(new URL[]{
             new URL(output.toURI().toString())
@@ -60,7 +59,12 @@ class TestUtil {
     }
 
     public void deleteFromOutput(String file ) {
+        System.out.println("file to delete = " + file);
         if( file == null ) { return; }
         new File( output.getPath()+"/"+file).delete();
+    }
+
+    public void addSourceDir(File sourceDir) {
+        ryzc.sourceDirs(sourceDir);
     }
 }
