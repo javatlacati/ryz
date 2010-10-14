@@ -1,0 +1,11 @@
+/*
+className: attribute.package$.Class
+attributes: s:java.lang.String, name:java.lang.String, lastName:java.lang.String
+#methods: i:int
+classFile: attribute/package$/Class.class
+*/
+attribute.package.Class {
+    s:String
+    name:String
+    lastName: String
+}

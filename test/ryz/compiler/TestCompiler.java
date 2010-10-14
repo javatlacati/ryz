@@ -105,12 +105,12 @@ public class TestCompiler {
             boolean matched = false;
             for (Field f : clazz.getDeclaredFields()) {
                 if (f.getName().equals(nameType[0].trim())
-                        && f.getType().toString().equals(nameType[1].trim())) {
+                        && f.getType().getName().equals(nameType[1].trim())) {
                     matched = true;
                     break;
                 }
             }
-            assert matched : file + " didn't fulfilled: " + pairs + "attribute";
+            assert matched : file + " didn't fulfilled: " + pairs + " attribute";
         }
     }
 

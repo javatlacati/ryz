@@ -16,6 +16,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.System.err;
 
@@ -66,18 +68,28 @@ public class RyzC {
     /**
      * Compile the .ryz source files.
      * @param files - The files to be compiled
-     * @throws IOException
+     * @throws IOException - If there an IO problem while compiling
      */
     public void compile(String ... files) throws IOException {
         for( String file : files ){
             File toCompile = validateExists(file);
             if (toCompile == null) { return; }
 
-            List<String> lines = readLines(toCompile);
-            List<String> output = new ArrayList<String>();
-            getPackage(lines, output);
-            createClassDefinition( getClass( output), output );
+            List<String> lines = trimLines(readLines(toCompile));
+
+            List<String> generatedSource = new ArrayList<String>();
+            getPackage(lines, generatedSource);
+            getAttributes( lines, generatedSource );
+            createClassDefinition( getClass( generatedSource), generatedSource );
         }
+    }
+
+    private List<String> trimLines(List<String> output) {
+        List<String> trimmed = new ArrayList<String>();
+        for( String s : output ){
+            trimmed.add( s.trim() );
+        }
+        return trimmed;
     }
 
 
@@ -92,7 +104,6 @@ public class RyzC {
      */
     private void getPackage(List<String> lines, List<String> output) {
         for( String line : lines ) {
-            line = line.trim();
 
             int iod = line.indexOf(".");
             int iok = line.indexOf("{", iod);
@@ -101,8 +112,6 @@ public class RyzC {
                 String possiblePackageAndClass = line.substring(0, iok);
                 int liod = possiblePackageAndClass.lastIndexOf(".");
                 String possibleClass = possiblePackageAndClass.substring(liod+1).trim();
-                System.out.println("line = " + line);
-                System.out.println("possibleClass = " + possibleClass);
                 
                 if (Character.isUpperCase(possibleClass.charAt(0))) {
                     String packageName = possiblePackageAndClass.substring(0, liod);
@@ -113,11 +122,22 @@ public class RyzC {
                     }
                     sb.delete(sb.length()-1, sb.length());
                     output.add(String.format("package %s;%n", sb.toString()));
-                    output.add(String.format("class %s {%n", scapeName(possibleClass)));
+                    output.add(String.format("public class %s {%n", scapeName(possibleClass)));
                 }
             }
         }
     }
+    Pattern attributePattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)");
+    private void getAttributes(List<String> lines, List<String> output) {
+        for( String  line : lines ) {
+            Matcher matcher = attributePattern.matcher(line);
+
+            if( matcher.matches()){
+                output.add( String.format("    /*attribute*/private %s %s;%n", scapeName(matcher.group(2)),scapeName(matcher.group(1))));
+            }
+        }
+    }
+
 
     /**
      * Tries to get a class name from the "outputlines" searching for a line
@@ -128,8 +148,8 @@ public class RyzC {
      */
     private String getClass(List<String> outputLines) {
         for(String s : outputLines) {
-            if( s.startsWith("class")){
-                return s.substring(6, s.indexOf("{"));
+            if( s.startsWith("public class")){
+                return s.substring("public class".length(), s.indexOf("{")).trim();
             }
         }
         return "First";
@@ -151,14 +171,21 @@ public class RyzC {
         FileWriter writer = new FileWriter(sourceFile);
 
         boolean containsPackage = false;
+//        boolean containsAttributes = false;
         for (String s : outputLines) {
             if (s.startsWith("package")) {
                 containsPackage = true;
             }
+//            if(s.startsWith("    /*attribute*/")){
+//                containsAttributes = true;
+//            }
             writer.write(s);
+            
         }
 
         String packageName = containsPackage ? "" : "package load.test;\n public class First{\n";
+//        String attributeName = containsAttribute ? "" : "{\n";
+
         writer.write(
                 packageName +
                 "    private int i = 0;" +
@@ -222,15 +249,15 @@ public class RyzC {
     /**
      * Utility method to read all all the input into the output. Use by the
      * "readFile" method
-     * @param input
-     * @param output
-     * @return
-     * @throws IOException
+     * @param input - The input to read from.
+     * @param output - Where to copy the data to.
+     * @return a count of the bytes read.
+     * @throws IOException - If there is an IO problem while reading
      */
 	private long copyLarge( InputStream input, OutputStream output ) throws IOException {
 		byte[] buffer = new byte[1024];
 		long count = 0;
-		int n = 0;
+		int n;
 		while( ( n = input.read(buffer)) >= 0 ) {
 			output.write( buffer, 0, n );
 			count += n;
@@ -257,9 +284,9 @@ public class RyzC {
                 break;
             }
         }
-        if( !toCompile.exists() ) {
-            err.println("RyzC: file not found "+ file);
-            return null;
+        if (toCompile != null && !toCompile.exists() ) {
+                err.println("RyzC: file not found "+ file);
+                return null;
         }
         return toCompile;
     }
