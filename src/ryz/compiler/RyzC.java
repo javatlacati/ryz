@@ -1,19 +1,21 @@
 package ryz.compiler;
 
 
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import javax.tools.JavaCompiler;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.System.err;
 
@@ -28,6 +30,18 @@ import static java.lang.System.err;
  * Time: 9:42:07 PM
  */
 public class RyzC {
+
+
+    private static final List<String> javaKeywords = Arrays.asList(
+            "abstract","assert","boolean","break","byte","case","catch",
+            "char","class","const","continue","default","do","double",
+            "else","enum","extends","final ","finally","float","for",
+            "goto","if","implements","import","instanceof","int",
+            "interface","long","native ","new","package","private ",
+            "protected ","public return","short","static ","strictfp ",
+            "super","switch","synchronized ","this","throw","transient ",
+            "try","void","volatile ","while"
+    );
 
 
     /**
@@ -59,73 +73,102 @@ public class RyzC {
             File toCompile = validateExists(file);
             if (toCompile == null) { return; }
 
-            String content = readFile(toCompile);
-            String packageName = getPackage( content );
-            String className   = getClass( content );
-            if( packageName == null  ){ packageName = "load.test"; }
-            if( className == null  ){ className = "First"; }
-            compileClass(packageName, className);
+            List<String> lines = readLines(toCompile);
+            List<String> output = new ArrayList<String>();
+            getPackage(lines, output);
+            createClassDefinition( getClass( output), output );
         }
-
-
     }
 
-    private String getPackage(String content) {
-        if( content.contains("simple.class")){
-        return "simple.class$";  //To change body of created methods use File | Settings | File Templates.
+
+    /**
+     * Iterate all the lines and tries to get one representing
+     * the package and class definition ie: "some.package.Class {"
+     * Then stores the correspondent Java representation into the "output"
+     * list
+     *
+     * @param lines - A list with the Ryz source code
+     * @param output - A list where the Java source code will be placed
+     */
+    private void getPackage(List<String> lines, List<String> output) {
+        for( String line : lines ) {
+            line = line.trim();
+
+            int iod = line.indexOf(".");
+            int iok = line.indexOf("{", iod);
+            if (iod > 0 && iok > iod) {
+                // ej: some.package.Name {
+                String possiblePackageAndClass = line.substring(0, iok);
+                int liod = possiblePackageAndClass.lastIndexOf(".");
+                String possibleClass = possiblePackageAndClass.substring(liod+1).trim();
+                System.out.println("line = " + line);
+                System.out.println("possibleClass = " + possibleClass);
+                
+                if (Character.isUpperCase(possibleClass.charAt(0))) {
+                    String packageName = possiblePackageAndClass.substring(0, liod);
+                    StringBuilder sb = new StringBuilder("");
+                    for( String s : packageName.split("\\.")){
+                        sb.append(scapeName(s));
+                        sb.append(".");
+                    }
+                    sb.delete(sb.length()-1, sb.length());
+                    output.add(String.format("package %s;%n", sb.toString()));
+                    output.add(String.format("class %s {%n", scapeName(possibleClass)));
+                }
+            }
         }
-
-        return null;
-    }
-
-    private String getClass(String content) {
-        if( content.contains("One")){
-            return "One";  //To change body of created methods use File | Settings | File Templates.
-        }
-        return null;
-    }
-
-    private String readFile(File toCompile) throws IOException {
-        InputStream is = new FileInputStream(toCompile);
-        BufferedInputStream bis = new BufferedInputStream(is);
-        int c = -1;
-        StringBuilder builder = new StringBuilder();
-
-        while( ( c = bis.read() ) >= 0 ) {
-            builder.append( (char) c );
-        }
-
-        bis.close();
-        is.close();
-        System.out.println("builder.toString() = " + builder.toString());
-        return builder.toString();
-
     }
 
     /**
-     * Creates a sample class and compiles it.
+     * Tries to get a class name from the "outputlines" searching for a line
+     * that looks like "class Xyz {"
      *
-     * This method would be removed in the future.
-     * @throws IOException
-     * @param packageName
-     * @param className
+     * @param outputLines - The generated java source code.
+     * @return - A class name found in those lines
      */
-    private void compileClass(String packageName, String className) throws IOException {
-        // write the test class
-        File sourceFile = new File(className+".java");
-        FileWriter writer     = new FileWriter(sourceFile);
+    private String getClass(List<String> outputLines) {
+        for(String s : outputLines) {
+            if( s.startsWith("class")){
+                return s.substring(6, s.indexOf("{"));
+            }
+        }
+        return "First";
 
+    }
+
+    private String scapeName(String name) {
+        if( javaKeywords.contains(name)){
+            return name + "$";
+        }
+
+        return name;
+    }
+
+    private void createClassDefinition(String className, List<String> outputLines ) throws IOException {
+        System.out.println("outputLines = " + outputLines);
+        // write the test class
+        File sourceFile = new File(className + ".java");
+        FileWriter writer = new FileWriter(sourceFile);
+
+        boolean containsPackage = false;
+        for (String s : outputLines) {
+            if (s.startsWith("package")) {
+                containsPackage = true;
+            }
+            writer.write(s);
+        }
+
+        String packageName = containsPackage ? "" : "package load.test;\n public class First{\n";
         writer.write(
-                "package "+ packageName +";\n" +
-                "public class "+ className + " {" +
+                packageName +
                 "    private int i = 0;" +
-                "    public int i(){ return i;}" +
-                "}"
+                        "    public int i(){ return i;}" +
+                        "}"
         );
         writer.close();
 
         // Get the java compiler for this platform
-        JavaCompiler compiler    = ToolProvider.getSystemJavaCompiler();
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(
                 null,
                 null,
@@ -134,18 +177,67 @@ public class RyzC {
         fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(output));
         // Compile the file
         compiler
-            .getTask(null,
-                    fileManager,
-                    null,
-                    null,
-                    null,
-                    fileManager.getJavaFileObjectsFromFiles(Arrays.asList(sourceFile)))
-            .call();
+                .getTask(null,
+                        fileManager,
+                        null,
+                        null,
+                        null,
+                        fileManager.getJavaFileObjectsFromFiles(Arrays.asList(sourceFile)))
+                .call();
         fileManager.close();
 
         // delete the file
         sourceFile.deleteOnExit();
+
+
     }
+
+    /**
+     * Read the given files as a list of lines
+     * @param f - the file to read
+     * @return a list of strings each one containing one line.
+     */
+    private List<String> readLines(File f){
+        String separator = System.getProperty("line.separator");
+        return Arrays.asList(readFile( f ).split(separator));
+    }
+
+    /**
+     * Read all the file into a single string.
+     * @param f - the file to read
+     * @return a String with the content of the file
+     */
+    private String readFile( File f )  {
+		ByteArrayOutputStream out = new ByteArrayOutputStream( (int) f.length() );
+        try {
+            copyLarge( new FileInputStream( f ), out );
+            return out.toString("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Utility method to read all all the input into the output. Use by the
+     * "readFile" method
+     * @param input
+     * @param output
+     * @return
+     * @throws IOException
+     */
+	private long copyLarge( InputStream input, OutputStream output ) throws IOException {
+		byte[] buffer = new byte[1024];
+		long count = 0;
+		int n = 0;
+		while( ( n = input.read(buffer)) >= 0 ) {
+			output.write( buffer, 0, n );
+			count += n;
+		}
+		return count;
+	}
+
 
     /**
      * Validate the file exists before attempting a compilation.
