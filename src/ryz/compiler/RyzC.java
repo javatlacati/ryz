@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,16 +35,6 @@ import static java.lang.System.err;
 public class RyzC {
 
 
-    private static final List<String> javaKeywords = Arrays.asList(
-            "abstract","assert","boolean","break","byte","case","catch",
-            "char","class","const","continue","default","do","double",
-            "else","enum","extends","final ","finally","float","for",
-            "goto","if","implements","import","instanceof","int",
-            "interface","long","native ","new","package","private ",
-            "protected ","public return","short","static ","strictfp ",
-            "super","switch","synchronized ","this","throw","transient ",
-            "try","void","volatile ","while"
-    );
 
 
     /**
@@ -66,6 +57,24 @@ public class RyzC {
     private File output = new File("");
 
     /**
+     * Specify the source path directories for the compiler to use.
+     *
+     * @param dirs - Where to find .ryz source files.
+     */
+    public void sourceDirs(File ... dirs) {
+        sourceDirs = dirs.clone();
+
+    }
+
+    /**
+     * Specify where to put the generated .class files
+     * @param output - Specify the output directory for the generated .class files
+     */
+    public void outDir(File output) {
+        this.output = output;
+    }
+
+    /**
      * Compile the .ryz source files.
      * @param files - The files to be compiled
      * @throws IOException - If there an IO problem while compiling
@@ -78,10 +87,23 @@ public class RyzC {
             List<String> lines = trimLines(readLines(toCompile));
 
             List<String> generatedSource = new ArrayList<String>();
-            getPackage(lines, generatedSource);
-            getAttributes( lines, generatedSource );
+            for( String line : lines ) {
+                for( LineTransformer t : transformers() ) {
+                    t.transform( line, generatedSource );
+                }
+            }
             createClassDefinition( getClass( generatedSource), generatedSource );
         }
+    }
+
+    private List<LineTransformer> transformers = Arrays.asList(
+            new PackageTransformer(),
+            new AttributeTransformer(),
+            new CommentTransformer()
+    );
+
+    private List<LineTransformer> transformers() {
+        return transformers;
     }
 
     private List<String> trimLines(List<String> output) {
@@ -93,50 +115,6 @@ public class RyzC {
     }
 
 
-    /**
-     * Iterate all the lines and tries to get one representing
-     * the package and class definition ie: "some.package.Class {"
-     * Then stores the correspondent Java representation into the "output"
-     * list
-     *
-     * @param lines - A list with the Ryz source code
-     * @param output - A list where the Java source code will be placed
-     */
-    private void getPackage(List<String> lines, List<String> output) {
-        for( String line : lines ) {
-
-            int iod = line.indexOf(".");
-            int iok = line.indexOf("{", iod);
-            if (iod > 0 && iok > iod) {
-                // ej: some.package.Name {
-                String possiblePackageAndClass = line.substring(0, iok);
-                int liod = possiblePackageAndClass.lastIndexOf(".");
-                String possibleClass = possiblePackageAndClass.substring(liod+1).trim();
-                
-                if (Character.isUpperCase(possibleClass.charAt(0))) {
-                    String packageName = possiblePackageAndClass.substring(0, liod);
-                    StringBuilder sb = new StringBuilder("");
-                    for( String s : packageName.split("\\.")){
-                        sb.append(scapeName(s));
-                        sb.append(".");
-                    }
-                    sb.delete(sb.length()-1, sb.length());
-                    output.add(String.format("package %s;%n", sb.toString()));
-                    output.add(String.format("public class %s {%n", scapeName(possibleClass)));
-                }
-            }
-        }
-    }
-    Pattern attributePattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)");
-    private void getAttributes(List<String> lines, List<String> output) {
-        for( String  line : lines ) {
-            Matcher matcher = attributePattern.matcher(line);
-
-            if( matcher.matches()){
-                output.add( String.format("    /*attribute*/private %s %s;%n", scapeName(matcher.group(2)),scapeName(matcher.group(1))));
-            }
-        }
-    }
 
 
     /**
@@ -156,42 +134,39 @@ public class RyzC {
 
     }
 
-    private String scapeName(String name) {
-        if( javaKeywords.contains(name)){
-            return name + "$";
-        }
-
-        return name;
-    }
 
     private void createClassDefinition(String className, List<String> outputLines ) throws IOException {
         System.out.println("outputLines = " + outputLines);
         // write the test class
         File sourceFile = new File(className + ".java");
         FileWriter writer = new FileWriter(sourceFile);
-
+        StringWriter sWriter = new StringWriter();
         boolean containsPackage = false;
-//        boolean containsAttributes = false;
         for (String s : outputLines) {
             if (s.startsWith("package")) {
                 containsPackage = true;
             }
-//            if(s.startsWith("    /*attribute*/")){
-//                containsAttributes = true;
-//            }
             writer.write(s);
-            
+            sWriter.write(s);
+
         }
 
         String packageName = containsPackage ? "" : "package load.test;\n public class First{\n";
-//        String attributeName = containsAttribute ? "" : "{\n";
-
         writer.write(
                 packageName +
                 "    private int i = 0;" +
-                        "    public int i(){ return i;}" +
-                        "}"
+                "    public int i(){ return i;}" +
+                "}"
         );
+
+        sWriter.write(
+                packageName +
+                "    private int i = 0;" +
+                "    public int i(){ return i;}" +
+                "}"
+                
+        );
+        System.out.println("sWriter = " + sWriter);
         writer.close();
 
         // Get the java compiler for this platform
@@ -291,21 +266,5 @@ public class RyzC {
         return toCompile;
     }
 
-    /**
-     * Specify the source path directories for the compiler to use.
-     *
-     * @param dirs - Where to find .ryz source files. 
-     */
-    public void sourceDirs(File ... dirs) {
-        sourceDirs = dirs.clone();
 
-    }
-
-    /**
-     * Specify where to put the generated .class files
-     * @param output - Specify the output directory for the generated .class files
-     */
-    public void outDir(File output) {
-        this.output = output;
-    }
 }
