@@ -17,8 +17,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static java.lang.System.err;
 
@@ -99,7 +97,9 @@ public class RyzC {
     private List<LineTransformer> transformers = Arrays.asList(
             new PackageTransformer(),
             new AttributeTransformer(),
-            new CommentTransformer()
+            new CommentTransformer(),
+            new ClosingKeyTransformer(),
+            new MethodTransformer()
     );
 
     private List<LineTransformer> transformers() {
@@ -151,21 +151,15 @@ public class RyzC {
 
         }
 
-        String packageName = containsPackage ? "" : "package load.test;\n public class First{\n";
-        writer.write(
-                packageName +
-                "    private int i = 0;" +
-                "    public int i(){ return i;}" +
-                "}"
-        );
+        String packageName = containsPackage ? "" : "package load.test;\n" +
+                " public class First{\n" +
+               "    private int i = 0;\n" +
+               "    public int i(){ return i;} \n" +
+               "}";
+        String code = packageName ;
+        writer.write(code);
 
-        sWriter.write(
-                packageName +
-                "    private int i = 0;" +
-                "    public int i(){ return i;}" +
-                "}"
-                
-        );
+        sWriter.write(code);
         System.out.println("sWriter = " + sWriter);
         writer.close();
 

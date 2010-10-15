@@ -80,6 +80,7 @@ class AttributeTransformer extends LineTransformer {
                 }
     }
 }
+// TODO: multiline comments has problems
 class CommentTransformer extends LineTransformer {
 
     @Override
@@ -92,7 +93,6 @@ class CommentTransformer extends LineTransformer {
         }
     }
 }
-// TODO: verify usage of this class 
 class ClosingKeyTransformer extends LineTransformer {
 
     @Override
@@ -100,5 +100,20 @@ class ClosingKeyTransformer extends LineTransformer {
         if( line.startsWith("}")) {
             generatedSource.add( line + ls );
         }
+    }
+}
+class MethodTransformer extends LineTransformer {
+
+    private final Pattern methodPattern = Pattern.compile("(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
+    
+    @Override
+    public void transform(String line, List<String> generatedSource) {
+        Matcher matcher = methodPattern.matcher(line);
+        //TODO: handle default return
+        if( matcher.matches() ) {
+            generatedSource.add( String.format("    /*method*/public %s %s() {%n    return \"\";%n", scapeName(matcher.group(2)),scapeName(matcher.group(1))));
+        }
+
+
     }
 }

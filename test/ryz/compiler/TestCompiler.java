@@ -131,13 +131,13 @@ public class TestCompiler {
             for (Method m : clazz.getDeclaredMethods()) {
                 if (m.getName().equals(nameType[0].trim())
                         && m.getReturnType()
-                            .toString()
+                            .getName()
                             .equals(nameType[1].trim())) {
                     matched = true;
                     break;
                 }
             }
-            assert matched : file + " didn't fulfilled: " + pairs + "attribute";
+            assert matched : file + " didn't fulfilled: " + pairs + " method";
         }
     }
 
