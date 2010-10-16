@@ -80,19 +80,10 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ImportSpec.ryz" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="52" selection-start="206" selection-end="206" vertical-scroll-proportion="0.45180723">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RyzC.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="RyzC.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="34" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.0">
+            <state line="145" column="34" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.45783132">
               <folding />
             </state>
           </provider>
@@ -844,7 +835,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-5" y="25" width="1451" height="879" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -858,9 +849,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969835" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3294964" sideWeight="0.4918033" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3294964" sideWeight="0.4918033" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4986339" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4986339" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -991,16 +982,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
+    <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="34" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.0">
+        <state line="10" column="52" selection-start="206" selection-end="206" vertical-scroll-proportion="0.45180723">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="52" selection-start="206" selection-end="206" vertical-scroll-proportion="0.45180723">
+        <state line="145" column="34" selection-start="4072" selection-end="4072" vertical-scroll-proportion="0.45783132">
           <folding />
         </state>
       </provider>
