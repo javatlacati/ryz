@@ -37,6 +37,22 @@ abstract class LineTransformer {
     
     public abstract void transform(String line, List<String> generatedSource);
 }
+class ImportTransformer extends LineTransformer {
+    private final Pattern importPattern = Pattern.compile("import\\s*\\((.+)\\s*\\)");
+
+
+
+    @Override
+    public void transform(String line, List<String> generatedSource) {
+        if( line.startsWith("import(")){
+            System.out.println("line = " + line);
+            Matcher m = importPattern.matcher(line);
+            if( m.matches() ) {
+                generatedSource.add( String.format("import %s;%n", m.group(1)));
+            }
+        }
+    }
+}
 class PackageTransformer extends LineTransformer {
     @Override
     public void transform(String line, List<String> generatedSource) {

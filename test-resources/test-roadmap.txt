@@ -1,7 +1,8 @@
 00.loading - Load classes dynamically
 01.comments - Single line, multiline.
-02.classes 
+02.classes
 03.attributes
 04.methods
-05.closures
-06. TBD
+05.import
+06.closures
+07. TBD

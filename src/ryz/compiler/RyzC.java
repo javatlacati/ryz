@@ -96,6 +96,7 @@ public class RyzC {
 
     private List<LineTransformer> transformers = Arrays.asList(
             new PackageTransformer(),
+            new ImportTransformer(),
             new AttributeTransformer(),
             new CommentTransformer(),
             new ClosingKeyTransformer(),
@@ -137,29 +138,36 @@ public class RyzC {
 
     private void createClassDefinition(String className, List<String> outputLines ) throws IOException {
         System.out.println("outputLines = " + outputLines);
-        // write the test class
+        // write the  class
         File sourceFile = new File(className + ".java");
         FileWriter writer = new FileWriter(sourceFile);
         StringWriter sWriter = new StringWriter();
-        boolean containsPackage = false;
-        for (String s : outputLines) {
-            if (s.startsWith("package")) {
-                containsPackage = true;
+        String importString = "";
+        String packageString = "";
+        for( String s: outputLines ){
+            if( s.startsWith("package")) {
+                packageString = s;
+                write( writer, sWriter, packageString );
             }
-            writer.write(s);
-            sWriter.write(s);
-
+            if( s.startsWith("import")){
+                importString = s;
+                write( writer, sWriter, importString );
+            }
         }
-
-        String packageName = containsPackage ? "" : "package load.test;\n" +
-                " public class First{\n" +
+        if( packageString == "" ){
+            write(writer, sWriter,
+               "package load.test;\n" +
+               " public class First{\n" +
                "    private int i = 0;\n" +
                "    public int i(){ return i;} \n" +
-               "}";
-        String code = packageName ;
-        writer.write(code);
+               "}");
+        }
+        outputLines.remove(packageString);
+        outputLines.remove(importString);
 
-        sWriter.write(code);
+        for (String s : outputLines) {
+            write(writer, sWriter, s);
+        }
         System.out.println("sWriter = " + sWriter);
         writer.close();
 
@@ -186,6 +194,11 @@ public class RyzC {
         sourceFile.deleteOnExit();
 
 
+    }
+
+    private void write(FileWriter writer, StringWriter sWriter, String s) throws IOException {
+        writer.write(s);
+        sWriter.write(s);
     }
 
     /**
