@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  */
 abstract class LineTransformer {
 
-    protected final String ls = System.getProperty("line.separator");
+    protected final String lineSeparator = System.getProperty("line.separator");
 
     private static final List<String> javaKeywords = Arrays.asList(
             "abstract","assert","boolean","break","byte","case","catch",
@@ -104,7 +104,7 @@ class CommentTransformer extends LineTransformer {
         if( line.startsWith("/*")
           || line.startsWith("//")
           || line.endsWith("*/") ){
-            generatedSource.add(line + ls );
+            generatedSource.add(line + lineSeparator);
 
         }
     }
@@ -114,7 +114,7 @@ class ClosingKeyTransformer extends LineTransformer {
     @Override
     public void transform(String line, List<String> generatedSource) {
         if( line.startsWith("}")) {
-            generatedSource.add( line + ls );
+            generatedSource.add( line + lineSeparator);
         }
     }
 }
@@ -127,9 +127,22 @@ class MethodTransformer extends LineTransformer {
         Matcher matcher = methodPattern.matcher(line);
         //TODO: handle default return
         if( matcher.matches() ) {
-            generatedSource.add( String.format("    /*method*/public %s %s() {%n    return \"\";%n", scapeName(matcher.group(2)),scapeName(matcher.group(1))));
+            generatedSource.add( String.format("    /*method*/public %s %s() {%n", scapeName(matcher.group(2)),scapeName(matcher.group(1))));
         }
 
 
+    }
+}
+// Handles, temporarily the "return" of the method. Eventually the return
+// woudl change to avoid the "return" keyword
+class ReturnTransformer extends LineTransformer {
+    private final Pattern returnPattern = Pattern.compile("\\^\\s+(.+)");
+
+    @Override
+    public void transform(String line, List<String> generatedSource) {
+        Matcher m = returnPattern.matcher(line);
+        if( m.matches() ){
+            generatedSource.add( String.format("        return %s;%n",m.group(1)));
+        }
     }
 }

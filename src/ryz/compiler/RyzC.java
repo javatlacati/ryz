@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -100,7 +101,8 @@ public class RyzC {
             new AttributeTransformer(),
             new CommentTransformer(),
             new ClosingKeyTransformer(),
-            new MethodTransformer()
+            new MethodTransformer(),
+            new ReturnTransformer()
     );
 
     private List<LineTransformer> transformers() {
@@ -140,22 +142,22 @@ public class RyzC {
         System.out.println("outputLines = " + outputLines);
         // write the  class
         File sourceFile = new File(className + ".java");
-        FileWriter writer = new FileWriter(sourceFile);
         StringWriter sWriter = new StringWriter();
+        Writer writer = new SourceWriter( new FileWriter(sourceFile), sWriter);
         String importString = "";
         String packageString = "";
         for( String s: outputLines ){
             if( s.startsWith("package")) {
                 packageString = s;
-                write( writer, sWriter, packageString );
+                writer.write( packageString );
             }
             if( s.startsWith("import")){
                 importString = s;
-                write( writer, sWriter, importString );
+                writer.write( importString );
             }
         }
         if( packageString == "" ){
-            write(writer, sWriter,
+            writer.write(
                "package load.test;\n" +
                " public class First{\n" +
                "    private int i = 0;\n" +
@@ -166,7 +168,7 @@ public class RyzC {
         outputLines.remove(importString);
 
         for (String s : outputLines) {
-            write(writer, sWriter, s);
+            writer.write(s);
         }
         System.out.println("sWriter = " + sWriter);
         writer.close();
@@ -274,4 +276,32 @@ public class RyzC {
     }
 
 
+}
+class SourceWriter extends Writer {
+
+    private final Writer a;
+    private final Writer b;
+
+    public SourceWriter(Writer b, Writer a) {
+        this.b = b;
+        this.a = a;
+    }
+
+    @Override
+    public void write(char[] cbuf, int off, int len) throws IOException {
+        a.write(cbuf, off, len );
+        b.write(cbuf, off, len );
+    }
+
+    @Override
+    public void flush() throws IOException {
+        a.flush();
+        b.flush();
+    }
+
+    @Override
+    public void close() throws IOException {
+        a.close();
+        b.close();
+    }
 }

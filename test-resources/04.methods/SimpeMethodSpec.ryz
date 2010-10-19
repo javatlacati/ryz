@@ -6,6 +6,7 @@ classFile: methods/package$/First.class
 */
 methods.package.First{
     name:String
-    name():String {
+    name(): String {
+        ^ name
     }
 }
