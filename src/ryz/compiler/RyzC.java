@@ -33,7 +33,12 @@ import static java.lang.System.err;
  */
 public class RyzC {
 
-
+    public static void main( String [] args ) throws IOException {
+        RyzC c = RyzC.getCompiler();
+        c.sourceDirs(new File("."));
+        c.outDir(new File("."));
+        c.compile(args);
+    }
 
 
     /**
@@ -196,11 +201,6 @@ public class RyzC {
         sourceFile.deleteOnExit();
 
 
-    }
-
-    private void write(FileWriter writer, StringWriter sWriter, String s) throws IOException {
-        writer.write(s);
-        sWriter.write(s);
     }
 
     /**

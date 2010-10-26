@@ -8,7 +8,7 @@ import.class.First {
 
     import( java.util.Date )
 
-    date : Date =  Date()
+    date : Date = Date()
 
     endDate() : Date {
         ^   Date()

@@ -105,7 +105,7 @@ class AttributeTransformer extends LineTransformer {
     private final Pattern attributeInitializedPattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
     // hola: adio = Xyz()
     private final Pattern attributeInitializedPatternFromInvocation = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
-    // hola = adios
+    // hola = adios //TODO: revisar como saber el tipo de dato de un valor
     private final Pattern attributeInferencePattern = Pattern.compile("(\\w+)\\s*=\\s*(.+)");
     // hola = adios()
     private final Pattern attributeInferenceFromInvocationPattern = Pattern.compile("(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
@@ -117,36 +117,28 @@ class AttributeTransformer extends LineTransformer {
 
         if( matcher.matches()){
             generatedSource.add( String.format("    /*attribute*/private %s %s;%n",
-                    scapeName(matcher.group(2)),
-                    scapeName(matcher.group(1))));
+                scapeName(matcher.group(2)),
+                scapeName(matcher.group(1))));
         } else if( (matcher = attributeInitializedPatternFromInvocation.matcher(line)).matches() ){
-            System.out.println("matcher = " + matcher);
             generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
-                    scapeName(matcher.group(2)),
-                    scapeName(matcher.group(1)),
-                    scapeName(checkObjectInitialization(matcher.group(3)))));
+                scapeName(matcher.group(2)),
+                scapeName(matcher.group(1)),
+                scapeName(checkObjectInitialization(matcher.group(3)))));
         } else if( (matcher = attributeInitializedPattern.matcher(line)).matches() ){
             generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
-                    scapeName(matcher.group(2)),
-                    scapeName(matcher.group(1)),
-                    scapeName(matcher.group(3))));
+                scapeName(matcher.group(2)),
+                scapeName(matcher.group(1)),
+                scapeName(matcher.group(3))));
         } else if( (matcher = attributeInferenceFromInvocationPattern.matcher(line)).matches() ){
             generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
-                    scapeName(inferType(matcher.group(2))),
-                    scapeName(matcher.group(1)),
-                    scapeName(checkObjectInitialization(matcher.group(2)))));
+                scapeName(inferType(matcher.group(2))),
+                scapeName(matcher.group(1)),
+                scapeName(checkObjectInitialization(matcher.group(2)))));
         }
 
     }
 
 
-}
-class TestRegExp {
-    public static void main(String[] args) {
-       Pattern attributeInitializedPattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
-        Matcher m = attributeInitializedPattern.matcher("s : String =  String()");
-        System.out.println(m.matches());
-    }
 }
 // TODO: multiline comments has problems
 class CommentTransformer extends LineTransformer {
