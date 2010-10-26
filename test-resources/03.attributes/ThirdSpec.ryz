@@ -1,0 +1,12 @@
+/*
+className: attribute.initialized.Third
+attributes: i : java.lang.Integer, s: java.lang.String , third : attribute.initialized.Third
+#methods:    endDate:java.util.Date
+classFile: attribute/initialized/Third.class
+Featuring type inference
+*/
+attribute.initialized.Third{
+    i     =  Integer(0)
+    s     = String("s")
+    third = Third()
+}

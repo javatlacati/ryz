@@ -1,0 +1,11 @@
+/*
+className: attribute.initialized.Second
+attributes: i : java.lang.Integer, s: java.lang.String , second : attribute.initialized.Second
+#methods:    endDate:java.util.Date
+classFile: attribute/initialized/Second.class
+*/
+attribute.initialized.Second {
+    i : Integer =  Integer(0)
+    s : String =  String("s")
+    second : Second = Second()
+}

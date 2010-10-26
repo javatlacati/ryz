@@ -5,14 +5,13 @@ methods: endDate:java.util.Date
 classFile: import$/class$/First.class
 */
 import.class.First {
+
     import( java.util.Date )
 
-    // TODO: change new Date()  with Date()
-    date : Date = new Date()
+    date : Date =  Date()
 
-    // TODO: change new Date() with Date()
     endDate() : Date {
-        ^  new Date() 
+        ^   Date()
     }
 
 }

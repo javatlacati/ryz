@@ -139,7 +139,7 @@ public class RyzC {
 
 
     private void createClassDefinition(String className, List<String> outputLines ) throws IOException {
-        System.out.println("outputLines = " + outputLines);
+        //System.out.println("outputLines = " + outputLines);
         // write the  class
         File sourceFile = new File(className + ".java");
         StringWriter sWriter = new StringWriter();

@@ -36,6 +36,22 @@ abstract class LineTransformer {
     }
     
     public abstract void transform(String line, List<String> generatedSource);
+
+    protected String checkObjectInitialization(String initialValue) {
+        if( Character.isUpperCase(initialValue.charAt(0)) && initialValue.matches(".*\\(.*\\)")){
+            initialValue = "new " + initialValue;
+        }
+        return initialValue;
+    }
+    protected String inferType(String initialValue ) {
+        Matcher m = Pattern.compile("(.*)\\(.*\\)").matcher(initialValue);
+        if( Character.isUpperCase(initialValue.charAt(0)) && m.matches()){
+            return m.group(1);
+        }
+        return initialValue;
+        
+    }
+
 }
 class ImportTransformer extends LineTransformer {
     private final Pattern importPattern = Pattern.compile("import\\s*\\((.+)\\s*\\)");
@@ -80,20 +96,56 @@ class PackageTransformer extends LineTransformer {
     }
 
 }
+
 class AttributeTransformer extends LineTransformer {
 
+    // hola : adios
     private final Pattern attributePattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)");
+    // hola : adios = xyz
     private final Pattern attributeInitializedPattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
+    // hola: adio = Xyz()
+    private final Pattern attributeInitializedPatternFromInvocation = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
+    // hola = adios
+    private final Pattern attributeInferencePattern = Pattern.compile("(\\w+)\\s*=\\s*(.+)");
+    // hola = adios()
+    private final Pattern attributeInferenceFromInvocationPattern = Pattern.compile("(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
+
 
     @Override
     public void transform(String line, List<String> generatedSource) {
-                Matcher matcher = attributePattern.matcher(line);
+        Matcher matcher = attributePattern.matcher(line);
 
-                if( matcher.matches()){
-                    generatedSource.add( String.format("    /*attribute*/private %s %s;%n", scapeName(matcher.group(2)),scapeName(matcher.group(1))));
-                } else if( (matcher = attributeInitializedPattern.matcher(line)).matches() ){
-                    generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n", scapeName(matcher.group(2)),scapeName(matcher.group(1)), scapeName(matcher.group(3))));
-                }
+        if( matcher.matches()){
+            generatedSource.add( String.format("    /*attribute*/private %s %s;%n",
+                    scapeName(matcher.group(2)),
+                    scapeName(matcher.group(1))));
+        } else if( (matcher = attributeInitializedPatternFromInvocation.matcher(line)).matches() ){
+            System.out.println("matcher = " + matcher);
+            generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
+                    scapeName(matcher.group(2)),
+                    scapeName(matcher.group(1)),
+                    scapeName(checkObjectInitialization(matcher.group(3)))));
+        } else if( (matcher = attributeInitializedPattern.matcher(line)).matches() ){
+            generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
+                    scapeName(matcher.group(2)),
+                    scapeName(matcher.group(1)),
+                    scapeName(matcher.group(3))));
+        } else if( (matcher = attributeInferenceFromInvocationPattern.matcher(line)).matches() ){
+            generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
+                    scapeName(inferType(matcher.group(2))),
+                    scapeName(matcher.group(1)),
+                    scapeName(checkObjectInitialization(matcher.group(2)))));
+        }
+
+    }
+
+
+}
+class TestRegExp {
+    public static void main(String[] args) {
+       Pattern attributeInitializedPattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
+        Matcher m = attributeInitializedPattern.matcher("s : String =  String()");
+        System.out.println(m.matches());
     }
 }
 // TODO: multiline comments has problems
@@ -142,7 +194,8 @@ class ReturnTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         Matcher m = returnPattern.matcher(line);
         if( m.matches() ){
-            generatedSource.add( String.format("        return %s;%n",m.group(1)));
+            String returnValue = checkObjectInitialization(m.group(1));
+            generatedSource.add( String.format("        return %s;%n", returnValue));
         }
     }
 }
