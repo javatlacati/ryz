@@ -2,6 +2,7 @@ package ryz.compiler;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,7 @@ import java.util.regex.Pattern;
 abstract class LineTransformer {
 
     protected final String lineSeparator = System.getProperty("line.separator");
-
+    protected final Logger logger = Logger.getLogger(this.getClass().getName());
     private static final List<String> javaKeywords = Arrays.asList(
             "abstract","assert","boolean","break","byte","case","catch",
             "char","class","const","continue","default","do","double",
@@ -57,11 +58,10 @@ class ImportTransformer extends LineTransformer {
     private final Pattern importPattern = Pattern.compile("import\\s*\\((.+)\\s*\\)");
 
 
-
     @Override
     public void transform(String line, List<String> generatedSource) {
         if( line.startsWith("import(")){
-            System.out.println("line = " + line);
+            logger.finest("line = " + line);
             Matcher m = importPattern.matcher(line);
             if( m.matches() ) {
                 generatedSource.add( String.format("import %s;%n", m.group(1)));
@@ -164,6 +164,7 @@ class ClosingKeyTransformer extends LineTransformer {
 }
 class MethodTransformer extends LineTransformer {
 
+    // hola():String{
     private final Pattern methodPattern = Pattern.compile("(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
     
     @Override
@@ -171,7 +172,9 @@ class MethodTransformer extends LineTransformer {
         Matcher matcher = methodPattern.matcher(line);
         //TODO: handle default return
         if( matcher.matches() ) {
-            generatedSource.add( String.format("    /*method*/public %s %s() {%n", scapeName(matcher.group(2)),scapeName(matcher.group(1))));
+            generatedSource.add( String.format("    /*method*/public %s %s() {%n",
+                    scapeName(matcher.group(2)),
+                    scapeName(matcher.group(1))));
         }
 
 
@@ -189,5 +192,20 @@ class ReturnTransformer extends LineTransformer {
             String returnValue = checkObjectInitialization(m.group(1));
             generatedSource.add( String.format("        return %s;%n", returnValue));
         }
+    }
+}
+class StatementTransformer extends LineTransformer {
+
+    private final Pattern statementPattern = Pattern.compile("\\w+\\.\\w+\\(\\)");//StringBuilder(name).reverse().toString()
+
+    @Override
+    public void transform(String line, List<String> generatedSource) {
+        Matcher m = statementPattern.matcher(line);
+        if( m.matches() ) {
+            generatedSource.add( String.format("    /*invocation*/%s;%n",
+                    line));
+            
+        }
+        
     }
 }

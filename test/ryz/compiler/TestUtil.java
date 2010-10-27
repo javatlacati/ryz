@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.net.URLClassLoader;
+import java.util.logging.Logger;
 
 /**
  * Utility class which is pretty much a wrapper for the compiler.
@@ -14,6 +15,7 @@ import java.net.URLClassLoader;
  */
 class TestUtil {
 
+    private static final Logger logger = Logger.getLogger(TestUtil.class.getName());
     private final RyzC ryzc;
     private final ClassLoader classPath;
     private final File output;
@@ -59,7 +61,7 @@ class TestUtil {
     }
 
     public void deleteFromOutput(String file ) {
-        System.out.println("file to delete = " + file);
+        logger.finest("file to delete = " + file);
         if( file == null ) { return; }
         new File( output.getPath()+"/"+file).delete();
     }

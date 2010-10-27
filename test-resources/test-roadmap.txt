@@ -1,8 +1,11 @@
 00.loading - Load classes dynamically
 01.comments - Single line, multiline.
-02.classes
-03.attributes
+02.classes - Top level, nested. 
+03.attributes - With type inference
 04.methods
 05.import
 06.closures
-07. TBD
+07.structural typing
+08.embedding
+09.nullObject
+10.Java interoperability

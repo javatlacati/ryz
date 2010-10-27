@@ -18,6 +18,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static java.lang.System.err;
 
@@ -33,6 +34,7 @@ import static java.lang.System.err;
  */
 public class RyzC {
 
+    private static Logger logger = Logger.getLogger(RyzC.class.getName());
     public static void main( String [] args ) throws IOException {
         RyzC c = RyzC.getCompiler();
         c.sourceDirs(new File("."));
@@ -107,7 +109,8 @@ public class RyzC {
             new CommentTransformer(),
             new ClosingKeyTransformer(),
             new MethodTransformer(),
-            new ReturnTransformer()
+            new ReturnTransformer(),
+            new StatementTransformer()
     );
 
     private List<LineTransformer> transformers() {
@@ -175,7 +178,7 @@ public class RyzC {
         for (String s : outputLines) {
             writer.write(s);
         }
-        System.out.println("sWriter = " + sWriter);
+        logger.finest("sWriter = " + sWriter);
         writer.close();
 
         // Get the java compiler for this platform
