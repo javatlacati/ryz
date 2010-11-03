@@ -1,6 +1,6 @@
 00.loading - Load classes dynamically
 01.comments - Single line, multiline.
-02.classes - Top level, nested. 
+02.classes - Top level, nested, inner, etc 
 03.attributes - With type inference
 04.methods
 05.import

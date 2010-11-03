@@ -75,11 +75,23 @@ class PackageTransformer extends LineTransformer {
 
         int iod = line.indexOf(".");
         int iok = line.indexOf("{", iod);
+        int ioc = line.indexOf(":");
+
         if (iod > 0 && iok > iod) {
             // ej: some.package.Name {
             String possiblePackageAndClass = line.substring(0, iok);
             int liod = possiblePackageAndClass.lastIndexOf(".");
-            String possibleClass = possiblePackageAndClass.substring(liod+1).trim();
+
+            String possibleClass;
+            String possibleSuperClass = "java.lang.Object";
+            if( ioc > 0 ){
+                possibleClass = possiblePackageAndClass.substring(liod+1, ioc);
+                possibleSuperClass = possiblePackageAndClass.substring(ioc+1);
+
+            } else {
+                possibleClass = possiblePackageAndClass.substring(liod+1).trim();
+
+            }
 
             if (Character.isUpperCase(possibleClass.charAt(0))) {
                 String packageName = possiblePackageAndClass.substring(0, liod);
@@ -90,7 +102,7 @@ class PackageTransformer extends LineTransformer {
                 }
                 sb.delete(sb.length()-1, sb.length());
                 generatedSource.add(String.format("package %s;%n", sb.toString()));
-                generatedSource.add(String.format("public class %s {%n", scapeName(possibleClass)));
+                generatedSource.add(String.format("public class %s extends %s {%n", scapeName(possibleClass), scapeName(possibleSuperClass)));
             }
         }
     }

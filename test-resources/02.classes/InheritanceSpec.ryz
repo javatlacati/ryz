@@ -1,0 +1,9 @@
+/*
+className: simple.inheritance.Class
+extends: java.lang.Thread
+#attributes: i:int
+#methods: i:int
+classFile: simple/inheritance/Class.class
+*/
+simple.inheritance.Class : Thread {
+}

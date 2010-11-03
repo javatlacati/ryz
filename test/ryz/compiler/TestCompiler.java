@@ -59,6 +59,7 @@ public class TestCompiler {
             testUtil.compile(testFile);
             Class clazz = testUtil.assertExists(className);
 
+            assertExtendsImplements( spec, testFile, clazz );
             assertAttributes(spec, testFile, clazz);
             assertMethods(spec, testFile, clazz);
 
@@ -67,6 +68,7 @@ public class TestCompiler {
         }
 
     }
+
 
 
     @DataProvider(name="sourceFiles")
@@ -88,6 +90,19 @@ public class TestCompiler {
     }
 
 
+    private void assertExtendsImplements(Properties spec,
+                                         String testFile,
+                                         Class clazz) {
+        String superClass;
+        if( isNull(clazz) || isNull(superClass=spec.getProperty("extends"))){
+            return;
+        }
+        assert clazz.getSuperclass().getName().equals(superClass): testFile + " doesn't' inherits from : " + superClass;
+
+    }
+
+
+
     /**
      * Assert that the given class has the attributes defined in the spec
      * object.
@@ -96,10 +111,10 @@ public class TestCompiler {
      * @param clazz
      */
     private void assertAttributes(Properties spec, String file, Class clazz) {
-        if( clazz == null || spec.getProperty("attributes") == null ){
+        String attributes;
+        if( isNull(clazz) || isNull(attributes=spec.getProperty("attributes"))){
             return ;
         }
-        String attributes = spec.getProperty("attributes");
         for (String pairs : attributes.split(",")) {
             String[] nameType = pairs.split(":");
             boolean matched = false;
@@ -121,10 +136,11 @@ public class TestCompiler {
      * @param clazz
      */
     private void assertMethods(Properties spec, String file, Class clazz) {
-        if( clazz == null || spec.getProperty("methods") == null ){
+        String methods;
+        if( isNull(clazz) || isNull(methods=spec.getProperty("methods"))){
             return; 
         }
-        String methods = spec.getProperty("methods");
+
         for (String pairs : methods.split(",")) {
             String[] nameType = pairs.split(":");
             boolean matched = false;
@@ -182,5 +198,14 @@ public class TestCompiler {
         }
         return files;
     }
+    /**
+     * Test if the given object is null.
+     * @param object to test
+     * @return object == null
+     */
+    private final boolean isNull(Object object) {
+        return object == null;
+    }
+    
 
 }

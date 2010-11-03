@@ -138,7 +138,7 @@ public class RyzC {
     private String getClass(List<String> outputLines) {
         for(String s : outputLines) {
             if( s.startsWith("public class")){
-                return s.substring("public class".length(), s.indexOf("{")).trim();
+                return s.substring("public class".length(), s.indexOf("extends")).trim();
             }
         }
         return "First";
@@ -149,6 +149,7 @@ public class RyzC {
     private void createClassDefinition(String className, List<String> outputLines ) throws IOException {
         //System.out.println("outputLines = " + outputLines);
         // write the  class
+        logger.finest("className=["+className+"]");
         File sourceFile = new File(className + ".java");
         StringWriter sWriter = new StringWriter();
         Writer writer = new SourceWriter( new FileWriter(sourceFile), sWriter);
