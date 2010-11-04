@@ -103,7 +103,7 @@ public class RyzC {
     }
 
     private List<LineTransformer> transformers = Arrays.asList(
-            new PackageTransformer(),
+            new PackageClassTransformer(),
             new ImportTransformer(),
             new AttributeTransformer(),
             new CommentTransformer(),
@@ -137,8 +137,11 @@ public class RyzC {
      */
     private String getClass(List<String> outputLines) {
         for(String s : outputLines) {
-            if( s.startsWith("public class")){
+            //TODO: refactorme
+            if( s.startsWith("public class") && s.contains("extends")){
                 return s.substring("public class".length(), s.indexOf("extends")).trim();
+            } else if(s.startsWith("public class") && s.contains("implements") ){
+                return s.substring("public class".length(), s.indexOf("implements")).trim();   
             }
         }
         return "First";

@@ -59,7 +59,8 @@ public class TestCompiler {
             testUtil.compile(testFile);
             Class clazz = testUtil.assertExists(className);
 
-            assertExtendsImplements( spec, testFile, clazz );
+            assertExtends( spec, testFile, clazz );
+            assertImplements( spec, testFile, clazz );
             assertAttributes(spec, testFile, clazz);
             assertMethods(spec, testFile, clazz);
 
@@ -89,15 +90,38 @@ public class TestCompiler {
                 );
     }
 
+    private void assertImplements(Properties spec,
+                                         String testFile,
+                                         Class clazz) {
 
-    private void assertExtendsImplements(Properties spec,
+        String interfaces;
+        if( isNull(clazz) || isNull(interfaces=spec.getProperty("implements"))){
+            return;
+        }
+
+        System.out.println("interfaces = " + interfaces);
+        for( String currentInterface : interfaces.split(",")){
+            boolean implemented = false;
+            for( Class implementedInterfaces : clazz.getInterfaces() ) {
+                if( implementedInterfaces.getName().equals(currentInterface)){
+                    implemented = true;
+                }
+            }
+            assert implemented :  testFile + " doesn't implement : "+ currentInterface;
+
+        }
+
+    }
+    private void assertExtends(Properties spec,
                                          String testFile,
                                          Class clazz) {
         String superClass;
         if( isNull(clazz) || isNull(superClass=spec.getProperty("extends"))){
             return;
         }
-        assert clazz.getSuperclass().getName().equals(superClass): testFile + " doesn't' inherits from : " + superClass;
+        assert clazz.getSuperclass().getName().equals(superClass) :
+                testFile + " doesn't' inherits from : " + superClass;
+
 
     }
 

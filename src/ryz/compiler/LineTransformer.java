@@ -69,7 +69,7 @@ class ImportTransformer extends LineTransformer {
         }
     }
 }
-class PackageTransformer extends LineTransformer {
+class PackageClassTransformer extends LineTransformer {
     @Override
     public void transform(String line, List<String> generatedSource) {
 
@@ -86,7 +86,8 @@ class PackageTransformer extends LineTransformer {
             String possibleSuperClass = "java.lang.Object";
             if( ioc > 0 ){
                 possibleClass = possiblePackageAndClass.substring(liod+1, ioc);
-                possibleSuperClass = possiblePackageAndClass.substring(ioc+1);
+                possibleSuperClass = possiblePackageAndClass.substring(ioc+1).trim();
+
 
             } else {
                 possibleClass = possiblePackageAndClass.substring(liod+1).trim();
@@ -102,7 +103,27 @@ class PackageTransformer extends LineTransformer {
                 }
                 sb.delete(sb.length()-1, sb.length());
                 generatedSource.add(String.format("package %s;%n", sb.toString()));
-                generatedSource.add(String.format("public class %s extends %s {%n", scapeName(possibleClass), scapeName(possibleSuperClass)));
+                String extendsOrImplements = isInterface( possibleSuperClass ) ?
+                        "implements" :
+                        "extends";
+                generatedSource.add(String.format("public class %s %s %s {%n",
+                        scapeName(possibleClass),
+                        extendsOrImplements,
+                        scapeName(possibleSuperClass)));
+            }
+        }
+    }
+
+    private boolean isInterface(String clazz) {
+        try {
+            logger.fine(clazz);
+            Class c = Class.forName(clazz);
+            return c.isInterface();
+        } catch (ClassNotFoundException e) {
+            if( !clazz.startsWith("java.lang")){
+                return isInterface("java.lang."+clazz);
+            } else {
+                return false;// should throw class not found exception actually.
             }
         }
     }
@@ -178,15 +199,21 @@ class MethodTransformer extends LineTransformer {
 
     // hola():String{
     private final Pattern methodPattern = Pattern.compile("(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
-    
+    //
+    private final Pattern voidMethodPattern = Pattern.compile("(\\w+)\\(\\)\\s*\\s*\\{");
+
     @Override
     public void transform(String line, List<String> generatedSource) {
-        Matcher matcher = methodPattern.matcher(line);
+        Matcher matcher;
         //TODO: handle default return
-        if( matcher.matches() ) {
+        if( (matcher = methodPattern.matcher(line)).matches() ) {
             generatedSource.add( String.format("    /*method*/public %s %s() {%n",
                     scapeName(matcher.group(2)),
                     scapeName(matcher.group(1))));
+        } else if( ( matcher = voidMethodPattern.matcher(line)).matches() ){
+            generatedSource.add( String.format("    /*method*/public void %s() {",
+                       scapeName(matcher.group(1))));
+
         }
 
 
