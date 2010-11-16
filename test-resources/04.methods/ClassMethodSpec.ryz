@@ -1,0 +1,19 @@
+/*
+className: methods.class$.ClassMethod
+attributes:  name:java.lang.String
+methods: name: java.lang.String
+class-methods: main: void, count: java.lang.Integer
+classFile: methods/class$/ClassMethod.class
+*/
+methods.class.ClassMethod{
+    name:String
+    name(): String {
+        name.toString()
+        ^ name
+    }
+    main() {
+    }
+    __ count() : Integer {
+        ^ 0
+    }
+}

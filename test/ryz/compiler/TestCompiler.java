@@ -39,6 +39,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -206,6 +207,26 @@ public class TestCompiler {
                 }
             }
             assert matched : file + " didn't fulfilled: " + pairs + " method";
+        }
+
+        String classMethods;
+        if( isNull(clazz) || isNull(classMethods=spec.getProperty("class-methods"))){
+            return;
+        }
+        for (String pairs : classMethods.split(",")) {
+            String[] nameType = pairs.split(":");
+            boolean matched = false;
+            for (Method m : clazz.getDeclaredMethods()) {;
+                if (Modifier.isStatic(m.getModifiers())
+                        && m.getName().equals(nameType[0].trim())
+                        && m.getReturnType()
+                            .getName()
+                            .equals(nameType[1].trim())) {
+                    matched = true;
+                    break;
+                }
+            }
+            assert matched : file + " didn't fulfilled class method: " + pairs ;
         }
     }
 

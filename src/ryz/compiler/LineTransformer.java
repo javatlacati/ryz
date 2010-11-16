@@ -227,8 +227,12 @@ class MethodTransformer extends LineTransformer {
 
     // hola():String{
     private final Pattern methodPattern = Pattern.compile("(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
-    //
+    // __ hola() : String { 
+    private final Pattern classMethodPattern = Pattern.compile("__\\s*(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
+    // hola() {
     private final Pattern voidMethodPattern = Pattern.compile("(\\w+)\\(\\)\\s*\\s*\\{");
+    // __ hola() {
+    private final Pattern voidClassMethodPattern = Pattern.compile("_{2}\\s*(\\w+)\\(\\)\\s*\\s*\\{");
 
     @Override
     public void transform(String line, List<String> generatedSource) {
@@ -238,8 +242,24 @@ class MethodTransformer extends LineTransformer {
             generatedSource.add( String.format("    /*method*/public %s %s() {%n",
                     scapeName(matcher.group(2)),
                     scapeName(matcher.group(1))));
+        } else if ( (matcher = classMethodPattern.matcher(line)).matches() ){
+            generatedSource.add( String.format("    /*method*/public static %s %s() {%n",
+                    scapeName(matcher.group(2)),
+                    scapeName(matcher.group(1))));
         } else if( ( matcher = voidMethodPattern.matcher(line)).matches() ){
-            generatedSource.add( String.format("    /*method*/public void %s() {",
+            String methodName = matcher.group(1);
+            // main() {  is special, will create public static void main( String [] args )
+            // TODO: must create: psvm(){ new Instance().main() } public void main(){ ...
+            if( "main".equals(methodName)){
+                 generatedSource.add( String.format("    /*method*/public static void %s( String [] args ) {",
+                       scapeName(methodName)));
+            } else {
+                generatedSource.add( String.format("    /*method*/public void %s() {",
+                           scapeName(methodName)));
+            }
+
+        } else if( ( matcher = voidClassMethodPattern.matcher(line)).matches()){
+            generatedSource.add( String.format("    /*method*/public static void %s() {",
                        scapeName(matcher.group(1))));
 
         }
