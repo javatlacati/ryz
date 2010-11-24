@@ -1,6 +1,6 @@
 /*
 className: import$.class$.First
-attributes: date: java.util.Date
+attributes: private date: java.util.Date
 methods: endDate:java.util.Date
 classFile: import$/class$/First.class
 */

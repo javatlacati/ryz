@@ -1,6 +1,6 @@
 /*
 className: simple.class$.Two
-#attributes: i:int
+#attributes: private i:int
 #methods: i:int
 classFile: simple/class$/Two.class
 */

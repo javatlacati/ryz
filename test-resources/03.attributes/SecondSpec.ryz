@@ -1,6 +1,6 @@
 /*
 className: attribute.initialized.Second
-attributes: i : java.lang.Integer, s: java.lang.String , second : attribute.initialized.Second
+attributes: private i : java.lang.Integer, private s: java.lang.String ,private second : attribute.initialized.Second
 #methods:    endDate:java.util.Date
 classFile: attribute/initialized/Second.class
 */

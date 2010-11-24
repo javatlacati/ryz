@@ -176,6 +176,8 @@ class AttributeTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         Matcher matcher = attributePattern.matcher(line);
 
+        //TODO: default must be private
+
         if( matcher.matches()){
             generatedSource.add( String.format("    /*attribute*/private %s %s;%n",
                 scapeName(matcher.group(2)),
