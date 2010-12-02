@@ -28,6 +28,8 @@
 
 package ryz.compiler;
 
+import com.sun.codemodel.internal.JDefinedClass;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -55,6 +57,17 @@ abstract class LineTransformer {
             "super","switch","synchronized ","this","throw","transient ",
             "try","void","volatile ","while"
     );
+
+    private RyzClass currentClass;
+
+    public void currentClass(RyzClass currentClass) {
+        this.currentClass = currentClass;
+    }
+
+
+    public RyzClass currentClass() {
+        return currentClass;
+    }
 
     protected String scapeName(String name) {
         if( javaKeywords.contains(name)){
@@ -176,7 +189,7 @@ class AttributeTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         Matcher matcher = attributePattern.matcher(line);
 
-        //TODO: default must be private
+        //TODO: default must be final
 
         if( matcher.matches()){
             generatedSource.add( String.format("    /*attribute*/private %s %s;%n",
@@ -236,6 +249,7 @@ class MethodTransformer extends LineTransformer {
     // __ hola() {
     private final Pattern voidClassMethodPattern = Pattern.compile("_{2}\\s*(\\w+)\\(\\)\\s*\\s*\\{");
 
+
     @Override
     public void transform(String line, List<String> generatedSource) {
         Matcher matcher;
@@ -253,8 +267,12 @@ class MethodTransformer extends LineTransformer {
             // main() {  is special, will create public static void main( String [] args )
             // TODO: must create: psvm(){ new Instance().main() } public void main(){ ...
             if( "main".equals(methodName)){
-                 generatedSource.add( String.format("    /*method*/public static void %s( String [] args ) {",
-                       scapeName(methodName)));
+;
+                 generatedSource.add(String.format(
+                         "public static void main( String [] args ) {\n" +
+                        "  new %s().main();\n" +
+                        "}\n" +
+                        "public void main() {", currentClass().name()));
             } else {
                 generatedSource.add( String.format("    /*method*/public void %s() {",
                            scapeName(methodName)));

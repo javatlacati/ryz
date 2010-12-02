@@ -63,6 +63,7 @@ import static java.lang.System.err;
 public class RyzC {
 
     private static Logger logger = Logger.getLogger(RyzC.class.getName());
+    
     public static void main( String [] args ) throws IOException {
         RyzC c = RyzC.getCompiler();
         c.sourceDirs(new File("."));
@@ -89,6 +90,11 @@ public class RyzC {
      * Where to put the output, default to current directory.
      */
     private File output = new File("");
+
+    /**
+     * Holds a representation of the Ryz classes compiled during this session.
+     */
+    private List<RyzClass> classes = new ArrayList<RyzClass>();
 
     /**
      * Specify the source path directories for the compiler to use.
@@ -118,33 +124,15 @@ public class RyzC {
             File toCompile = validateExists(file);
             if (toCompile == null) { return; }
 
-            List<String> lines = trimLines(readLines(toCompile));
-
-            List<String> generatedSource = new ArrayList<String>();
-            for( String line : lines ) {
-                for( LineTransformer t : transformers() ) {
-                    t.transform( line, generatedSource );
-                }
-            }
-            createClassDefinition( getClass( generatedSource), generatedSource );
+            RyzClass currentClass = new RyzClass(trimLines(readLines(toCompile)));
+            classes.add( currentClass );
+            currentClass.transformSourceCode();
+            createClassDefinition( currentClass );
         }
     }
 
-    private List<LineTransformer> transformers = Arrays.asList(
-            new PackageClassTransformer(),
-            new ImportTransformer(),
-            new AttributeTransformer(),
-            new CommentTransformer(),
-            new ClosingKeyTransformer(),
-            new MethodTransformer(),
-            new ReturnTransformer(),
-            new StatementTransformer()
-    );
 
-    private List<LineTransformer> transformers() {
-        return transformers;
-    }
-
+    //TODO: Move to Utility class when the time comes
     private List<String> trimLines(List<String> output) {
         List<String> trimmed = new ArrayList<String>();
         for( String s : output ){
@@ -153,40 +141,25 @@ public class RyzC {
         return trimmed;
     }
 
-
-
-
     /**
-     * Tries to get a class name from the "outputlines" searching for a line
-     * that looks like "class Xyz {"
-     *
-     * @param outputLines - The generated java source code.
-     * @return - A class name found in those lines
+     * Compiles a java source code file from the given RyzClass
+      * @param currentClass
+     * @throws IOException
      */
-    private String getClass(List<String> outputLines) {
-        for(String s : outputLines) {
-            //TODO: refactorme
-            if( s.startsWith("public class") && s.contains("extends")){
-                return s.substring("public class".length(), s.indexOf("extends")).trim();
-            } else if(s.startsWith("public class") && s.contains("implements") ){
-                return s.substring("public class".length(), s.indexOf("implements")).trim();   
-            }
-        }
-        return "First";
-
-    }
-
-
-    private void createClassDefinition(String className, List<String> outputLines ) throws IOException {
+    private void createClassDefinition( RyzClass currentClass ) throws IOException {
         //System.out.println("outputLines = " + outputLines);
         // write the  class
-        logger.finest("className=["+className+"]");
-        File sourceFile = new File(className + ".java");
+        logger.finest("className=["+currentClass.name()+"]");
+        File sourceFile = new File(currentClass.name() + ".java");
         StringWriter sWriter = new StringWriter();
         Writer writer = new SourceWriter( new FileWriter(sourceFile), sWriter);
+
+        //TODO: move this to the RyzClass
+        // from here
         String importString = "";
         String packageString = "";
-        for( String s: outputLines ){
+        List<String> outputLines = currentClass.outputLines();
+        for( String s: outputLines){
             if( s.startsWith("package")) {
                 packageString = s;
                 writer.write( packageString );
@@ -206,6 +179,7 @@ public class RyzC {
         }
         outputLines.remove(packageString);
         outputLines.remove(importString);
+        // to here 
 
         for (String s : outputLines) {
             writer.write(s);

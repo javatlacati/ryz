@@ -1,0 +1,31 @@
+//TODO: work on the rest of the feature for this to be able to work.
+// eventually sould be renamed to StructuralTypeSpec.ryz
+/*
+className: structural.type.SampleSpec
+attributes:  private thing: structural.type.Duck$tilde
+methods: main: void
+classFile: structural/type/SampleSpec.class
+*/
+structural.type.SampleSpec {
+
+
+    thing ~ Duck
+
+    main(){
+        thing = Duck()
+        out.print( thing.name() ) // prints "Duck"
+        thing = Person()
+        out.print( thing.name() ) // prints "Person"
+    }
+}
+
+structural.type.Person {
+    name(): String {
+        "Person"
+    }
+}
+structural.type.Duck {
+    name(): String {
+       "Duck"
+    }
+}

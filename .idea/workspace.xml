@@ -15,10 +15,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="36296a06-84e0-411b-b5b5-827a5c8b4c69" name="Default" comment="" />
-    <ignored path="$USER_HOME_GRIFFON$/" />
-    <ignored path="ryz.iws" />
-    <ignored path="$USER_HOME_GRAILS$/" />
     <ignored path=".idea/workspace.xml" />
+    <ignored path="$USER_HOME_GRIFFON$/" />
+    <ignored path="$USER_HOME_GRAILS$/" />
+    <ignored path="ryz.iws" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +83,54 @@
       <file leaf-file-name="LineTransformer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="178" column="39" selection-start="7226" selection-end="7233" vertical-scroll-proportion="0.0">
+            <state line="62" column="28" selection-start="2816" selection-end="2828" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RyzClass.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzClass.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="71" column="0" selection-start="2631" selection-end="2631" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImportSpec.ryz" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="33" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RyzC.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="181" column="0" selection-start="6109" selection-end="6109" vertical-scroll-proportion="0.7294776">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestCompiler.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="82" column="16" selection-start="3031" selection-end="3031" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TODO-Notes.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/TODO-Notes.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,55 +145,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StructuralType.ryz" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="StructuralType.ryz" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test-resources/07.structural-typing/StructuralType.ryz">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="52" selection-start="501" selection-end="501" vertical-scroll-proportion="0.41295546">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpeMethodSpec.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/04.methods/SimpeMethodSpec.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="21" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassMethodSpec.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/04.methods/ClassMethodSpec.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="3" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ImportSpec.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="33" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ObjectIntStringSpec.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/ObjectIntStringSpec.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SecondSpec.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/SecondSpec.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="19" selection-start="55" selection-end="62" vertical-scroll-proportion="0.0">
+            <state line="14" column="11" selection-start="350" selection-end="373" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -184,9 +186,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test-resources/test-roadmap.txt" />
-        <option value="$PROJECT_DIR$/test-resources/03.attributes/ObjectIntStringSpec.ryz" />
-        <option value="$PROJECT_DIR$/test-resources/02.classes/SecondClassSpec.ryz" />
         <option value="$PROJECT_DIR$/test-resources/03.attributes/StringSpec.ryz" />
         <option value="$PROJECT_DIR$/test-resources/03.attributes/ThirdSpec.ryz" />
         <option value="$PROJECT_DIR$/test-resources/04.methods/ClassMethodSpec.ryz" />
@@ -198,8 +197,11 @@
         <option value="$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java" />
         <option value="$PROJECT_DIR$/test-resources/03.attributes/AccessModifierSpec.ryz" />
         <option value="$PROJECT_DIR$/test-resources/07.structural-typing/StructuralTypeSpec.ryz" />
-        <option value="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" />
         <option value="$PROJECT_DIR$/test-resources/07.structural-typing/StructuralType.ryz" />
+        <option value="$PROJECT_DIR$/test-resources/TODO-Notes.txt" />
+        <option value="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" />
+        <option value="$PROJECT_DIR$/src/ryz/compiler/RyzClass.java" />
+        <option value="$PROJECT_DIR$/src/ryz/compiler/RyzC.java" />
       </list>
     </option>
   </component>
@@ -240,7 +242,44 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Favorites" />
+      <pane id="Scope">
+        <subPane subId="Tests">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz.compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -416,6 +455,24 @@
               <option name="myItemId" value="compiler" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="RyzC.java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
@@ -445,44 +502,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Tests">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz.compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -501,9 +521,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.08436445" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -512,15 +532,15 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="ryz.compiler" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="ryz.compiler" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/test-resources/05.import" />
       <recent name="$PROJECT_DIR$/test-resources" />
+      <recent name="$PROJECT_DIR$/test-resources/05.import" />
       <recent name="$PROJECT_DIR$/resources/output/" />
       <recent name="$PROJECT_DIR$/resources/loading/" />
       <recent name="$PROJECT_DIR$/resources/loading" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="ryz.compiler" />
     </key>
   </component>
   <component name="RunManager" selected="TestNG.ryz.compiler">
@@ -969,9 +989,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969835" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329296" sideWeight="0.7427441" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2611658" sideWeight="0.7427441" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24802111" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21899736" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1015,29 +1035,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="18" selection-start="4775" selection-end="4778" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/ThirdSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="82" selection-start="0" selection-end="367" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/02.classes/ImplementsSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/00.loading/First.ryz">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="211" column="56" selection-start="7133" selection-end="7133" vertical-scroll-proportion="-85.80769" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/logging.properties">
@@ -1045,11 +1045,19 @@
         <state line="37" column="60" selection-start="1213" selection-end="1213" vertical-scroll-proportion="0.4238683" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/SimpeMethodSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="21" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/ClassMethodSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="3" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/ObjectIntStringSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/SecondSpec.ryz">
@@ -1057,52 +1065,66 @@
         <state line="2" column="19" selection-start="55" selection-end="62" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="33" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/SimpeMethodSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="21" selection-start="58" selection-end="58" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/MethodAttributeMethodSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="374" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/04.methods/InvokeMethodSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="21" selection-start="63" selection-end="63" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/ClassMethodSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="3" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="178" column="39" selection-start="7226" selection-end="7233" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/test-roadmap.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="11" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0">
+        <state line="4" column="11" selection-start="166" selection-end="166" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/TODO-Notes.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.0">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="33" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/07.structural-typing/StructuralType.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="52" selection-start="501" selection-end="501" vertical-scroll-proportion="0.41295546">
+        <state line="14" column="11" selection-start="350" selection-end="373" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/MethodAttributeMethodSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="374" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="28" selection-start="2816" selection-end="2828" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="16" selection-start="3031" selection-end="3031" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzClass.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="0" selection-start="2631" selection-end="2631" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="181" column="0" selection-start="6109" selection-end="6109" vertical-scroll-proportion="0.7294776">
           <folding />
         </state>
       </provider>
