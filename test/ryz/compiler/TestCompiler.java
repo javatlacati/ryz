@@ -258,8 +258,7 @@ public class TestCompiler {
             return; 
         }
 
-        // TODO: refactor this code is duplicated and looks very similar to that in
-        // assertAttribute
+        // TODO: refactor this code is duplicated and looks very similar to that in assertAttribute
         for (String pairs : methods.split(",")) {
             String[] nameType = pairs.split(":");
             boolean matched = false;

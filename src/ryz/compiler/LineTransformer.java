@@ -28,7 +28,6 @@
 
 package ryz.compiler;
 
-import com.sun.codemodel.internal.JDefinedClass;
 
 import java.util.Arrays;
 import java.util.List;
@@ -265,9 +264,8 @@ class MethodTransformer extends LineTransformer {
         } else if( ( matcher = voidMethodPattern.matcher(line)).matches() ){
             String methodName = matcher.group(1);
             // main() {  is special, will create public static void main( String [] args )
-            // TODO: must create: psvm(){ new Instance().main() } public void main(){ ...
             if( "main".equals(methodName)){
-;
+
                  generatedSource.add(String.format(
                          "public static void main( String [] args ) {\n" +
                         "  new %s().main();\n" +
