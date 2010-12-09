@@ -1,0 +1,12 @@
+/*
+className: access.test.ScopeTest
+attributes: private s:java.lang.String, public a:java.lang.String, protected b:java.lang.String
+classFile: access/test/ScopeTest.class
+*/
+access.test.ScopeTest {
+      s:String
+    + a:String = ":D"
+    # b:String = ":P"
+ // - c:String = ":S"
+ // ~ d:String = ":("
+}
