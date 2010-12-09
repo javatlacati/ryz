@@ -219,6 +219,7 @@ public class RyzC {
      */
     private List<String> readLines(File f){
         String separator = System.getProperty("line.separator");
+        separator = "\n";//delete 
         return Arrays.asList(readFile( f ).split(separator));
     }
 

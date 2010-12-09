@@ -171,41 +171,48 @@ class PackageClassTransformer extends LineTransformer {
 }
 
 class AttributeTransformer extends LineTransformer {
-
+    // [+#~-] hola ...
+    private final Pattern attributePatternScope = Pattern.compile("\\s*([+#~-]{1})\\s*.+");
     // hola : adios
-    private final Pattern attributePattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)");
+    private final Pattern attributePattern = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:\\s*(\\w+)");
     // hola : adios = xyz
-    private final Pattern attributeInitializedPattern = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
+    private final Pattern attributeInitializedPattern = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
     // hola: adio = Xyz()
-    private final Pattern attributeInitializedPatternFromInvocation = Pattern.compile("(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
+    private final Pattern attributeInitializedPatternFromInvocation = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
     // hola = adios //TODO: revisar como saber el tipo de dato de un valor
-    private final Pattern attributeInferencePattern = Pattern.compile("(\\w+)\\s*=\\s*(.+)");
+    private final Pattern attributeInferencePattern = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(.+)");
     // hola = adios()
-    private final Pattern attributeInferenceFromInvocationPattern = Pattern.compile("(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
+    private final Pattern attributeInferenceFromInvocationPattern = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
 
 
     @Override
     public void transform(String line, List<String> generatedSource) {
+        String scope = getScope(line);
+
         Matcher matcher = attributePattern.matcher(line);
 
         //TODO: default must be final
 
         if( matcher.matches()){
-            generatedSource.add( String.format("    /*attribute*/private %s %s;%n",
+            generatedSource.add( String.format("    /*attribute*/ %s %s %s;%n",
+                scope,
                 scapeName(matcher.group(2)),
                 scapeName(matcher.group(1))));
         } else if( (matcher = attributeInitializedPatternFromInvocation.matcher(line)).matches() ){
-            generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
+            generatedSource.add( String.format("    /*attribute*/ %s %s %s = %s;%n",
+                scope,
                 scapeName(matcher.group(2)),
                 scapeName(matcher.group(1)),
                 scapeName(checkObjectInitialization(matcher.group(3)))));
         } else if( (matcher = attributeInitializedPattern.matcher(line)).matches() ){
-            generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
+            generatedSource.add( String.format("    /*attribute*/ %s %s %s = %s;%n",
+                scope,
                 scapeName(matcher.group(2)),
                 scapeName(matcher.group(1)),
                 scapeName(matcher.group(3))));
         } else if( (matcher = attributeInferenceFromInvocationPattern.matcher(line)).matches() ){
-            generatedSource.add( String.format("    /*attribute*/private %s %s = %s;%n",
+            generatedSource.add( String.format("    /*attribute*/ %s %s %s = %s;%n",
+                scope,
                 scapeName(inferType(matcher.group(2))),
                 scapeName(matcher.group(1)),
                 scapeName(checkObjectInitialization(matcher.group(2)))));
@@ -213,7 +220,22 @@ class AttributeTransformer extends LineTransformer {
 
     }
 
+    private String getScope(String line){
+            Matcher matcher = attributePatternScope.matcher(line);
 
+            if (matcher.matches()) {
+                if (matcher.group(1).equals("+")) {
+                    return "public";
+                } else if (matcher.group(1).equals("#")) {
+                    return "protected";
+                } else if (matcher.group(1).equals("~")) {
+                    return "";
+                } else if (matcher.group(1).equals("-")) {
+                    return "final";
+                }
+            }
+            return "private";
+    }
 }
 // TODO: multiline comments has problems
 class CommentTransformer extends LineTransformer {
