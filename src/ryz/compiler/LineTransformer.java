@@ -231,7 +231,7 @@ class AttributeTransformer extends LineTransformer {
                 } else if (matcher.group(1).equals("~")) {
                     return "";
                 } else if (matcher.group(1).equals("-")) {
-                    return "final";
+                    return "private";
                 }
             }
             return "private";
