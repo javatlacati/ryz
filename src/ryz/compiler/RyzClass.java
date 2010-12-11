@@ -29,12 +29,12 @@
 package ryz.compiler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: oscarryz
+ * This class would be used to hold the state of the current compiled class.
+ *
+ * @author oscarryz
  * Date: Dec 2, 2010
  * Time: 4:08:07 PM
  * To change this template use File | Settings | File Templates.
@@ -43,22 +43,40 @@ public class RyzClass {
     private final List<String> sourceLines;
     private final List<String> generatedSource = new ArrayList<String>();
     private String name;
+    private String packageName;
+    RyzClassState state;
+
+    private List<String> methods;
 
     public RyzClass(List<String> sourceLines) {
         this.sourceLines = sourceLines;
+        this.methods = new ArrayList<String>();
+        setState(new RyzClassInitialState(this));
+    }
+
+
+    public void setClassName(String theClassName ) {
+        this.name = theClassName.trim();
+        state.nextState();
+    }
+
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public String name() {
         if( name == null ){
-            this.name = getClass(generatedSource);
+            throw new IllegalStateException("Should have name by now");
         }
         return this.name;
     }
 
+    /**
+     * Takes the list of source code lines and sends it to the transformers
+     * to produce translated  ( java ) code.
+     */
     public void transformSourceCode() {
-        for (LineTransformer transformer : transformers) {
-            transformer.currentClass(this);
-        }
 
         for( String line : sourceLines ) {
             for( LineTransformer t : transformers() ) {
@@ -68,44 +86,33 @@ public class RyzClass {
         
     }
 
+    /**
+     * Returns the list of translated source code.
+     * @return
+     */
     public List<String> outputLines() {
-        return generatedSource;  //To change body of created methods use File | Settings | File Templates.
+        return generatedSource;
     }
 
-    private List<LineTransformer> transformers = Arrays.asList(
-            new PackageClassTransformer(),
-            new ImportTransformer(),
-            new AttributeTransformer(),
-            new CommentTransformer(),
-            new ClosingKeyTransformer(),
-            new MethodTransformer(),
-            new ReturnTransformer(),
-            new StatementTransformer()
-    );
     private List<LineTransformer> transformers() {
-        return transformers;
+        return state.transformers();
     }
 
     /**
-     * Tries to get a class name from the "outputlines" searching for a line
-     * that looks like "class Xyz {"
-     *
-     * @param outputLines - The generated java source code.
-     * @return - A class name found in those lines
+     * Close key means the current state has finished and we should return
+     * to the previous state.
      */
-    private String getClass(List<String> outputLines) {
-        for(String s : outputLines) {
-            //TODO: refactorme
-            if( s.startsWith("public class") && s.contains("extends")){
-                return s.substring("public class".length(), s.indexOf("extends")).trim();
-            } else if(s.startsWith("public class") && s.contains("implements") ){
-                return s.substring("public class".length(), s.indexOf("implements")).trim();
-            }
-        }
-        return "First";
-
+    public void closeKey() {
+        this.state.previousState();
+        //To change body of created methods use File | Settings | File Templates.
     }
-    
-    
 
+    public void addMethod(String methodName, String methodType) {
+        this.methods.add(methodName + ":" + methodType );// TODO: add args
+        state.nextState();
+    }
+
+    public void setState(RyzClassState classState) {
+        this.state = classState;
+    }
 }

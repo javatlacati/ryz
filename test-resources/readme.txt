@@ -10,6 +10,8 @@ The test specification describes what the compiled class should have.
 
 className : fully qualified class name
 attributes : comma separated attributes, the type is separated by :
+             and should include access modifier and fqtn.
+
 methods   : comma separated attributes, the type is separated by :
 classFile : name of the generated .class file to be deleted after the test
 
@@ -17,7 +19,7 @@ classFile : name of the generated .class file to be deleted after the test
 Example:
 
 className: load.test.First
-attributes: i:int
+attributes: private i:int, default s : java.lang.String
 methods: i:int
 classFile: load/test/First.class
 
