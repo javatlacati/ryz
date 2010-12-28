@@ -159,14 +159,21 @@ public class RyzC {
         String importString = "";
         String packageString = "";
         List<String> outputLines = currentClass.outputLines();
+        List<String> toRemove = new ArrayList<String>();
+        boolean packageWritten = false;
         for( String s: outputLines){
-            if( s.startsWith("package")) {
+            if( s.startsWith("package") && !packageWritten) {
                 packageString = s;
                 writer.write( packageString );
+                packageWritten = true;
+
             }
             if( s.startsWith("import")){
                 importString = s;
                 writer.write( importString );
+            }
+            if(s.startsWith("package") || s.startsWith("import")){
+                toRemove.add( s ) ;
             }
         }
         if( packageString == "" ){
@@ -177,14 +184,13 @@ public class RyzC {
                "    public int i(){ return i;} \n" +
                "}");
         }
-        outputLines.remove(packageString);
-        outputLines.remove(importString);
-        // to here 
+        outputLines.removeAll(toRemove);
+        // to here
 
         for (String s : outputLines) {
             writer.write(s);
         }
-        logger.finest("sWriter = " + sWriter);
+        logger.finest("sWriter = \n" + sWriter);
         writer.close();
 
         // Get the java compiler for this platform

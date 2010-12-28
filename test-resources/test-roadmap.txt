@@ -9,6 +9,12 @@
 08.embedding
 09.nullObject
 10.Java interoperability
+    All the objects should use usable including int's, chars, List
 11.expressions
-
+12.reflection. o = Object{ name():String{ "x" }}; o["name"] // returns x
+13.extension methods
+    java.util.List.each( l : List,  (e:E) )
+14.library
+    ( control strucures, basic types, etc )
+15.named-parameters
 class context

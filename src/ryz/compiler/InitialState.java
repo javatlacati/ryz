@@ -36,10 +36,9 @@ import java.util.Arrays;
  * User: oscarryz
  * Date: Dec 11, 2010
  * Time: 12:18:48 AM
- * To change this template use File | Settings | File Templates.
  */
-public class RyzClassInitialState extends RyzClassState {
-    public RyzClassInitialState(RyzClass ryzClass) {
+public class InitialState extends RyzClassState {
+    public InitialState(RyzClass ryzClass) {
         super(ryzClass);
         transformers(Arrays.asList(
                 new PackageClassTransformer(this),
@@ -56,7 +55,7 @@ public class RyzClassInitialState extends RyzClassState {
 
     @Override
     void previousState() {
-        ryzClass().setState(new RyzClassInitialState(ryzClass()));
+        ryzClass().setState(new InitialState(ryzClass()));
     }
 
     @Override

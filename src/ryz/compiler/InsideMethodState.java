@@ -28,8 +28,8 @@
 
 package ryz.compiler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Indicates the class is inside a method definition 
@@ -61,6 +61,22 @@ public class InsideMethodState extends RyzClassState {
 
     @Override
     void nextState() {
-        ryzClass().setState(new RyzClassInitialState(ryzClass()));
+        ryzClass().setState(new InitialState(ryzClass()));
+    }
+
+    @Override
+    public boolean addVariable(String accessModifier, String variableName, String variableType) {
+        String method = ryzClass().methods().get( ryzClass().methods().size()-1);
+        if( ryzClass().attributes().get( method ) == null ){
+            ryzClass().attributes().put( method , new ArrayList<String>());
+        }
+        String variable = variableName;//String.format("(%s)%s:%s", accessModifier, variableName, variableType);
+
+        logger.warning("variable = "+ variable);
+        if(!ryzClass().attributes().get(method).contains(variable)){
+            return ryzClass().attributes().get(method).add(variable);
+        }
+        return false;
+
     }
 }

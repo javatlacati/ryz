@@ -157,7 +157,8 @@ class PackageClassTransformer extends LineTransformer {
                         "implements" :
                         "extends";
                 String className = scapeName(possibleClass);
-                generatedSource.add(String.format("public class %s %s %s {%n",
+                //TODO: solve what to do with public/nonpublic class in the same source file
+                generatedSource.add(String.format("/*public*/ class %s %s %s {%n",
                         className,
                         extendsOrImplements,
                         scapeName(possibleSuperClass)));
@@ -249,9 +250,11 @@ class AttributeTransformer extends LineTransformer {
             initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(2))) + ";";
         }
         if( attributeName != null ) {
+            boolean added = currentClass().addVariable( accessModifier , attributeName, attributeType );
+            String type = added ? attributeType : "" ;
             generatedSource.add( String.format("    /*attribute*/ %s %s %s %s %n",
                 accessModifier,
-                attributeType,
+                type,
                 attributeName,
                 initialValue));
 

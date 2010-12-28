@@ -8,7 +8,6 @@ classFile: structural/type/SampleSpec.class
 */
 structural.type.SampleSpec {
 
-
     thing ~ Duck
 
     main(){
@@ -21,7 +20,7 @@ structural.type.SampleSpec {
 
 structural.type.Person {
     name(): String {
-        "Person"
+       "Person"
     }
 }
 structural.type.Duck {

@@ -29,7 +29,9 @@
 package ryz.compiler;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Intended to hold current RyzClass state to know if we are inside
@@ -40,8 +42,11 @@ import java.util.List;
  * Time: 12:06:05 AM
  */
 public abstract class RyzClassState {
+
+    protected static Logger logger = Logger.getLogger(RyzC.class.getName());
     private final RyzClass ryzClass;
     List<LineTransformer> transformers;
+
 
     // TODO: have the transformers initialized differently
     // TODO: I think there is too much passing of the "ryzClass" instance, perhaps is not needed.
@@ -68,4 +73,8 @@ public abstract class RyzClassState {
 
 
     abstract void nextState();
+
+    public boolean addVariable(String accessModifier, String variableName, String variableType){
+       return true;
+    }
 }

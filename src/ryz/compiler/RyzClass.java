@@ -28,8 +28,12 @@
 
 package ryz.compiler;
 
+import com.sun.corba.se.pept.transport.OutboundConnectionCache;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class would be used to hold the state of the current compiled class.
@@ -47,11 +51,12 @@ public class RyzClass {
     RyzClassState state;
 
     private List<String> methods;
-
+    private HashMap<String, List<String>> attributes = new HashMap<String,List<String>>();
+    
     public RyzClass(List<String> sourceLines) {
         this.sourceLines = sourceLines;
         this.methods = new ArrayList<String>();
-        setState(new RyzClassInitialState(this));
+        setState(new InitialState(this));
     }
 
 
@@ -70,6 +75,13 @@ public class RyzClass {
             throw new IllegalStateException("Should have name by now");
         }
         return this.name;
+    }
+
+    List<String> methods(){
+        return this.methods;
+    }
+    Map<String,List<String>> attributes(){
+        return this.attributes;
     }
 
     /**
@@ -114,5 +126,9 @@ public class RyzClass {
 
     public void setState(RyzClassState classState) {
         this.state = classState;
+    }
+
+    public boolean addVariable(String accessModifier, String variableName, String variableType) {
+        return state.addVariable( accessModifier, variableName, variableType);
     }
 }

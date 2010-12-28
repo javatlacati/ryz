@@ -52,7 +52,7 @@ public class InsideClassState extends RyzClassState {
 
     @Override
     void previousState() {
-        ryzClass().setState(new RyzClassInitialState(ryzClass()));
+        ryzClass().setState(new InitialState(ryzClass()));
     }
 
     @Override
