@@ -64,8 +64,7 @@ class TestUtil {
     
 
     Class assertExists(String className)
-            throws MalformedURLException,
-            ClassNotFoundException {
+            throws ClassNotFoundException {
 
         if( className == null ) { return null; }
         Class<?> aClass = classPath.loadClass(className);
@@ -88,6 +87,7 @@ class TestUtil {
         ryzc.compile(file);
     }
 
+    @SuppressWarnings({"ResultOfMethodCallIgnored"})
     public void deleteFromOutput(String file ) {
         logger.finest("file to delete = " + file);
         if( file == null ) { return; }

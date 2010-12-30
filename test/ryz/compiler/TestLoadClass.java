@@ -65,10 +65,9 @@ public class TestLoadClass {
     /**
      * Test that a given class which is not in the classpath
      * is loaded dynamically with the URLClassLoader
-     * @throws MalformedURLException
-     * @throws ClassNotFoundException
+     * @throws ClassNotFoundException - if the class is not found
      */
-    public void loadClass() throws MalformedURLException, ClassNotFoundException {
+    public void loadClass() throws ClassNotFoundException {
 
         // hello.world.Hello compiled class is in resources/output directory
         String className = "hello.world.Hello";
@@ -79,7 +78,7 @@ public class TestLoadClass {
     /**
      * Test the compiler to verify if a given file exists in the file system
      * before a compilation attempt is made.
-     * @throws IOException
+     * @throws IOException - If the compiler can't write the source class
      */
     public void testFileNotFound() throws IOException {
 
@@ -95,8 +94,8 @@ public class TestLoadClass {
 
     /**
      * Compile a simple class and load it dinamically. 
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException  If the compiler can't write/read from disk
+     * @throws ClassNotFoundException  - If the class is not found.
      */
     public void compileAndLoad() throws IOException, ClassNotFoundException {
         String className = "load.test.First";

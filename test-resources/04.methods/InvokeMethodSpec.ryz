@@ -1,7 +1,7 @@
 /*
 className: methods.invoke.InvokeMethod
 attributes:  private name:java.lang.String
-methods: name: java.lang.String
+methods: public name: java.lang.String
 classFile: methods/invoke/InvokeMethod.class
 */
 methods.invoke.InvokeMethod{

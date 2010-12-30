@@ -1,7 +1,7 @@
 /*
 className: local.variable.Name
 attributes:  private name:java.lang.String
-methods: name: java.lang.String
+methods: public name: java.lang.String
 classFile: local/variable/Name.class
 */
 local.variable.Name{

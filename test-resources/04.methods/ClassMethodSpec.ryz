@@ -1,8 +1,7 @@
 /*
 className: methods.class$.ClassMethod
 attributes:  private name:java.lang.String
-methods: name: java.lang.String , main: void
-class-methods: main: void, count: java.lang.Integer
+methods: public name: java.lang.String , public main: void, public-static main:void, public-static count: java.lang.Integer
 classFile: methods/class$/ClassMethod.class
 */
 methods.class.ClassMethod{

@@ -72,7 +72,7 @@ public class InsideMethodState extends RyzClassState {
         }
         String variable = variableName;//String.format("(%s)%s:%s", accessModifier, variableName, variableType);
 
-        logger.warning("variable = "+ variable);
+        logger.finest("variable = "+ variable);
         if(!ryzClass().attributes().get(method).contains(variable)){
             return ryzClass().attributes().get(method).add(variable);
         }

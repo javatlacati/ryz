@@ -1,7 +1,5 @@
 /*
 className: simple.class$.One
-#attributes: i:int
-#methods: i:int
 classFile: simple/class$/One.class
 */
 simple.class.One {

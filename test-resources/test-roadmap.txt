@@ -1,20 +1,38 @@
-00.loading - Load classes dynamically
-01.comments - Single line, multiline.
-02.classes - Top level, nested, inner, etc 
-03.attributes - With type inference
-04.methods
-05.import
-06.closures
+00.loading      - Load classes dynamically
+01.comments     - Single line, multiline.
+02.classes      - Top level, nested, inner, etc
+03.attributes   - With type inference
+04.methods      -
+05.import       - import, importFrom, importStatic
+06.closures     - (param:Type):Type { /*body*/ }
 07.structural typing
 08.embedding
-09.nullObject
+09.nullObject   -
+
+  // This class will have NullObjectPattern Magic
+  some.Class : Nullable {
+
+  }
+
+  // alternate
+  @nullable
+  some.Class {
+  }
+  
 10.Java interoperability
     All the objects should use usable including int's, chars, List
 11.expressions
-12.reflection. o = Object{ name():String{ "x" }}; o["name"] // returns x
+12.reflection   -
+  o = Object{
+    name():String{
+     "x"
+    }
+  }
+  o["name"] // returns x
 13.extension methods
     java.util.List.each( l : List,  (e:E) )
 14.library
-    ( control strucures, basic types, etc )
+    ( control structures, basic types, etc )
 15.named-parameters
-class context
+
+16.varargs - method( arguments: String* ) {...}

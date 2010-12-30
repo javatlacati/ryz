@@ -1,7 +1,6 @@
 /*
 className: attribute.initialized.Third
 attributes:  private i : java.lang.Integer, private s: java.lang.String , private third : attribute.initialized.Third
-#methods:    endDate:java.util.Date
 classFile: attribute/initialized/Third.class
 Featuring type inference
 */
