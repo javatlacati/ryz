@@ -1,1 +1,2 @@
 - To remove exception in the byte code use something like javassist see: so/4337281
+- Support multiple public class in the same source

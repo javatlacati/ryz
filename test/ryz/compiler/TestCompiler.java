@@ -82,9 +82,9 @@ public class TestCompiler {
     @Test(dataProvider="sourceFiles")
     public void runTests(Properties spec) throws IOException, ClassNotFoundException {
 
-        String className  = spec.getProperty("className");
-        String testFile   = spec.getProperty("fileName");
-        String sourcePath = spec.getProperty("sourcePath");
+        String className  = spec.getProperty("className").trim();
+        String testFile   = spec.getProperty("fileName").trim();
+        String sourcePath = spec.getProperty("sourcePath").trim();
 
         testUtil.addSourceDir(new File("./test-resources/"+sourcePath+"/"));
 
