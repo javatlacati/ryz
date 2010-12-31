@@ -50,7 +50,7 @@ abstract class LineTransformer {
             "abstract","assert","boolean","break","byte","case","catch",
             "char","class","const","continue","default","do","double",
             "else","enum","extends","final ","finally","float","for",
-            "goto","if","implements","import","instanceof","int",
+            "goto","if","implements","import","instanceof",/*"int",*/ // temporally disable "int" to be able to override hashCode():int  
             "interface","long","native ","new","package","private ",
             "protected ","public return","short","static ","strictfp ",
             "super","switch","synchronized ","this","throw","transient ",
@@ -158,7 +158,8 @@ class PackageClassTransformer extends LineTransformer {
                         "extends";
                 String className = scapeName(possibleClass);
                 //TODO: solve what to do with public/nonpublic class in the same source file
-                generatedSource.add(String.format("/*public*/ class %s %s %s {%n",
+                generatedSource.add(String.format("import static java.lang.System.out;%n"));
+                generatedSource.add(String.format("public class %s %s %s {%n",
                         className,
                         extendsOrImplements,
                         scapeName(possibleSuperClass)));
@@ -400,7 +401,7 @@ class ReturnTransformer extends LineTransformer {
 }
 class StatementTransformer extends LineTransformer {
 
-    private final Pattern statementPattern = Pattern.compile("\\w+\\.\\w+\\(\\)");//StringBuilder(name).reverse().toString()
+    private final Pattern statementPattern = Pattern.compile("\\w+\\.\\w+\\(.*\\)");//StringBuilder(name).reverse().toString()
 
     StatementTransformer(RyzClassState state) {
         super(state);

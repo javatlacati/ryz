@@ -29,14 +29,18 @@
 package ryz.compiler;
 
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +48,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * This test class will load from the filesytem all the .ryz source files
+ * This test class will load from the filesystem all the .ryz source files
  * and it will compile them and assert they match the specification
  * described by the properties object loaded from that same file.
  *
@@ -59,10 +63,11 @@ public class TestCompiler {
     private TestUtil testUtil;
     
 
-    private final AssertStrategy attributesAssertion   = new AttributesAssertStrategy();
-    private final AssertStrategy methodsAssertStrategy = new MethodsAssertStrategy();
-    private final AssertStrategy implementsAssertion   = new ImplementsAssertStrategy();
-    private final AssertStrategy extendsAssertion      = new ExtendsAssertionStrategy();
+    private AssertStrategy attributesAssertion = new AttributesAssertStrategy();
+    private AssertStrategy methodsAssertion    = new MethodsAssertStrategy();
+    private AssertStrategy implementsAssertion = new ImplementsAssertStrategy();
+    private AssertStrategy extendsAssertion    = new ExtendsAssertionStrategy();
+    private AssertStrategy assertBehaviour     = new BehaviorAssertionStrategy();
 
 
     @BeforeMethod
@@ -93,10 +98,11 @@ public class TestCompiler {
             testUtil.compile(testFile);
             Class clazz = testUtil.assertExists(className);
 
-            extendsAssertion.assertDefinition(clazz, "extends", spec, testFile);
-            implementsAssertion.assertDefinition(clazz, "implements", spec, testFile);
-            attributesAssertion.assertDefinition(clazz, "attributes", spec, testFile);
-            methodsAssertStrategy.assertDefinition(clazz, "methods", spec, testFile);
+            extendsAssertion.assertDefinition(clazz,  spec, testFile);
+            implementsAssertion.assertDefinition(clazz, spec, testFile);
+            attributesAssertion.assertDefinition(clazz, spec, testFile);
+            methodsAssertion.assertDefinition(clazz, spec, testFile);
+            assertBehaviour.assertDefinition(clazz, spec, testFile );
 
         } finally {
             testUtil.deleteFromOutput(spec.getProperty("classFile"));
@@ -169,7 +175,3 @@ public class TestCompiler {
     }
 
 }
-
-
-
-

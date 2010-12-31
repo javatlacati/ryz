@@ -124,7 +124,7 @@ public class RyzC {
             File toCompile = validateExists(file);
             if (toCompile == null) { return; }
 
-            RyzClass currentClass = new RyzClass(cleanLines(readLines(toCompile)));
+            RyzClass currentClass = new RyzClass( file, cleanLines(readLines(toCompile)));
             classes.add( currentClass );
             currentClass.transformSourceCode();
             createClassDefinition( currentClass );
@@ -164,6 +164,8 @@ public class RyzC {
         File sourceFile = new File(currentClass.name() + ".java");
         StringWriter sWriter = new StringWriter();
         Writer writer = new SourceWriter( new FileWriter(sourceFile), sWriter);
+
+        writer.write(String.format("//-- Create from: %s %n " , currentClass.sourceFile()));
 
         //TODO: move this to the RyzClass
         // from here

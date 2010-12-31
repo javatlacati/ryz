@@ -47,7 +47,7 @@ import java.util.Properties;
  * Time: 3:48:23 PM
  */
 abstract class AssertStrategy {
-    // Hashcode for the access modifiers
+    // HashCode for the access modifiers
     private final static int PUBLIC     = 0xc5bdb269; // public
     private final static int PROTECTED  = 0xdbba6bae; // protected
     private final static int PRIVATE    = 0xed412583; // private
@@ -62,12 +62,10 @@ abstract class AssertStrategy {
      * This method iterates them and validates they match.
      *
      * @param clazz - The class to be validated.
-     * @param what - A key from the spec. For instance "attributes" or "methods"
      * @param spec - The properties containing the values to compare against.
      * @param file - The Ryz source file name where this class was created from.
      */
     final void assertDefinition( Class clazz,
-                             String what,
                              Properties spec,
                              String file ) {
         /*
@@ -83,7 +81,7 @@ abstract class AssertStrategy {
 
          // If there is nothing to validate the method exits.
          if( isNull(clazz)
-                 || isNull(values=spec.getProperty(what))
+                 || isNull(values=spec.getProperty(propertyToValidate()))
                  || isEmpty(values)) {
              return;
          }
@@ -106,9 +104,11 @@ abstract class AssertStrategy {
              // Assert matched the spec or no
              assert matched :
                     String.format("%s validating \"%s\" didn't fulfilled: \"%s\"",
-                             file,  what, elementSpecification);
+                             file,  propertyToValidate(), elementSpecification);
          }
      }
+
+    protected abstract String propertyToValidate();
 
 
     /**
@@ -117,7 +117,7 @@ abstract class AssertStrategy {
      * verify if the class fulfilled the "element" in turn.
      * @param clazz - Things will be obtained from here.
      * @return - An array of elements or things to validate.
-     * @see #assertDefinition(Class, String, java.util.Properties, String) 
+     * @see #assertDefinition(Class,  java.util.Properties, String)
      */
     public abstract Object[] getObjectsToValidate(Class clazz);
 
@@ -162,14 +162,26 @@ abstract class AssertStrategy {
      * as described in the "elementDescription"
      */
     boolean assertSpec(Object o, String elementDescription) {
-       String [] nameType = elementDescription.split(":");
-       String name        = getNameFromSpec(nameType[0].trim());
-       String type        = nameType[1].trim();
-       String modifier    = getModifierFromSpec( nameType[0].trim() );
-        return getName(o).equals(name)
-                && getType(o).equals(type)
-                && sameModifier(modifier, getModifiers(o));
 
+        String[] nameType = getNameTypePairs(elementDescription);
+
+        String name        = getNameFromSpec(nameType[0].trim());
+        String type        = nameType[1].trim();
+        String modifier    = getModifierFromSpec( nameType[0].trim() );
+
+        return name.equals(getName(o))
+                    && type.equals(getType(o))
+                    && sameModifier(modifier, getModifiers(o));
+
+    }
+
+    private String[] getNameTypePairs(String elementDescription) {
+        return elementDescription.contains(":") ?
+                elementDescription.split(":") :
+                new String[]{
+                        elementDescription,
+                        elementDescription
+                };
     }
 
 
@@ -250,7 +262,7 @@ abstract class AssertStrategy {
      * @param object to test
      * @return object == null
      */
-    private boolean isNull(Object object) {
+    final boolean isNull(Object object) {
         return object == null;
     }
 
@@ -260,7 +272,7 @@ abstract class AssertStrategy {
      * @param string the string to validate
      * @return string.trim().length() == 0
      */
-    private boolean isEmpty(String string) {
+    final boolean isEmpty(String string) {
         return string.trim().length() == 0;
     }
 
@@ -270,6 +282,11 @@ abstract class AssertStrategy {
  * Validates against "attributes" entry in the spec.
  */
 class AttributesAssertStrategy extends AssertStrategy {
+    @Override
+    protected String propertyToValidate() {
+        return "attributes";
+    }
+
     @Override
     public Object[] getObjectsToValidate(Class clazz) {
         return clazz.getDeclaredFields();
@@ -296,6 +313,11 @@ class AttributesAssertStrategy extends AssertStrategy {
  *  Validates against "methods" entry in the spec.
  */
 class MethodsAssertStrategy extends AssertStrategy {
+    @Override
+    protected String propertyToValidate() {
+        return "methods";
+    }
+
     @Override
     public Object[] getObjectsToValidate(Class clazz) {
         return clazz.getDeclaredMethods();
@@ -326,6 +348,11 @@ class ImplementsAssertStrategy extends AssertStrategy {
     public boolean assertSpec(Object o, String elementDescription) {
         return ((Class)o).getName().equals(elementDescription);
 
+    }
+
+    @Override
+    protected String propertyToValidate() {
+        return "implements";
     }
 
     @Override
@@ -360,6 +387,11 @@ class ExtendsAssertionStrategy extends AssertStrategy {
     }
 
     @Override
+    protected String propertyToValidate() {
+        return "extends";
+    }
+
+    @Override
     public Object[] getObjectsToValidate(Class clazz) {
         return new Object[]{clazz.getSuperclass()};
     }
@@ -379,3 +411,4 @@ class ExtendsAssertionStrategy extends AssertStrategy {
         throw new UnsupportedOperationException();
     }
 }
+

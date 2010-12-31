@@ -55,8 +55,10 @@ public class RyzClass {
     private List<String> methods;
     private HashMap<String, List<String>> attributes = new HashMap<String,List<String>>();
     private Logger logger = Logger.getLogger(this.getClass().getName());
+    private final String sourceFile;
 
-    public RyzClass(List<String> sourceLines) {
+    public RyzClass(String sourceFile, List<String> sourceLines) {
+        this.sourceFile = sourceFile;
         if( logger.isLoggable(Level.FINEST)){
             StringBuilder sb = new StringBuilder();
             for (String sourceLine : sourceLines) {
@@ -157,5 +159,9 @@ public class RyzClass {
      */
     public void outsideComment() {
         state.outsideComment();
+    }
+
+    public String sourceFile() {
+        return sourceFile;
     }
 }

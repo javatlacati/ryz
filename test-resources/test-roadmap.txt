@@ -36,3 +36,78 @@
 15.named-parameters
 
 16.varargs - method( arguments: String* ) {...}
+17.self invocation:
+
+demo.Self {
+	name=(newName:String){ // void
+	}
+	lastName=(newLastName:String){ // void
+	}
+}
+...
+s = Self()
+s.name="Oscar"
+.lastName="Reyes"
+
+17.builder - The object will have as default the no args constructor and a builder, the following: 
+
+demo.Person {
+	name : String 
+	lastName : String 
+	age : Int	
+}
+
+Should be intiantiated as: 
+
+p = Person( name = "Oscar",
+ 			lastName ="Reyes",
+ 			age=0x20)
+
+Under the hood, that will be created by a builder in Java like this: 
+
+Person p = new Person.Builder()
+			.name("Oscar")
+			.lastName("Reyes")
+			.age(0x20).build();
+
+and Person as: 
+
+class Person {
+	private final String name;
+	private final String lastName;
+	private final int    age;
+	
+	public static class  Builder {
+		private String name;
+		private String lastName;
+		private int age;
+		Builder name(String aName ){
+			name = aName;
+			return this;
+		}
+		Builder lastName( String aLastName ){
+			lastName = aLastName;
+			return this;	
+		}
+		Builder age( int anAge ){
+			age = anAge;
+			return this;
+		}
+		Person build(){
+			return new Person( this );
+		}
+		private Person(Builder builder ){
+			this.name = builder.name;
+			this.lastName = builder.lastName;
+			this.age = builder.age;
+		}
+		public Person(){
+			name = "";
+			lastName = "";
+			age = 0;
+		}
+		Peson setAge( int newAge ){
+			return new Builder( this ).age(newAge).build()
+		}
+	}
+}
