@@ -29,60 +29,35 @@
 package ryz.compiler;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Logger;
 
 /**
- * Intended to hold current RyzClass state to know if we are inside
- * a method, a class, or where.
- * 
+ * Created by IntelliJ IDEA.
  * User: oscarryz
- * Date: Dec 11, 2010
- * Time: 12:06:05 AM
+ * Date: Dec 30, 2010
+ * Time: 6:24:10 PM
  */
-public abstract class RyzClassState {
+class InsideCommentState extends RyzClassState {
+    private final RyzClassState previousState;
 
-    protected static Logger logger = Logger.getLogger(RyzC.class.getName());
-    private final RyzClass ryzClass;
-    List<LineTransformer> transformers;
-
-
-    // TODO: have the transformers initialized differently
-    // TODO: I think there is too much passing of the "ryzClass" instance, perhaps is not needed.
-    protected RyzClassState(RyzClass ryzClass) {
-        this.ryzClass = ryzClass;
+    public InsideCommentState(RyzClass ryzClass, RyzClassState currentState) {
+        super(ryzClass);
+        transformers(Arrays.asList(
+            new CommentTransformer(this),
+            new ClosingKeyTransformer(this)
+        ));
+        this.previousState = currentState;
     }
 
 
-    RyzClass ryzClass() {
-        return this.ryzClass;
+    @Override
+    void previousState() {
+        ryzClass().setState(previousState);
     }
 
-
-    abstract void previousState();
-    
-
-    public  List<LineTransformer> transformers(){
-        return this.transformers;
-    }
-
-    void transformers(List<LineTransformer> lineTransformers) {
-        this.transformers = lineTransformers;
-    }
-
-
-    abstract void nextState();
-
-    public boolean addVariable(String accessModifier, String variableName, String variableType){
-       return true;
-    }
-
-    public void insideComment() {
-        ryzClass().setState(new InsideCommentState(ryzClass(), this));
-    }
-
-    public void outsideComment() {
-        ryzClass().state.previousState();
+    @Override
+    void nextState() {
+        ryzClass().setState(previousState);
     }
 }
+
+

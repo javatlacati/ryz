@@ -283,7 +283,6 @@ class AttributeTransformer extends LineTransformer {
             return "private";
     }
 }
-// TODO: multiline comments has problems
 class CommentTransformer extends LineTransformer {
     CommentTransformer(RyzClassState state) {
         super(state);
@@ -294,9 +293,14 @@ class CommentTransformer extends LineTransformer {
         if( line.startsWith("/*")
           || line.startsWith("//")
           || line.endsWith("*/") ){
-            generatedSource.add(line + lineSeparator);
-
+                generatedSource.add(line + lineSeparator);
         }
+        if( line.startsWith("/*")){
+            currentClass().insideComment();
+        } else if( line.endsWith("*/") ){
+            currentClass().outsideComment();    
+        }
+
     }
 }
 class ClosingKeyTransformer extends LineTransformer {
@@ -331,7 +335,6 @@ class MethodTransformer extends LineTransformer {
     @Override
     public void transform(String line, List<String> generatedSource) {
         Matcher matcher;
-        //TODO: handle default return
 
         String methodName = null;
         String methodType = null;
@@ -379,6 +382,7 @@ class MethodTransformer extends LineTransformer {
 // would change to avoid the "return" keyword which will be used only
 // when returning from closures
 class ReturnTransformer extends LineTransformer {
+    //TODO: fixme, shouldn't need  ^ to indicate return in regular cases
     private final Pattern returnPattern = Pattern.compile("\\^\\s+(.+)");
 
     ReturnTransformer(RyzClassState state) {

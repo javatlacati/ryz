@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class would be used to hold the state of the current compiled class.
@@ -52,8 +54,17 @@ public class RyzClass {
 
     private List<String> methods;
     private HashMap<String, List<String>> attributes = new HashMap<String,List<String>>();
-    
+    private Logger logger = Logger.getLogger(this.getClass().getName());
+
     public RyzClass(List<String> sourceLines) {
+        if( logger.isLoggable(Level.FINEST)){
+            StringBuilder sb = new StringBuilder();
+            for (String sourceLine : sourceLines) {
+                sb.append(sourceLine);
+                sb.append("\n");
+            }
+            logger.finest(sb.toString());
+        }
         this.sourceLines = sourceLines;
         this.methods = new ArrayList<String>();
         setState(new InitialState(this));
@@ -130,5 +141,21 @@ public class RyzClass {
 
     public boolean addVariable(String accessModifier, String variableName, String variableType) {
         return state.addVariable( accessModifier, variableName, variableType);
+    }
+
+    /**
+     * Makes this class to enter in "comment" mode so the lines are not
+     * interpreted anymore
+     */
+    public void insideComment() {
+        state.insideComment();
+    }
+
+    /**
+     * Makes this class to enter in "outside comment" mode, returning to the
+     * previous state
+     */
+    public void outsideComment() {
+        state.outsideComment();
     }
 }

@@ -124,7 +124,7 @@ public class RyzC {
             File toCompile = validateExists(file);
             if (toCompile == null) { return; }
 
-            RyzClass currentClass = new RyzClass(trimLines(readLines(toCompile)));
+            RyzClass currentClass = new RyzClass(cleanLines(readLines(toCompile)));
             classes.add( currentClass );
             currentClass.transformSourceCode();
             createClassDefinition( currentClass );
@@ -133,10 +133,21 @@ public class RyzC {
 
 
     //TODO: Move to Utility class when the time comes
-    private List<String> trimLines(List<String> output) {
+    private List<String> cleanLines(List<String> output) {
         List<String> trimmed = new ArrayList<String>();
         for( String s : output ){
-            trimmed.add( s.trim() );
+            String line = s.trim();
+            // if line starts with single line comment: "//"
+            // then put that line in the next one.
+            // to avoid problems.
+            // TODO: this may cause problems when reporting line numbers
+            if( line.contains("//") && !line.startsWith("//")){
+                String[] strings = line.split("\\/\\/");
+                trimmed.add( strings[0].trim() );
+                trimmed.add( "//"+strings[1].trim());
+            } else {
+                trimmed.add(line);
+            }
         }
         return trimmed;
     }
