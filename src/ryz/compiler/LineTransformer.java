@@ -159,10 +159,11 @@ class PackageClassTransformer extends LineTransformer {
                 String className = scapeName(possibleClass);
                 //TODO: solve what to do with public/nonpublic class in the same source file
                 generatedSource.add(String.format("import static java.lang.System.out;%n"));
-                generatedSource.add(String.format("public class %s %s %s {%n",
+                generatedSource.add(String.format("public class %s %s %s { %n    private final %s self = this;%n",
                         className,
                         extendsOrImplements,
-                        scapeName(possibleSuperClass)));
+                        scapeName(possibleSuperClass),
+                        className));
                 this.currentClass().setPackageName(packageName);
                 this.currentClass().setClassName(className);
             }

@@ -25,13 +25,16 @@ methods.invoke.InvokeStatement{
    * Needed to validate if the creation of an instance
    * of this class is always: methods.invoke.InvokeStatement@0
     */
-  hashCode(): int  { //TODO: change int for Int 
+  hashCode(): int  { //TODO: change int for Int
      ^ 0
   }
 
   modifyNumber() : Integer {
+    self.increment()
+     ^ number
+  }
+  increment() {
     number = 2
-    ^ number
   }
 
 }

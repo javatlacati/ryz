@@ -10,6 +10,7 @@ extends: Fully qualifies class name this object inherits from.
 implements: Comma separated of fully qualified interfaces implemented by this class
 attributes: Comma separated attributes of this class.
 methods: Comma separated methods of this class
+behavior: Comma separated instructions the generated class must execute.
 
 className and classFile  are mandatory
 
@@ -26,6 +27,7 @@ extends: java.lang.Thread
 implements: java.lang.Runnable
 attributes:  private name:java.lang.String, private-static t : java.lang.String
 methods: public name: java.lang.String , public main: void, public-static main:void, public-static count: java.lang.Integer
+behavior : new,  invokestatic main([Ljava.lang.String;) | stdout=Hello, world\n
 */
 
 

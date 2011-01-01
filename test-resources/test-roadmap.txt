@@ -1,113 +1,19 @@
-00.loading      - Load classes dynamically
-01.comments     - Single line, multiline.
-02.classes      - Top level, nested, inner, etc
-03.attributes   - With type inference
-04.methods      -
-05.import       - import, importFrom, importStatic
-06.closures     - (param:Type):Type { /*body*/ }
-07.structural typing
-08.embedding
-09.nullObject   -
-
-  // This class will have NullObjectPattern Magic
-  some.Class : Nullable {
-
-  }
-
-  // alternate
-  @nullable
-  some.Class {
-  }
-  
-10.Java interoperability
-    All the objects should use usable including int's, chars, List
-11.expressions
-12.reflection   -
-  o = Object{
-    name():String{
-     "x"
-    }
-  }
-  o["name"] // returns x
-13.extension methods
-    java.util.List.each( l : List,  (e:E) )
-14.library
-    ( control structures, basic types, etc )
+00.loading       - Load classes dynamically
+01.comments      - Single line, multiline.
+02.classes       - Top level, nested, inner, etc
+03.attributes    - With type inference
+04.methods       -
+05.import        - import, importFrom, importStatic
+06.closures      - (param:Type):Type { /*body*/ }
+07.structural typing - Or status Duck type :)
+08.embedding     - To replace inheritance with composition
+09.nullObject    - Probably using an annotation @NullObjecteable ?
+10.Java interoperability - primitives, java.util. etc.
+11.expressions   -
+12.reflection    -  o["name"] // returns x
+13.extension methods - __ java.util.List.each( l : List,  (e:E) )
+14.library       - ( control structures, basic types, etc )
 15.named-parameters
-
-16.varargs - method( arguments: String* ) {...}
-17.self invocation:
-
-demo.Self {
-	name=(newName:String){ // void
-	}
-	lastName=(newLastName:String){ // void
-	}
-}
-...
-s = Self()
-s.name="Oscar"
-.lastName="Reyes"
-
-17.builder - The object will have as default the no args constructor and a builder, the following: 
-
-demo.Person {
-	name : String 
-	lastName : String 
-	age : Int	
-}
-
-Should be intiantiated as: 
-
-p = Person( name = "Oscar",
- 			lastName ="Reyes",
- 			age=0x20)
-
-Under the hood, that will be created by a builder in Java like this: 
-
-Person p = new Person.Builder()
-			.name("Oscar")
-			.lastName("Reyes")
-			.age(0x20).build();
-
-and Person as: 
-
-class Person {
-	private final String name;
-	private final String lastName;
-	private final int    age;
-	
-	public static class  Builder {
-		private String name;
-		private String lastName;
-		private int age;
-		Builder name(String aName ){
-			name = aName;
-			return this;
-		}
-		Builder lastName( String aLastName ){
-			lastName = aLastName;
-			return this;	
-		}
-		Builder age( int anAge ){
-			age = anAge;
-			return this;
-		}
-		Person build(){
-			return new Person( this );
-		}
-		private Person(Builder builder ){
-			this.name = builder.name;
-			this.lastName = builder.lastName;
-			this.age = builder.age;
-		}
-		public Person(){
-			name = "";
-			lastName = "";
-			age = 0;
-		}
-		Peson setAge( int newAge ){
-			return new Builder( this ).age(newAge).build()
-		}
-	}
-}
+16.varargs       - method( arguments: String* ) {...}
+17.self chaining - instead of void
+17.builder
