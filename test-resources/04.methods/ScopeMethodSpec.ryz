@@ -1,0 +1,127 @@
+/*
+className: methods.MethodScope
+classFile: methods/MethodScope.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods: private-instance privateMethod:void, \
+         public-instance publicMethod:void, public-instance otherPublicMethod: void, \
+         protected-instance protectedMethod:void,\
+         default-instance packageMethod: void, \
+         public-static publicClassMethod:void, public-static otherPublicClassMethod: void, \
+         private-static privateClassMethod:void, \
+         protected-static protectedClassMethod:void,\
+         default-static packageClassMethod: void, \
+         private-instance privateStringMethod:java.lang.String, \
+         public-instance publicStringMethod:java.lang.String, public-instance otherPublicStringMethod: java.lang.String, \
+         protected-instance protectedStringMethod:java.lang.String,\
+         default-instance packageStringMethod: java.lang.String, \
+         public-static publicStringClassMethod:java.lang.String, public-static otherPublicStringClassMethod: java.lang.String, \
+         private-static privateStringClassMethod:java.lang.String, \
+         protected-static protectedStringClassMethod:java.lang.String,\
+         default-static packageStringClassMethod: java.lang.String         
+behavior :
+*/
+methods.MethodScope{
+
+  __ anString : String = "anString"
+
+  ////////////////
+  // void methods
+  ////////////////
+  + publicMethod(){
+  }
+
+  // defaults to public
+  otherPublicMethod() {
+
+  }
+
+  # protectedMethod() {
+  }
+
+  ~ packageMethod() {
+  }
+
+  - privateMethod(){
+  }
+
+    ///////////////////////
+    // static void methods
+    ///////////////////////
+
+  +__ publicClassMethod(){
+  }
+
+  // defaults to public
+  __ otherPublicClassMethod() {
+
+  }
+
+  #__ protectedClassMethod() {
+  }
+
+  ~__ packageClassMethod() {
+  }
+
+  - __ privateClassMethod(){
+  }
+
+  ////////////////
+  // String  methods
+  ////////////////
+  + publicStringMethod() : String {
+    anString
+  }
+
+  // defaults to public
+  otherPublicStringMethod() : String  {
+    anString
+  }
+
+  # protectedStringMethod() : String {
+      anString
+  }
+
+  ~ packageStringMethod() : String  {
+      anString
+  }
+
+  - privateStringMethod() : String {
+      anString
+  }
+
+    ///////////////////////
+    // static String methods
+    ///////////////////////
+
+  +__ publicStringClassMethod() : String {
+      anString
+  }
+
+  // defaults to public
+  __ otherPublicStringClassMethod(): String  {
+      anString
+
+  }
+
+  #__ protectedStringClassMethod(): String  {
+      anString
+  }
+
+  ~__ packageStringClassMethod() : String {
+      anString
+  }
+
+  - __ privateStringClassMethod() : String {
+      anString
+  }
+
+
+
+
+
+
+
+
+}

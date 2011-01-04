@@ -48,7 +48,8 @@ public class InsideMethodState extends RyzClassState {
                 new MethodTransformer(this),
                 new ReturnTransformer(this),
                 new StatementTransformer(this),
-                new SimpleAssignmentTransformer(this)
+                new SimpleAssignmentTransformer(this),
+                new SingleValueLineTransformer(this)
         ));
     }
 
@@ -56,6 +57,7 @@ public class InsideMethodState extends RyzClassState {
 
     @Override
     void previousState() {
+        ryzClass().markLastLineAsReturn();
         ryzClass().setState(new InsideClassState(ryzClass()));
     }
 

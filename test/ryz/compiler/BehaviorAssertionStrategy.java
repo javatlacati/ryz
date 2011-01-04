@@ -37,11 +37,13 @@ import java.io.PrintStream;
  * Time: 11:42:06 AM
  */
 class BehaviorAssertionStrategy extends AssertStrategy {
+
+
     @Override
     boolean assertSpec(Object o, String elementDescription) {
         Class c = (Class)o;
-        System.out.println("o = " + o);
-        System.out.println("elementDescription = " + elementDescription);
+        logger.finest("o = " + o);
+        logger.finest("elementDescription = " + elementDescription);
         if( "new".equals(elementDescription) ){
 
             return !isNull(createInstance(c));
@@ -77,11 +79,11 @@ class BehaviorAssertionStrategy extends AssertStrategy {
         // search for the args
         int i = methodDefinition.indexOf("(");
         // starting after "invokestatic" up to the first parenthesis.
-        int space = methodDefinition.indexOf(" ")+1;
-        String instruction = methodDefinition.substring(0,space-1);
-        System.out.println("space = " + space);
-        String methodName = methodDefinition.substring(space, i);
-        System.out.println("methodName = " + methodName);
+        int firstSpace = methodDefinition.indexOf(" ")+1;
+        String instruction = methodDefinition.substring(0, firstSpace -1);
+        logger.finest("firstSpace = " + firstSpace);
+        String methodName = methodDefinition.substring(firstSpace, i);
+        logger.finest("methodName = " + methodName);
         // and ommiting the last parenthesis
         String methodArgs = methodDefinition.substring(i+1, methodDefinition.length()-1);
 
@@ -120,7 +122,7 @@ class BehaviorAssertionStrategy extends AssertStrategy {
                 invocationResult = byteArrayOutputStream.toString();
             }
 
-            System.out.println("invocationResult = " + invocationResult);
+            logger.finest("invocationResult = " + invocationResult);
             assert expectedValue.equals(invocationResult) : String.format("Expected [%s] obtained [%s]", expectedValue, invocationResult);
             return true;
 

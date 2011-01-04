@@ -53,7 +53,7 @@ public class RyzClass {
     RyzClassState state;
 
     private List<String> methods;
-    private HashMap<String, List<String>> attributes = new HashMap<String,List<String>>();
+    private Map<String, List<String>> attributes = new HashMap<String,List<String>>();
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private final String sourceFile;
 
@@ -163,5 +163,17 @@ public class RyzClass {
 
     public String sourceFile() {
         return sourceFile;
+    }
+
+    public void markLastLineAsReturn() {
+
+        String lastMethod = methods().get(methods().size() - 1);
+        String type = lastMethod.split(":")[1];
+        if( !type.equals("void") ){
+            int lastElementIndex = generatedSource.size() - 2;
+            String lastLine = generatedSource.remove(lastElementIndex);
+
+            generatedSource.add( lastElementIndex, "        return "+ lastLine );
+        }
     }
 }

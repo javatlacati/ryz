@@ -50,7 +50,7 @@ abstract class LineTransformer {
             "abstract","assert","boolean","break","byte","case","catch",
             "char","class","const","continue","default","do","double",
             "else","enum","extends","final ","finally","float","for",
-            "goto","if","implements","import","instanceof",/*"int",*/ // temporally disable "int" to be able to override hashCode():int  
+            "goto","if","implements","import","instanceof","int",
             "interface","long","native ","new","package","private ",
             "protected ","public return","short","static ","strictfp ",
             "super","switch","synchronized ","this","throw","transient ",
@@ -73,6 +73,8 @@ abstract class LineTransformer {
     protected String scapeName(String name) {
         if( javaKeywords.contains(name)){
             return name + "$";
+        } else if( "Int".equals(name)){ //TODO: Int should be a user defined type, not a keyword
+            return "int";
         }
 
         return name;
@@ -95,6 +97,28 @@ abstract class LineTransformer {
         
     }
 
+    protected String getScope(String line, boolean includeScope,
+                              Pattern pattern, String defaultScope){
+
+        if( includeScope == false ) {
+            return "";
+        }
+        Matcher matcher = pattern.matcher(line);
+
+        if (matcher.matches()) {
+            if (matcher.group(1).equals("+")) {return "public";
+            } else if (matcher.group(1).equals("#")) {
+                return "protected";
+            } else if (matcher.group(1).equals("~")) {
+                return "";
+            } else if (matcher.group(1).equals("-")) {
+                return "private";
+            }
+        }
+
+            return defaultScope;
+
+    }
 }
 class ImportTransformer extends LineTransformer {
     private final Pattern importPattern = Pattern.compile("import\\s*\\((.+)\\s*\\)");
@@ -198,7 +222,7 @@ class AttributeTransformer extends LineTransformer {
     }
     // [+#~-] hola ...
     private final Pattern scopePattern
-            = Pattern.compile("\\s*([+#~-])\\s*.+");
+            = Pattern.compile("([+#~-])\\s*.+");
     // hola : adios
     private final Pattern pattern
             = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:\\s*(\\w+)");
@@ -217,6 +241,11 @@ class AttributeTransformer extends LineTransformer {
     private final Pattern inferenceFromInvocationPattern
             = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
 
+    // __ hola : adios = xyz
+    private final Pattern initializedClassAttributePattern
+            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
+
+
 
     @Override
     public void transform(String line, List<String> generatedSource) {
@@ -224,17 +253,26 @@ class AttributeTransformer extends LineTransformer {
 
         Matcher matcher = pattern.matcher(line);
 
+
         //TODO: default must be final
-        String accessModifier = getScope(line);
+        String accessModifier = getScope(line, this.includeScope, scopePattern, "private");
         String attributeName = null;
         String attributeType = null;
+        String instanceOrStatic = "";
         String initialValue = ";"; // is ";" or  "= xyz";
         if( matcher.matches()){
 
             attributeName = scapeName(matcher.group(1));
             attributeType = scapeName(matcher.group(2));
 
-        } else if( (matcher = initializedFromInvocation.matcher(line)).matches() ){
+        } else if( (matcher = initializedClassAttributePattern.matcher(line)).matches() ){
+
+            attributeName = scapeName(matcher.group(1));
+            attributeType = scapeName(matcher.group(2));
+            initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(3))) + ";";
+            instanceOrStatic = "static";
+
+        } else if ( (matcher = initializedFromInvocation.matcher(line)).matches() ){
 
             attributeName = scapeName(matcher.group(1));
             attributeType = scapeName(matcher.group(2));
@@ -251,11 +289,14 @@ class AttributeTransformer extends LineTransformer {
             attributeType = scapeName(inferType(matcher.group(2)));
             initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(2))) + ";";
         }
+
         if( attributeName != null ) {
             boolean added = currentClass().addVariable( accessModifier , attributeName, attributeType );
             String type = added ? attributeType : "" ;
-            generatedSource.add( String.format("    /*attribute*/ %s %s %s %s %n",
+
+            generatedSource.add( String.format("    /*attribute*/%s %s %s %s %s %n",
                 accessModifier,
+                instanceOrStatic,
                 type,
                 attributeName,
                 initialValue));
@@ -264,26 +305,6 @@ class AttributeTransformer extends LineTransformer {
 
     }
 
-    private String getScope(String line){
-        if( includeScope == false ) {
-            return "";
-        }
-        Matcher matcher = scopePattern.matcher(line);
-
-        if (matcher.matches()) {
-            if (matcher.group(1).equals("+")) {
-                return "public";
-            } else if (matcher.group(1).equals("#")) {
-                return "protected";
-            } else if (matcher.group(1).equals("~")) {
-                return "";
-            } else if (matcher.group(1).equals("-")) {
-                return "private";
-            }
-        }
-
-            return "private";
-    }
 }
 class CommentTransformer extends LineTransformer {
     CommentTransformer(RyzClassState state) {
@@ -313,21 +334,31 @@ class ClosingKeyTransformer extends LineTransformer {
     @Override
     public void transform(String line, List<String> generatedSource) {
         if( line.startsWith("}")) { // or ends with }
-            generatedSource.add( line + lineSeparator);
+            String indentation = currentClass().state instanceof InsideMethodState ?
+
+                    "    " : "";
+            generatedSource.add(indentation+ line + lineSeparator);
             this.currentClass().closeKey();
         }
     }
 }
 class MethodTransformer extends LineTransformer {
 
+    private final Pattern voidScopeInstancePattern = Pattern.compile("([+#~-])\\s*(\\w+)\\(\\)\\s*\\{");
+    private final Pattern voidScopeClassPattern = Pattern.compile("([+#~-])\\s*_{2}\\s*(\\w+)\\(\\)\\s*\\{");
+
+
+    private final Pattern scopeInstancePattern = Pattern.compile("([+#~-])\\s*(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
+    private final Pattern scopeClassPattern = Pattern.compile("([+#~-])\\s*_{2}\\s*(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
+
     // hola():String{
-    private final Pattern methodPattern = Pattern.compile("(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
+    private final Pattern methodPattern = Pattern.compile("[+#~-]??\\s*(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
     // __ hola() : String { 
-    private final Pattern classMethodPattern = Pattern.compile("__\\s*(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
+    private final Pattern classMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\(\\)\\s*:\\s*(\\w+)\\s*\\{");
     // hola() {
-    private final Pattern voidMethodPattern = Pattern.compile("(\\w+)\\(\\)\\s*\\s*\\{");
+    private final Pattern voidMethodPattern = Pattern.compile("[+#~-]??\\s*(\\w+)\\(\\)\\s*\\{");
     // __ hola() {
-    private final Pattern voidClassMethodPattern = Pattern.compile("_{2}\\s*(\\w+)\\(\\)\\s*\\s*\\{");
+    private final Pattern voidClassMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\(\\)\\s*\\s*\\{");
 
     MethodTransformer(RyzClassState state) {
         super(state);
@@ -338,19 +369,24 @@ class MethodTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         Matcher matcher;
 
+        String accessModifier = "public";
+
         String methodName = null;
         String methodType = null;
         String instanceOrStatic = null;
 
         if( (matcher = methodPattern.matcher(line)).matches() ) {
+            accessModifier = getScope(line, true, scopeInstancePattern, "public");
             methodType = scapeName(matcher.group(2));
             methodName = scapeName(matcher.group(1));
             instanceOrStatic = "";
         } else if ( (matcher = classMethodPattern.matcher(line)).matches() ){
+            accessModifier = getScope(line, true, scopeClassPattern, "public");
             methodType = scapeName(matcher.group(2));
             methodName = scapeName(matcher.group(1));
             instanceOrStatic = "static";
         } else if( ( matcher = voidMethodPattern.matcher(line)).matches() ){
+            accessModifier = getScope(line, true, voidScopeInstancePattern, "public");
             // main() {  is special, will create public static void main( String [] args )
             if( "main".equals(matcher.group(1))){
 
@@ -367,12 +403,17 @@ class MethodTransformer extends LineTransformer {
             }
 
         } else if( ( matcher = voidClassMethodPattern.matcher(line)).matches()){
+
+            accessModifier = getScope(line, true, voidScopeClassPattern, "public");
+
             methodType = "void";
             methodName = scapeName(matcher.group(1));
             instanceOrStatic = "static";
         }
         if( methodName != null ) {
-            generatedSource.add( String.format("    /*method*/public %s %s %s() {%n",
+            logger.finest(String.format("scope %s for line %s %n", accessModifier, line));
+            generatedSource.add( String.format("    /*method*/%s %s %s %s() {%n",
+                accessModifier,
                 instanceOrStatic,
                 methodType,
                 methodName));
@@ -384,7 +425,7 @@ class MethodTransformer extends LineTransformer {
 // would change to avoid the "return" keyword which will be used only
 // when returning from closures
 class ReturnTransformer extends LineTransformer {
-    //TODO: fixme, shouldn't need  ^ to indicate return in regular cases
+    //TODO: fixme, shouldn't need  ^ to indicate return in regular cases only from early returns
     private final Pattern returnPattern = Pattern.compile("\\^\\s+(.+)");
 
     ReturnTransformer(RyzClassState state) {
@@ -396,13 +437,14 @@ class ReturnTransformer extends LineTransformer {
         Matcher m = returnPattern.matcher(line);
         if( m.matches() ){
             String returnValue = checkObjectInitialization(m.group(1));
-            generatedSource.add( String.format("        return %s;%n", returnValue));
+            generatedSource.add( String.format("%s;%n", returnValue));
         }
     }
 }
 class StatementTransformer extends LineTransformer {
 
-    private final Pattern statementPattern = Pattern.compile("\\w+\\.\\w+\\(.*\\)");//StringBuilder(name).reverse().toString()
+    private final Pattern statementPattern = Pattern.compile("\\w+\\.\\w+\\(.*\\)");//something.toString(somethingElse)
+
 
     StatementTransformer(RyzClassState state) {
         super(state);
@@ -432,6 +474,25 @@ class SimpleAssignmentTransformer extends LineTransformer {
         Matcher m = assignPattern.matcher(line);
         if(m.matches()){
             generatedSource.add( String.format("/*assignment*/ %s;%n", m.group(1)));
+
+        }
+
+    }
+}
+//TODO: watchout, this may eventually process anything
+class SingleValueLineTransformer extends LineTransformer {
+
+    private final Pattern singleValuePattern = Pattern.compile("\\w+");
+    public SingleValueLineTransformer(RyzClassState state) {
+        super(state);
+    }
+
+    @Override
+    public void transform(String line, List<String> generatedSource) {
+
+        Matcher m = singleValuePattern.matcher(line);
+        if(m.matches()){
+            generatedSource.add( String.format("/*expression*/ %s;%n", line));
 
         }
 

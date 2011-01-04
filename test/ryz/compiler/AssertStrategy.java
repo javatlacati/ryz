@@ -32,6 +32,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 /**
  * This class defines a way to validate a given class against
@@ -47,6 +48,9 @@ import java.util.Properties;
  * Time: 3:48:23 PM
  */
 abstract class AssertStrategy {
+
+    final Logger logger = Logger.getLogger(this.getClass().getName());
+
     // HashCode for the access modifiers
     private final static int PUBLIC     = 0xc5bdb269; // public
     private final static int PROTECTED  = 0xdbba6bae; // protected

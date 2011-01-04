@@ -5,6 +5,6 @@ classFile: attribute/initialized/Second.class
 */
 attribute.initialized.Second {
     i : Integer =  Integer(0)
-    s : String =  String("s")
+    s : String  =  String("s")
     second : Second = Second()
 }

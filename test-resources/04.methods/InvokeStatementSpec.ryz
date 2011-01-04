@@ -13,7 +13,7 @@ invokevirtual modifyNumber() | result=2
 */
 methods.invoke.InvokeStatement{
 
-  number : Integer = 0
+  number : Int = 0
 
   main(){
     out.println("Hello Oscar") // TODO: change to:  out.print "Hello world"
@@ -25,11 +25,11 @@ methods.invoke.InvokeStatement{
    * Needed to validate if the creation of an instance
    * of this class is always: methods.invoke.InvokeStatement@0
     */
-  hashCode(): int  { //TODO: change int for Int
+  hashCode(): Int  {
      ^ 0
   }
 
-  modifyNumber() : Integer {
+  modifyNumber() : Int {
     self.increment()
      ^ number
   }
