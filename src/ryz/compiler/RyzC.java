@@ -165,7 +165,7 @@ public class RyzC {
         StringWriter sWriter = new StringWriter();
         Writer writer = new SourceWriter( new FileWriter(sourceFile), sWriter);
 
-        writer.write(String.format("//-- Create from: %s %n " , currentClass.sourceFile()));
+        writer.write(String.format("//-- Create from: %s %n" , currentClass.sourceFile()));
 
         //TODO: move this to the RyzClass
         // from here
@@ -177,13 +177,13 @@ public class RyzC {
         for( String s: outputLines){
             if( s.startsWith("package") && !packageWritten) {
                 packageString = s;
-                writer.write( packageString );
+                //writer.write( packageString );
                 packageWritten = true;
 
             }
             if( s.startsWith("import")){
                 importString = s;
-                writer.write( importString );
+                //writer.write( importString );
             }
             if(s.startsWith("package") || s.startsWith("import")){
                 toRemove.add( s ) ;
@@ -197,6 +197,9 @@ public class RyzC {
                "    public int i(){ return i;} \n" +
                "}");
         }
+
+        writer.write(packageString);
+        writer.write(importString);
         outputLines.removeAll(toRemove);
         // to here
 

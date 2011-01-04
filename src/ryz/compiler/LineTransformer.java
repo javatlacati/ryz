@@ -36,7 +36,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by IntelliJ IDEA.
  * User: oscarryz
  * Date: Oct 15, 2010
  * Time: 8:55:48 AM
@@ -182,7 +181,7 @@ class PackageClassTransformer extends LineTransformer {
                         "extends";
                 String className = scapeName(possibleClass);
                 //TODO: solve what to do with public/nonpublic class in the same source file
-                generatedSource.add(String.format("import static java.lang.System.out;%n"));
+                generatedSource.add(String.format("/*import static*/import static java.lang.System.out;%n"));
                 generatedSource.add(String.format("public class %s %s %s { %n    private final %s self = this;%n",
                         className,
                         extendsOrImplements,
@@ -482,7 +481,7 @@ class SimpleAssignmentTransformer extends LineTransformer {
 //TODO: watchout, this may eventually process anything
 class SingleValueLineTransformer extends LineTransformer {
 
-    private final Pattern singleValuePattern = Pattern.compile("\\w+");
+    private final Pattern singleValuePattern = Pattern.compile("\\w+|\\w+\\(\\)");
     public SingleValueLineTransformer(RyzClassState state) {
         super(state);
     }
@@ -492,7 +491,7 @@ class SingleValueLineTransformer extends LineTransformer {
 
         Matcher m = singleValuePattern.matcher(line);
         if(m.matches()){
-            generatedSource.add( String.format("/*expression*/ %s;%n", line));
+            generatedSource.add( String.format("/*expression*/ %s;%n", checkObjectInitialization(line)));
 
         }
 

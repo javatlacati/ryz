@@ -19,7 +19,9 @@ methods: private-instance privateMethod:void, \
          public-static publicStringClassMethod:java.lang.String, public-static otherPublicStringClassMethod: java.lang.String, \
          private-static privateStringClassMethod:java.lang.String, \
          protected-static protectedStringClassMethod:java.lang.String,\
-         default-static packageStringClassMethod: java.lang.String         
+         default-static packageStringClassMethod: java.lang.String, \
+         private-static privateDateClassMethod : java.util.Date
+
 behavior :
 */
 methods.MethodScope{
@@ -115,6 +117,10 @@ methods.MethodScope{
 
   - __ privateStringClassMethod() : String {
       anString
+  }
+  import(java.util.Date)
+  -__ privateDateClassMethod() : Date {
+    Date()
   }
 
 
