@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Ryz language developers.
+ * Copyright (c) 2011, Ryz language developers.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -31,21 +31,34 @@ package ryz.compiler;
 import java.util.Arrays;
 
 /**
- * Created by IntelliJ IDEA.
+ * When we're inside a block, closing a key should append another key and semicolon.
+ * This class helps to this purpose. 
  * User: oscarryz
- * Date: Dec 30, 2010
- * Time: 6:24:10 PM
+ * Date: Jan 7, 2011
+ * Time: 4:42:24 PM
  */
-class InsideCommentState extends RyzClassState {
+public class InsideBlockState extends RyzClassState {
     private final RyzClassState previousState;
+    public InsideBlockState(RyzClass ryzClass, RyzClassState state) {
+        super( ryzClass );
 
-    public InsideCommentState(RyzClass ryzClass, RyzClassState currentState) {
-        super(ryzClass);
+
         transformers(Arrays.asList(
-            (LineTransformer)new CommentTransformer(this)
+                new AttributeTransformer(this, false),
+                new CommentTransformer(this),
+                new ClosingKeyTransformer(this),
+                new MethodTransformer(this),
+                new ReturnTransformer(this),
+                new StatementTransformer(this),
+                new SimpleAssignmentTransformer(this),
+                new SingleValueLineTransformer(this)
         ));
-        this.previousState = currentState;
+
+        this.previousState = state;
     }
+
+
+
 
 
     @Override
@@ -57,6 +70,10 @@ class InsideCommentState extends RyzClassState {
     void nextState() {
         ryzClass().setState(previousState);
     }
+
+    @Override
+    public void keyClosed() {
+        ryzClass().outputLines().add(String.format("};%n"));
+        super.keyClosed();    //To change body of overridden methods use File | Settings | File Templates.
+    }
 }
-
-

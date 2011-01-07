@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Ryz language developers.
+ * Copyright (c) 2011, Ryz language developers.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -26,37 +26,15 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ryz.compiler;
-
-import java.util.Arrays;
+package ryz.lang;
 
 /**
- * Created by IntelliJ IDEA.
+ * This interface will be used to implement code block aka. closures.
  * User: oscarryz
- * Date: Dec 30, 2010
- * Time: 6:24:10 PM
+ * Date: Jan 7, 2011
+ * Time: 4:17:45 PM
  */
-class InsideCommentState extends RyzClassState {
-    private final RyzClassState previousState;
-
-    public InsideCommentState(RyzClass ryzClass, RyzClassState currentState) {
-        super(ryzClass);
-        transformers(Arrays.asList(
-            (LineTransformer)new CommentTransformer(this)
-        ));
-        this.previousState = currentState;
-    }
-
-
-    @Override
-    void previousState() {
-        ryzClass().setState(previousState);
-    }
-
-    @Override
-    void nextState() {
-        ryzClass().setState(previousState);
-    }
+public interface Block<T> {
+    public T value();
+    public void value(T t);
 }
-
-

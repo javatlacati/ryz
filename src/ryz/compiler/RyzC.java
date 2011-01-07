@@ -209,6 +209,7 @@ public class RyzC {
         logger.finest("sWriter = \n" + sWriter);
         writer.close();
 
+        //TODO: findout how to pass the classpath on to the compiler to include external libraries
         // Get the java compiler for this platform
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(

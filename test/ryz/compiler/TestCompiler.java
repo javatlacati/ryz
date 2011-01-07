@@ -106,6 +106,7 @@ public class TestCompiler {
 
         } finally {
             testUtil.deleteFromOutput(spec.getProperty("classFile"));
+            testUtil.deleteFromOutput(spec.getProperty("otherClasses"));
         }
 
     }

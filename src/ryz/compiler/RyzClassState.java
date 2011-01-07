@@ -85,4 +85,11 @@ public abstract class RyzClassState {
     public void outsideComment() {
         ryzClass().state.previousState();
     }
+
+    public void insideBlock(){
+        ryzClass.setState( new InsideBlockState(ryzClass(), this ));
+    }
+    public void keyClosed() {
+        ryzClass().state.previousState();    
+    }
 }

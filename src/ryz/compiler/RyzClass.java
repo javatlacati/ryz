@@ -128,7 +128,8 @@ public class RyzClass {
      * to the previous state.
      */
     public void closeKey() {
-        this.state.previousState();
+        this.state.keyClosed();
+        ;
         //To change body of created methods use File | Settings | File Templates.
     }
 
@@ -175,5 +176,9 @@ public class RyzClass {
 
             generatedSource.add( lastElementIndex, "        return "+ lastLine );
         }
+    }
+
+    public void insideBlock() {
+        state.insideBlock();
     }
 }

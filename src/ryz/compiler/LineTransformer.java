@@ -244,6 +244,11 @@ class AttributeTransformer extends LineTransformer {
     private final Pattern initializedClassAttributePattern
             = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
 
+    // a = {\n}
+    private final Pattern blockPattern =
+             Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*\\{");
+
+
 
 
     @Override
@@ -254,31 +259,27 @@ class AttributeTransformer extends LineTransformer {
 
 
         //TODO: default must be final
-        String accessModifier = getScope(line, this.includeScope, scopePattern, "private");
+        String accessModifier = "private";
         String attributeName = null;
         String attributeType = null;
         String instanceOrStatic = "";
         String initialValue = ";"; // is ";" or  "= xyz";
         if( matcher.matches()){
-
             attributeName = scapeName(matcher.group(1));
             attributeType = scapeName(matcher.group(2));
 
         } else if( (matcher = initializedClassAttributePattern.matcher(line)).matches() ){
-
             attributeName = scapeName(matcher.group(1));
             attributeType = scapeName(matcher.group(2));
             initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(3))) + ";";
             instanceOrStatic = "static";
 
         } else if ( (matcher = initializedFromInvocation.matcher(line)).matches() ){
-
             attributeName = scapeName(matcher.group(1));
             attributeType = scapeName(matcher.group(2));
             initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(3))) + ";";
 
         } else if( (matcher = initializedPattern.matcher(line)).matches() ){
-
             attributeName = scapeName(matcher.group(1));
             attributeType = scapeName(matcher.group(2));
             initialValue = " = "+ scapeName(matcher.group(3)) + ";";
@@ -287,9 +288,19 @@ class AttributeTransformer extends LineTransformer {
             attributeName = scapeName(matcher.group(1));
             attributeType = scapeName(inferType(matcher.group(2)));
             initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(2))) + ";";
+        } else if( (matcher = blockPattern.matcher(line)).matches() ){
+
+            attributeName = scapeName(matcher.group(1));
+            attributeType = "Runnable"; //TODO: should use Block interface instead
+            
+
+            initialValue = String.format(" = /* block */ new Runnable(){%n    public void run(){%n");
+            currentClass().insideBlock();
+
         }
 
         if( attributeName != null ) {
+            accessModifier = getScope(line, this.includeScope, scopePattern, "private");
             boolean added = currentClass().addVariable( accessModifier , attributeName, attributeType );
             String type = added ? attributeType : "" ;
 
@@ -335,8 +346,8 @@ class ClosingKeyTransformer extends LineTransformer {
         if( line.startsWith("}")) { // or ends with }
             String indentation = currentClass().state instanceof InsideMethodState ?
 
-                    "    " : "";
-            generatedSource.add(indentation+ line + lineSeparator);
+                    "    " : "/**/";
+            generatedSource.add(indentation +line + lineSeparator);
             this.currentClass().closeKey();
         }
     }
@@ -436,7 +447,7 @@ class ReturnTransformer extends LineTransformer {
         Matcher m = returnPattern.matcher(line);
         if( m.matches() ){
             String returnValue = checkObjectInitialization(m.group(1));
-            generatedSource.add( String.format("%s;%n", returnValue));
+            generatedSource.add( String.format("/* return */ %s;%n", returnValue));
         }
     }
 }

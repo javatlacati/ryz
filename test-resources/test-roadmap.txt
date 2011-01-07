@@ -4,7 +4,7 @@
 03.attributes    - With type inference
 04.methods       -
 05.import        - import, importFrom, importStatic
-06.closures      - (param:Type):Type { /*body*/ }
+06.blocks ( aka. closures ) - (param:Type):Type { /*body*/ }
 07.structural typing - Or status Duck type :)
 08.embedding     - To replace inheritance with composition
 09.nullObject    - Probably using an annotation @NullObjecteable ?
