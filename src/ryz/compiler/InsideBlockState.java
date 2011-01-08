@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Ryz language developers.
+ * Copyright (c)  2010 - 2011, Oscar Reyes and Ryz language developers.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,

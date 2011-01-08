@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Ryz language developers.
+ * Copyright (c)  2010 - 2011, Oscar Reyes and Ryz language developers.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -60,7 +60,7 @@ import static java.lang.System.err;
  * Date: Sep 7, 2010
  * Time: 9:42:07 PM
  */
-public class RyzC {
+public class RyzC extends LineTransformer {
 
     private static Logger logger = Logger.getLogger(RyzC.class.getName());
     

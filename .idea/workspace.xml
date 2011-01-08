@@ -15,10 +15,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="36296a06-84e0-411b-b5b5-827a5c8b4c69" name="Default" comment="" />
-    <ignored path=".idea/workspace.xml" />
-    <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="ryz.iws" />
+    <ignored path=".idea/workspace.xml" />
     <ignored path="$USER_HOME_GRAILS$/" />
+    <ignored path="$USER_HOME_GRIFFON$/" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,8 +86,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="exception_breakpoints_groupByClasses" value="true" />
+      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -100,98 +100,7 @@
   </component>
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="LineTransformer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="294" column="12" selection-start="11419" selection-end="11419" vertical-scroll-proportion="-13.846154">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestCompiler.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="68" selection-start="4268" selection-end="4268" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RyzC.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="214" column="13" selection-start="7436" selection-end="7436" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Block.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ryz/lang/Block.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="30" selection-start="1722" selection-end="1722" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpleBlockSpec.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/06.blocks/SimpleBlockSpec.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="40" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RyzClassState.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzClassState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="16" selection-start="3136" selection-end="3136" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HelloRyz.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/misc/HelloRyz.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="5" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Sample.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/misc/Sample.ryz">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="77" selection-end="77" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InsideBlockState.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InsideBlockState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="9" selection-start="2525" selection-end="2525" vertical-scroll-proportion="1.556314">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InsideClassState.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InsideClassState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="9" selection-start="2245" selection-end="2245" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -205,7 +114,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test-resources/05.import/ImportOutsideSpec.ryz" />
         <option value="$PROJECT_DIR$/test-resources/test-roadmap.txt" />
         <option value="$PROJECT_DIR$/test-resources/misc/HelloRyzSpec.ryz" />
         <option value="$PROJECT_DIR$/test-resources/misc/SampleSpec.ryz" />
@@ -217,10 +125,11 @@
         <option value="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" />
         <option value="$PROJECT_DIR$/src/ryz/compiler/RyzC.java" />
         <option value="$PROJECT_DIR$/src/ryz/lang/Block.java" />
-        <option value="$PROJECT_DIR$/src/ryz/compiler/InsideBlockState.java" />
         <option value="$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java" />
         <option value="$PROJECT_DIR$/test-resources/misc/Sample.ryz" />
         <option value="$PROJECT_DIR$/test-resources/06.blocks/SimpleBlockSpec.ryz" />
+        <option value="$PROJECT_DIR$/src/ryz/compiler/InsideBlockState.java" />
+        <option value="$PROJECT_DIR$/src/ryz/compiler/InitialState.java" />
       </list>
     </option>
   </component>
@@ -353,13 +262,14 @@
       <showModules />
       <showLibraryContents />
       <hideEmptyPackages />
-      <abbreviatePackageNames ProjectPane="true" />
+      <abbreviatePackageNames ProjectPane="false" />
       <autoscrollToSource ProjectPane="true" />
       <autoscrollFromSource ProjectPane="true" />
       <sortByType ProjectPane="false" />
     </navigator>
     <panes>
       <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -388,51 +298,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AssertStrategy.java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lang" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -476,100 +342,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="compiler" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LineTransformer.java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test-resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test-resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="misc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test-resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="06.blocks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ryz" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test-resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="04.methods" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -580,7 +355,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="preferences.fileTypes" />
+    <property name="options.lastSelected" value="copyright.profiles" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -588,9 +363,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.08436445" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1042,7 +817,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="78" y="22" width="1372" height="878" extended-state="0" />
+    <frame x="68" y="22" width="1372" height="878" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1051,18 +826,18 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879817" sideWeight="0.7242744" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32717678" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44722956" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22675736" sideWeight="0.24538259" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969718" sideWeight="0.6635884" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3340892" sideWeight="0.44986808" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16780046" sideWeight="0.45118734" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.53957784" sideWeight="0.99861306" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.53957784" sideWeight="0.99861306" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.57255936" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32717678" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494331" sideWeight="0.7242744" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1114,113 +889,367 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test-resources/test-roadmap.txt">
+    <entry file="file://$PROJECT_DIR$/src/ryz/lang/Block.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="28" selection-start="274" selection-end="274" vertical-scroll-proportion="0.0" />
+        <state line="34" column="19" selection-start="1742" selection-end="1742" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/TODO-Notes.txt">
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InsideClassState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="19" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="53" column="9" selection-start="2265" selection-end="2265" vertical-scroll-proportion="0.42492014" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="294" column="12" selection-start="11439" selection-end="11439" vertical-scroll-proportion="-13.846154" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/06.blocks/SimpleBlockSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="40" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="13" selection-start="2484" selection-end="2484" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/misc/Sample.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="77" selection-end="77" vertical-scroll-proportion="0.115015976" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InsideBlockState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="3" selection-start="1589" selection-end="1589" vertical-scroll-proportion="0.9936102" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzClassState.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="16" selection-start="3156" selection-end="3156" vertical-scroll-proportion="3.4121406" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/misc/HelloRyz.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="5" selection-start="34" selection-end="34" vertical-scroll-proportion="0.076677315" />
+      </provider>
+    </entry>
+    <entry file="uml://MODULES/mdl-ryz">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>MODULES</ID>
+          <OriginalElement>mdl-ryz</OriginalElement>
+          <nodes>
+            <node x="0.0" y="0.0">mdl-ryz</node>
+          </nodes>
+          <edges />
+          <settings isCamel="false" isColorManagerEnabled="true" isShowDependencies="false" isVcsFilterEnabled="false" layout="Hierarchic Group" zoom="1.4000000000000004" x="28.0" y="15.0" />
+          <SelectedNodes>
+            <node>mdl-ryz</node>
+          </SelectedNodes>
+          <Categories />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="25" selection-start="4372" selection-end="4372" vertical-scroll-proportion="0.0">
+        <state line="47" column="13" selection-start="2075" selection-end="2075" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InsideMethodState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="32" selection-start="1967" selection-end="2411" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InsideCommentState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="29" selection-start="1983" selection-end="1983" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/InvokeStatementSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="213" selection-end="293" vertical-scroll-proportion="0.0">
-          <folding />
+    <entry file="uml://ryz.compiler.RyzC">
+      <provider selected="true" editor-type-id="UmlClassDiagramEditorProvider">
+        <state>
+          <classes>
+            <class fqn="ryz.compiler.ImportTransformer" x="1396.0" y="182.0" />
+            <class fqn="ryz.compiler.RyzC" x="1274.0" y="76.0" />
+            <class fqn="ryz.compiler.StatementTransformer" x="0.0" y="182.0" />
+            <class fqn="ryz.compiler.MethodTransformer" x="1194.0" y="182.0" />
+            <class fqn="ryz.compiler.PackageClassTransformer" x="952.0000000000001" y="182.0" />
+            <class fqn="java.lang.Object" x="1269.0" y="0.0" />
+            <class fqn="ryz.compiler.AttributeTransformer" x="1808.0" y="182.0" />
+            <class fqn="ryz.compiler.SingleValueLineTransformer" x="219.0000000000001" y="182.0" />
+            <class fqn="ryz.compiler.LineTransformer" x="1094.0" y="76.0" />
+            <class fqn="ryz.compiler.ClosingKeyTransformer" x="2020.0" y="182.0" />
+            <class fqn="ryz.compiler.CommentTransformer" x="1592.0" y="182.0" />
+            <class fqn="ryz.compiler.RyzClass" x="1374.0" y="76.0" />
+            <class fqn="ryz.compiler.ReturnTransformer" x="755.0000000000001" y="182.0" />
+            <class fqn="ryz.compiler.SimpleAssignmentTransformer" x="478.0000000000001" y="182.0" />
+          </classes>
+          <packages />
+          <edges>
+            <edge source="ryz.compiler.SimpleAssignmentTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="606.5000000000001" y="142.0" />
+              <point x="1134.0" y="142.0" />
+              <point x="-40.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.SingleValueLineTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="338.5000000000001" y="132.0" />
+              <point x="1118.0" y="132.0" />
+              <point x="-56.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.ImportTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1484.0" y="152.0" />
+              <point x="1198.0" y="152.0" />
+              <point x="24.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.LineTransformer" target="java.lang.Object" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1174.0" y="51.0" />
+              <point x="1284.0" y="51.0" />
+              <point x="-30.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.StatementTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="99.5" y="122.0" />
+              <point x="1102.0" y="122.0" />
+              <point x="-72.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.PackageClassTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1063.0" y="162.0" />
+              <point x="1166.0" y="162.0" />
+              <point x="-8.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.ClosingKeyTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="1.1368683772161603E-13" y="-13.0" />
+              <point x="2123.0" y="122.0" />
+              <point x="1246.0" y="122.0" />
+              <point x="72.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.ReturnTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="843.5000000000001" y="152.0" />
+              <point x="1150.0" y="152.0" />
+              <point x="-24.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.CommentTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1690.0" y="142.0" />
+              <point x="1214.0" y="142.0" />
+              <point x="40.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.MethodTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1285.0" y="162.0" />
+              <point x="1182.0" y="162.0" />
+              <point x="8.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.RyzC" target="java.lang.Object" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="0.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.AttributeTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1904.0" y="132.0" />
+              <point x="1230.0" y="132.0" />
+              <point x="56.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.RyzClass" target="java.lang.Object" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1427.0" y="51.0" />
+              <point x="1344.0" y="51.0" />
+              <point x="30.0" y="13.0" />
+            </edge>
+          </edges>
+          <settings isCamel="false" isColorManagerEnabled="true" isFieldsVisible="false" isConstructorsVisible="false" isMethodsVisible="false" isShowDependencies="false" isShowInnerClasses="false" isVcsFilterEnabled="false" defaultVisibility="all" layout="Hierarchic Group" isPropertiesVisible="false" zoom="1.0" x="1378.0" y="71.0" />
+          <SelectedNodes>
+            <node fqn="ryz.compiler.RyzC" />
+            <node fqn="ryz.compiler.LineTransformer" />
+          </SelectedNodes>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="214" column="13" selection-start="7436" selection-end="7436" vertical-scroll-proportion="0.0">
+        <state line="62" column="13" selection-start="2415" selection-end="2415" vertical-scroll-proportion="0.2798354">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/lang/Block.java">
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InitialState.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="30" selection-start="1722" selection-end="1722" vertical-scroll-proportion="0.0">
+        <state line="39" column="13" selection-start="1780" selection-end="1780" vertical-scroll-proportion="0.47325101">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InsideClassState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="9" selection-start="2245" selection-end="2245" vertical-scroll-proportion="0.0">
-          <folding />
+    <entry file="uml://JS/">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JS</ID>
+          <OriginalElement />
+          <nodes />
+          <edges />
+          <settings isCamel="false" isColorManagerEnabled="true" isShowDependencies="false" isVcsFilterEnabled="false" layout="Hierarchic Group" zoom="1.0" x="436.0" y="-2108.0" />
+          <SelectedNodes />
+          <Categories />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzClassState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="16" selection-start="3136" selection-end="3136" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/misc/HelloRyz.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="5" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="68" selection-start="4268" selection-end="4268" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="294" column="12" selection-start="11419" selection-end="11419" vertical-scroll-proportion="-13.846154">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/misc/Sample.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="77" selection-end="77" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/06.blocks/SimpleBlockSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="40" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/InsideBlockState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="9" selection-start="2525" selection-end="2525" vertical-scroll-proportion="1.556314">
-          <folding />
+    <entry file="uml://ryz.compiler">
+      <provider selected="true" editor-type-id="UmlClassDiagramEditorProvider">
+        <state>
+          <classes>
+            <class fqn="ryz.compiler.AttributesAssertStrategy" x="0.0" y="253.0" />
+            <class fqn="ryz.compiler.TestLoadClass" x="0.0" y="471.0" />
+            <class fqn="ryz.compiler.SourceWriter" x="369.0" y="471.0" />
+            <class fqn="ryz.compiler.TestUtil" x="0.0" y="542.0" />
+            <class fqn="ryz.compiler.CommentTransformer" x="1303.0" y="106.0" />
+            <class fqn="ryz.compiler.ReturnTransformer" x="196.0" y="106.0" />
+            <class fqn="ryz.compiler.RyzClass" x="546.0" y="471.0" />
+            <class fqn="ryz.compiler.BehaviorAssertionStrategy" x="456.0" y="253.0" />
+            <class fqn="ryz.compiler.TestCompiler" x="188.0" y="471.0" />
+            <class fqn="ryz.compiler.InsideBlockState" x="205.0" y="400.0" />
+            <class fqn="ryz.compiler.SingleValueLineTransformer" x="1745.0" y="106.0" />
+            <class fqn="ryz.compiler.InsideCommentState" x="0.0" y="400.0" />
+            <class fqn="ryz.compiler.RyzClassState" x="388.0" y="324.0" />
+            <class fqn="ryz.compiler.AssertStrategy" x="496.0" y="177.0" />
+            <class fqn="ryz.compiler.ClosingKeyTransformer" x="1519.0" y="106.0" />
+            <class fqn="ryz.compiler.ImportTransformer" x="0.0" y="106.0" />
+            <class fqn="ryz.compiler.AttributeTransformer" x="595.0" y="106.0" />
+            <class fqn="ryz.compiler.ExtendsAssertionStrategy" x="701.0" y="253.0" />
+            <class fqn="ryz.compiler.PackageClassTransformer" x="2004.0" y="106.0" />
+            <class fqn="ryz.compiler.ImplementsAssertStrategy" x="941.0" y="253.0" />
+            <class fqn="ryz.compiler.RyzC" x="2246.0" y="106.0" />
+            <class fqn="ryz.compiler.MethodTransformer" x="393.0" y="106.0" />
+            <class fqn="ryz.compiler.InsideClassState" x="380.0" y="400.0" />
+            <class fqn="ryz.compiler.SimpleAssignmentTransformer" x="1026.0" y="106.0" />
+            <class fqn="ryz.compiler.MethodsAssertStrategy" x="233.0" y="253.0" />
+            <class fqn="ryz.compiler.InitialState" x="555.0" y="400.0" />
+            <class fqn="ryz.compiler.LineTransformer" x="1074.5" y="0.0" />
+            <class fqn="ryz.compiler.StatementTransformer" x="807.0" y="106.0" />
+            <class fqn="ryz.compiler.InsideMethodState" x="692.0" y="400.0" />
+          </classes>
+          <packages />
+          <edges>
+            <edge source="ryz.compiler.InsideMethodState" target="ryz.compiler.RyzClassState" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="777.5" y="370.0" />
+              <point x="513.1" y="370.0" />
+              <point x="55.60000000000002" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.SimpleAssignmentTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="0.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.SingleValueLineTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1864.5" y="66.0" />
+              <point x="1198.1363636363637" y="66.0" />
+              <point x="43.63636363636374" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.InsideBlockState" target="ryz.compiler.RyzClassState" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="282.5" y="380.0" />
+              <point x="429.70000000000005" y="380.0" />
+              <point x="-27.799999999999955" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.ImportTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="88.0" y="46.0" />
+              <point x="1081.7727272727273" y="46.0" />
+              <point x="-72.72727272727275" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.ExtendsAssertionStrategy" target="ryz.compiler.AssertStrategy" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="811.0" y="233.0" />
+              <point x="597.5" y="233.0" />
+              <point x="29.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.ClosingKeyTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1622.0" y="76.0" />
+              <point x="1183.590909090909" y="76.0" />
+              <point x="29.09090909090901" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.StatementTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="906.5" y="86.0" />
+              <point x="1139.9545454545455" y="86.0" />
+              <point x="-14.545454545454504" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.PackageClassTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="2115.0" y="56.0" />
+              <point x="1212.6818181818182" y="56.0" />
+              <point x="58.181818181818244" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.CommentTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1401.0" y="86.0" />
+              <point x="1169.0454545454545" y="86.0" />
+              <point x="14.545454545454504" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.ReturnTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="284.5" y="56.0" />
+              <point x="1096.3181818181818" y="56.0" />
+              <point x="-58.181818181818244" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.InitialState" target="ryz.compiler.RyzClassState" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="613.5" y="380.0" />
+              <point x="485.29999999999995" y="380.0" />
+              <point x="27.799999999999955" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.MethodTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="484.0" y="66.0" />
+              <point x="1110.8636363636363" y="66.0" />
+              <point x="-43.63636363636374" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.ImplementsAssertStrategy" target="ryz.compiler.AssertStrategy" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="1053.5" y="223.0" />
+              <point x="626.5" y="223.0" />
+              <point x="58.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.AttributeTransformer" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="691.0" y="76.0" />
+              <point x="1125.409090909091" y="76.0" />
+              <point x="-29.09090909090901" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.InsideClassState" target="ryz.compiler.RyzClassState" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="0.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.InsideCommentState" target="ryz.compiler.RyzClassState" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="92.5" y="370.0" />
+              <point x="401.9" y="370.0" />
+              <point x="-55.60000000000002" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.AttributesAssertStrategy" target="ryz.compiler.AssertStrategy" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="106.5" y="223.0" />
+              <point x="510.5" y="223.0" />
+              <point x="-58.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.MethodsAssertStrategy" target="ryz.compiler.AssertStrategy" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="334.5" y="233.0" />
+              <point x="539.5" y="233.0" />
+              <point x="-29.0" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.RyzC" target="ryz.compiler.LineTransformer" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="2286.0" y="46.0" />
+              <point x="1227.2272727272727" y="46.0" />
+              <point x="72.72727272727275" y="13.0" />
+            </edge>
+            <edge source="ryz.compiler.BehaviorAssertionStrategy" target="ryz.compiler.AssertStrategy" relationship="GENERALIZATION">
+              <point x="0.0" y="-13.0" />
+              <point x="0.0" y="13.0" />
+            </edge>
+          </edges>
+          <settings isCamel="false" isColorManagerEnabled="false" isFieldsVisible="false" isConstructorsVisible="false" isMethodsVisible="false" isShowDependencies="false" isShowInnerClasses="false" isVcsFilterEnabled="false" defaultVisibility="all" layout="Hierarchic Group" isPropertiesVisible="false" zoom="1.0" x="386.0" y="17.0" />
+          <SelectedNodes />
         </state>
       </provider>
     </entry>
@@ -1244,8 +1273,15 @@
       <state key="Copyright.UI">
         <UIState>
           <splitter-proportions>
-            <SplitterProportionsDataImpl />
+            <SplitterProportionsDataImpl>
+              <option name="proportions">
+                <list>
+                  <option value="0.2" />
+                </list>
+              </option>
+            </SplitterProportionsDataImpl>
           </splitter-proportions>
+          <last-edited>Ryz</last-edited>
         </UIState>
       </state>
       <state key="ScopeChooserConfigurable.UI">
