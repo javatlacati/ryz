@@ -60,7 +60,7 @@ import static java.lang.System.err;
  * Date: Sep 7, 2010
  * Time: 9:42:07 PM
  */
-public class RyzC extends LineTransformer {
+public class RyzC {
 
     private static Logger logger = Logger.getLogger(RyzC.class.getName());
     
