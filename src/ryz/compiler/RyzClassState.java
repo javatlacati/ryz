@@ -28,6 +28,7 @@
 
 package ryz.compiler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -91,5 +92,11 @@ public abstract class RyzClassState {
     }
     public void keyClosed() {
         ryzClass().state.previousState();    
+    }
+
+    protected void ensureVariablesHolderInitialized(String method) {
+        if( ryzClass().variables().get( method ) == null ){
+            ryzClass().variables().put( method , new ArrayList<String>());
+        }
     }
 }

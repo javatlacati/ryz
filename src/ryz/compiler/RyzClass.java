@@ -28,8 +28,6 @@
 
 package ryz.compiler;
 
-import com.sun.corba.se.pept.transport.OutboundConnectionCache;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +51,7 @@ public class RyzClass {
     RyzClassState state;
 
     private List<String> methods;
-    private Map<String, List<String>> attributes = new HashMap<String,List<String>>();
+    private Map<String, List<String>> variables = new HashMap<String,List<String>>();
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private final String sourceFile;
 
@@ -93,8 +91,19 @@ public class RyzClass {
     List<String> methods(){
         return this.methods;
     }
-    Map<String,List<String>> attributes(){
-        return this.attributes;
+
+    /**
+        *  Map of list of names of the variables ( and variables ) defined in this class.
+        * For instance, for method test() the variable a could have been defined,
+        *  if variable a is redefined, this map will help to know if it was already there.
+        *  The entry would be: { foo : [ a ] }
+        *  If a is defined in the class ( as an instance attribute ) it will be kept in this map too as:
+        *  { instance : [ a]  , foo : [ a ] }
+        *
+        * @return a map containing the defined variables ( variables ) in this class
+        */
+    Map<String,List<String>> variables(){
+        return this.variables;
     }
 
     /**

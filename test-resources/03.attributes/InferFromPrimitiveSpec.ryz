@@ -1,0 +1,20 @@
+/*
+className: attributes.inference.FromPrimitive
+classFile: attributes/inference/FromPrimitive.class
+extends: java.lang.Object
+implements:
+attributes: public-instance i : int , protected-static j : int , default-instance k : int , private-static l : int
+methods:
+behavior :
+*/
+attributes.inference.FromPrimitive{
+
+    // integers
+    + i = 0
+    #__ j = 1
+    ~ k = 2
+    - __ l = 3
+
+    // strings
+    + m = "Hola"
+}

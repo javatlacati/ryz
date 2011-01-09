@@ -28,6 +28,7 @@
 
 package ryz.compiler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -48,6 +49,16 @@ public class InsideClassState extends RyzClassState {
             new MethodTransformer(this)
         ));
         
+    }
+
+    @Override
+    public boolean addVariable(String accessModifier, String variableName, String variableType) {
+        ensureVariablesHolderInitialized("instance");
+        if(!ryzClass().variables().get("instance").contains(variableName)){
+            return ryzClass().variables().get("instance").add(variableName);
+        }
+        return false;
+
     }
 
     @Override

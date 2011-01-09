@@ -69,16 +69,20 @@ public class InsideMethodState extends RyzClassState {
     @Override
     public boolean addVariable(String accessModifier, String variableName, String variableType) {
         String method = ryzClass().methods().get( ryzClass().methods().size()-1);
-        if( ryzClass().attributes().get( method ) == null ){
-            ryzClass().attributes().put( method , new ArrayList<String>());
-        }
+        ensureVariablesHolderInitialized(method);
+        ensureVariablesHolderInitialized("instance");
+
         String variable = variableName;//String.format("(%s)%s:%s", accessModifier, variableName, variableType);
 
         logger.finest("variable = "+ variable);
-        if(!ryzClass().attributes().get(method).contains(variable)){
-            return ryzClass().attributes().get(method).add(variable);
+        logger.finest("ryzClass().variables().get(method) = " + ryzClass().variables().get(method));
+        logger.finest("ryzClass().variables().get(\"instance\") = " +ryzClass().variables().get("instance"));
+        logger.finest("ryzClass().variables().get(method).contains(variable) = " + ryzClass().variables().get(method).contains(variable));
+        if(!ryzClass().variables().get(method).contains(variable) && !ryzClass().variables().get("instance").contains(variableName) ){
+            return ryzClass().variables().get(method).add(variable);
         }
         return false;
 
     }
+
 }

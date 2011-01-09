@@ -233,9 +233,13 @@ class AttributeTransformer extends LineTransformer {
             = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:" +
                               "\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
 
-    // hola = adios //TODO: revisar como saber el tipo de dato de un valor
-    private final Pattern attributeInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(.+)");
+    // hola = 0 //TODO: revisar como saber el tipo de dato de un valor
+    private final Pattern attributeIntegerInferencePattern
+            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(\\d+)");
+    // __ hola = 0 // TODO:  how to test ( and capture ) the presence of "__" ?
+    private final Pattern classAttributeIntegerInferencePattern
+            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*(\\d+)");
+
     // hola = adios()
     private final Pattern inferenceFromInvocationPattern
             = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
@@ -257,9 +261,8 @@ class AttributeTransformer extends LineTransformer {
 
         Matcher matcher = pattern.matcher(line);
 
-
+        // TODO: plenty of room for refactoring here :)
         //TODO: default must be final
-        String accessModifier = "private";
         String attributeName = null;
         String attributeType = null;
         String instanceOrStatic = "";
@@ -297,10 +300,19 @@ class AttributeTransformer extends LineTransformer {
             initialValue = String.format(" = /* block */ new Runnable(){%n    public void run(){%n");
             currentClass().insideBlock();
 
+        } else if( ( matcher = attributeIntegerInferencePattern.matcher(line)).matches() ){
+            attributeName = scapeName(matcher.group(1));
+            attributeType = "int";
+            initialValue  = " = "+ matcher.group(2) + ";";
+        } else if( (matcher = classAttributeIntegerInferencePattern.matcher(line)).matches()) {
+            attributeName = scapeName(matcher.group(1));
+            attributeType = "int";
+            initialValue  = " = "+ matcher.group(2) + ";";
+            instanceOrStatic = "static";
         }
 
         if( attributeName != null ) {
-            accessModifier = getScope(line, this.includeScope, scopePattern, "private");
+            String accessModifier = getScope(line, this.includeScope, scopePattern, "private");
             boolean added = currentClass().addVariable( accessModifier , attributeName, attributeType );
             String type = added ? attributeType : "" ;
 

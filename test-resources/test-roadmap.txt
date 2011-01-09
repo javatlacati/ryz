@@ -16,4 +16,6 @@
 15.named-parameters
 16.varargs       - method( arguments: String* ) {...}
 17.self chaining - instead of void
-17.builder
+18.builder       - To create immutable objects
+19.multiple classes per file
+20.multiline strings

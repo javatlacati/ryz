@@ -3,15 +3,15 @@ framework.
 
 The header of the file should contain a "test specification" with the following format:
 
-
+/*
 className: Fully qualified class name expected after compilation
-classFile: Name of the .class file generated after the compilation
-extends: Fully qualifies class name this object inherits from.
-implements: Comma separated of fully qualified interfaces implemented by this class
+classFile: Name of the .class file generated after the compilation. This should be deleted by the testing framework after each run.
+extends: Fully qualified class name this object inherits from.
+implements: Comma separated of fully qualified interfaces implemented by this class.
 attributes: Comma separated attributes of this class.
 methods: Comma separated methods of this class
-behavior: Comma separated instructions the generated class must execute.
-
+behavior: Comma separated instructions the generated class must execute. For a sample see: 04.methods/BehaviorSpec.ryz
+*/
 className and classFile  are mandatory
 
 The method and attribute format is:

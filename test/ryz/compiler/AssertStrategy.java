@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  * and each subclass should provide the elements of the class to be passed
  * <br/>
  *
- * For instance, there may be attributes subclasses which will validate against
+ * For instance, there may be variables subclasses which will validate against
  * java.lang.Field instances. 
  *
  * @author oscarryz
@@ -75,7 +75,7 @@ abstract class AssertStrategy {
         /*
          Values are taken from the specification.
 
-         For instance if we validate attributes the values would be
+         For instance if we validate variables the values would be
          something like:
 
             private name : java.lang.String,  private age : java.lang.Integer
@@ -145,7 +145,7 @@ abstract class AssertStrategy {
      * Subclasses should return the thing's access modifier.
      * @param o - The things whose access modifier we need to know.
      * @return An integer with the mask of the access modifier as
-     * defined in:Êjava.lang.reflect.Modifier
+     * defined in:ï¿½java.lang.reflect.Modifier
      * @see java.lang.reflect.Modifier
      */
     abstract int getModifiers(Object o);
@@ -283,7 +283,7 @@ abstract class AssertStrategy {
 }
 
 /**
- * Validates against "attributes" entry in the spec.
+ * Validates against "variables" entry in the spec.
  */
 class AttributesAssertStrategy extends AssertStrategy {
     @Override
