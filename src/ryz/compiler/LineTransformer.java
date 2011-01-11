@@ -181,7 +181,7 @@ class PackageClassTransformer extends LineTransformer {
                 //TODO: solve what to do with public/nonpublic class in the same source file
                 generatedSource.add(String.format("/*import static*/import static java.lang.System.out;%n"));
                 generatedSource.add(String.format("public class %s %s %s { %n" +
-                        "    private final static java.text.DateFormat $sdf$ =new java.text.SimpleDateFormat(\"dd-MM-yyyy hh:mm:ss\");%n"+
+                        "    private final static java.text.DateFormat $sdf$ =new java.text.SimpleDateFormat(\"yyyy-MM-dd hh:mm:ss\");%n"+
                         "    private final %s self = this;%n",
                         className,
                         extendsOrImplements,

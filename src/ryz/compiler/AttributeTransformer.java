@@ -94,11 +94,11 @@ class AttributeTransformer extends LineTransformer {
 
     // hola = '31-12-2010'
     private final Pattern attributeDateInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(\\d{2}-\\d{2}-\\d{4})");
+            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(\\d{4}-\\d{2}-\\d{2})");
 
     // __ hola = '31-12-2010'
     private final Pattern classAttributeDateInferencePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*(\\d{2}-\\d{2}-\\d{4})");
+            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*(\\d{4}-\\d{2}-\\d{2})");
 
     // hola = /^\d{2}-\d{2}-\d{4}$/
     private final Pattern attributeRegexInferencePattern
@@ -233,7 +233,7 @@ class AttributeTransformer extends LineTransformer {
         } else if( (matcher = classAttributeRegexInferencePattern.matcher(line)).matches()) {
             attributeName = scapeName(matcher.group(1));
             attributeType = "java.util.regex.Pattern";
-            initialValue  = String.format(" = java.util.regex.Pattern.compile(\"%s\");%n", matcher.group(2).replaceAll("\\\\","\\\\\\\\")  );
+            initialValue  = String.format(" = java.util.regex.Pattern.compile(\"%s\");%n", matcher.group(2).replaceAll("\\\\","\\\\\\\\")     );
             instanceOrStatic = "static";
         }
 
