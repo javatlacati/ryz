@@ -100,6 +100,14 @@ class AttributeTransformer extends LineTransformer {
     private final Pattern classAttributeDateInferencePattern
             = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*(\\d{2}-\\d{2}-\\d{4})");
 
+    // hola = /^\d{2}-\d{2}-\d{4}$/
+    private final Pattern attributeRegexInferencePattern
+            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/");
+
+    // __ hola = /^\d{2}-\d{2}-\d{4}$/
+    private final Pattern classAttributeRegexInferencePattern
+            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/");
+
 
     // TODO:  create test to infer from method call a = someMethod()
     // hola = adios()
@@ -156,8 +164,7 @@ class AttributeTransformer extends LineTransformer {
         } else if( (matcher = blockPattern.matcher(line)).matches() ){
 
             attributeName = scapeName(matcher.group(1));
-            attributeType = "Runnable"; //TODO: should use Block interface instead
-
+            attributeType = "Runnable"; //TODO: should use class "Block" interface instead
 
             initialValue = String.format(" = /* block */ new Runnable(){%n    public void run(){%n");
             currentClass().insideBlock();
@@ -218,6 +225,15 @@ class AttributeTransformer extends LineTransformer {
                     "      throw new IllegalStateException(\"Error in the compiler while identifying a date literal. Original message: \" + pe.getMessage());\n" +
                     "    }%n" +
                     "  }%n", attributeName, matcher.group(2));
+            instanceOrStatic = "static";
+        } else if( ( matcher = attributeRegexInferencePattern.matcher(line)).matches() ){
+            attributeName = scapeName(matcher.group(1));
+            attributeType = "java.util.regex.Pattern";
+            initialValue  = String.format(" = java.util.regex.Pattern.compile(\"%s\");%n", matcher.group(2).replaceAll("\\\\","\\\\\\\\"));
+        } else if( (matcher = classAttributeRegexInferencePattern.matcher(line)).matches()) {
+            attributeName = scapeName(matcher.group(1));
+            attributeType = "java.util.regex.Pattern";
+            initialValue  = String.format(" = java.util.regex.Pattern.compile(\"%s\");%n", matcher.group(2).replaceAll("\\\\","\\\\\\\\")  );
             instanceOrStatic = "static";
         }
 

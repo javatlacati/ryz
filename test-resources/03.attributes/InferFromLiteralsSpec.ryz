@@ -1,6 +1,6 @@
 /*
-className: attributes.inference.FromPrimitive
-classFile: attributes/inference/FromPrimitive.class
+className: attributes.inference.FromLiteral
+classFile: attributes/inference/FromLiteral.class
 extends: java.lang.Object
 implements:
 attributes: public-instance i : int , protected-static j : int , default-instance k : int , private-static l : int , private-static m: int, \
@@ -9,12 +9,13 @@ attributes: public-instance i : int , protected-static j : int , default-instanc
                 public-instance s: boolean,  protected-static t : boolean,  default-instance u : boolean,  private-static v : boolean, \
                 private-instance __w : boolean, \
                 private-instance x : char, private-static y : char, public-instance z : char, \
-                private-instance reyesMagos : java.util.Date
+                private-instance reyesMagos : java.util.Date, \
+                private-instance a : java.util.regex.Pattern, private-static b : java.util.regex.Pattern
 
 methods:
 behavior :
 */
-attributes.inference.FromPrimitive{
+attributes.inference.FromLiteral{
 
   // integers
   +    i = 0
@@ -48,6 +49,8 @@ attributes.inference.FromPrimitive{
    // date TODO: deeply review this literal, I think a number of bugs may originate here.
    reyesMagos = 06-01-2011
 
-   // TODO: regexp : /\d{4}/  -> Pattern.compile("\\d{4}").matcher()
+   // TODO: regex : /\d{4}/  -> Pattern.compile("\\d{4}").matcher()
+   a = /^ryz.*$/
+   __ b = /^\d$/
 
 }
