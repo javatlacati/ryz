@@ -3,18 +3,51 @@ className: attributes.inference.FromPrimitive
 classFile: attributes/inference/FromPrimitive.class
 extends: java.lang.Object
 implements:
-attributes: public-instance i : int , protected-static j : int , default-instance k : int , private-static l : int
+attributes: public-instance i : int , protected-static j : int , default-instance k : int , private-static l : int , private-static m: int, \
+                public-static n : java.lang.String, protected-instance o : java.lang.String, default-static p : java.lang.String, \
+                private-instance q : java.lang.String, private-static r : java.lang.String,\
+                public-instance s: boolean,  protected-static t : boolean,  default-instance u : boolean,  private-static v : boolean, \
+                private-instance __w : boolean, \
+                private-instance x : char, private-static y : char, public-instance z : char, \
+                private-instance reyesMagos : java.util.Date
+
 methods:
 behavior :
 */
 attributes.inference.FromPrimitive{
 
-    // integers
-    + i = 0
-    #__ j = 1
-    ~ k = 2
-    - __ l = 3
+  // integers
+  +    i = 0
+  # __ j = 1
+  ~    k = 2
+  - __ l = 3
+    __ m = 4
 
-    // strings
-    + m = "Hola"
+  // todo, test 0xFF, 010, and other possible formats
+
+  // strings
+  + __ n = "public"
+  #    o = "protected"
+  ~ __ p = "default"
+  -    q = "secret"
+    __ r = "private 'by' default"
+  //TODO try way more complex string literals including multiline string
+
+  // boolean
+  +s= false
+  #__ t= true
+  ~u=false
+  -__ v = true
+  __w = false
+
+  // characters
+     x = 'x'
+  __ y = 'y'
+   + z = 'ñ'
+
+   // date TODO: deeply review this literal, I thing a number of fails could come from there.
+   reyesMagos = 06-01-2011
+
+   // TODO: regexp : /\d{4}/  -> Pattern.compile("\\d{4}").matcher()
+
 }

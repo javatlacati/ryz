@@ -36,10 +36,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * User: oscarryz
  * Date: Oct 15, 2010
  * Time: 8:55:48 AM
- * To change this template use File | Settings | File Templates.
  */
 abstract class LineTransformer {
 
@@ -182,7 +180,9 @@ class PackageClassTransformer extends LineTransformer {
                 String className = scapeName(possibleClass);
                 //TODO: solve what to do with public/nonpublic class in the same source file
                 generatedSource.add(String.format("/*import static*/import static java.lang.System.out;%n"));
-                generatedSource.add(String.format("public class %s %s %s { %n    private final %s self = this;%n",
+                generatedSource.add(String.format("public class %s %s %s { %n" +
+                        "    private final static java.text.DateFormat $sdf$ =new java.text.SimpleDateFormat(\"dd-MM-yyyy hh:mm:ss\");%n"+
+                        "    private final %s self = this;%n",
                         className,
                         extendsOrImplements,
                         scapeName(possibleSuperClass),
@@ -209,125 +209,6 @@ class PackageClassTransformer extends LineTransformer {
 
 }
 
-class AttributeTransformer extends LineTransformer {
-    private final boolean includeScope;
-
-    public AttributeTransformer(RyzClassState state, boolean includeScope ) {
-        super(state);
-        this.includeScope = includeScope;
-    }
-    public AttributeTransformer(RyzClassState state) {
-        this(state, true);
-    }
-    // [+#~-] hola ...
-    private final Pattern scopePattern
-            = Pattern.compile("([+#~-])\\s*.+");
-    // hola : adios
-    private final Pattern pattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:\\s*(\\w+)");
-    // hola : adios = xyz
-    private final Pattern initializedPattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
-    // hola: adios = Xyz()
-    private final Pattern initializedFromInvocation
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:" +
-                              "\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
-
-    // hola = 0 //TODO: revisar como saber el tipo de dato de un valor
-    private final Pattern attributeIntegerInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(\\d+)");
-    // __ hola = 0 // TODO:  how to test ( and capture ) the presence of "__" ?
-    private final Pattern classAttributeIntegerInferencePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*(\\d+)");
-
-    // hola = adios()
-    private final Pattern inferenceFromInvocationPattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
-
-    // __ hola : adios = xyz
-    private final Pattern initializedClassAttributePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
-
-    // a = {\n}
-    private final Pattern blockPattern =
-             Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*\\{");
-
-
-
-
-    @Override
-    public void transform(String line, List<String> generatedSource) {
-
-
-        Matcher matcher = pattern.matcher(line);
-
-        // TODO: plenty of room for refactoring here :)
-        //TODO: default must be final
-        String attributeName = null;
-        String attributeType = null;
-        String instanceOrStatic = "";
-        String initialValue = ";"; // is ";" or  "= xyz";
-        if( matcher.matches()){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(matcher.group(2));
-
-        } else if( (matcher = initializedClassAttributePattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(matcher.group(2));
-            initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(3))) + ";";
-            instanceOrStatic = "static";
-
-        } else if ( (matcher = initializedFromInvocation.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(matcher.group(2));
-            initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(3))) + ";";
-
-        } else if( (matcher = initializedPattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(matcher.group(2));
-            initialValue = " = "+ scapeName(matcher.group(3)) + ";";
-
-        } else if( (matcher = inferenceFromInvocationPattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(inferType(matcher.group(2)));
-            initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(2))) + ";";
-        } else if( (matcher = blockPattern.matcher(line)).matches() ){
-
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "Runnable"; //TODO: should use Block interface instead
-            
-
-            initialValue = String.format(" = /* block */ new Runnable(){%n    public void run(){%n");
-            currentClass().insideBlock();
-
-        } else if( ( matcher = attributeIntegerInferencePattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "int";
-            initialValue  = " = "+ matcher.group(2) + ";";
-        } else if( (matcher = classAttributeIntegerInferencePattern.matcher(line)).matches()) {
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "int";
-            initialValue  = " = "+ matcher.group(2) + ";";
-            instanceOrStatic = "static";
-        }
-
-        if( attributeName != null ) {
-            String accessModifier = getScope(line, this.includeScope, scopePattern, "private");
-            boolean added = currentClass().addVariable( accessModifier , attributeName, attributeType );
-            String type = added ? attributeType : "" ;
-
-            generatedSource.add( String.format("    /*attribute*/%s %s %s %s %s %n",
-                accessModifier,
-                instanceOrStatic,
-                type,
-                attributeName,
-                initialValue));
-
-        }
-
-    }
-
-}
 class CommentTransformer extends LineTransformer {
     CommentTransformer(RyzClassState state) {
         super(state);

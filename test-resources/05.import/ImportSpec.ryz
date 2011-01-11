@@ -6,7 +6,6 @@ classFile: import$/class$/First.class
 */
 import.class.First {
 
-    //TODO: test import outside package
     import( java.util.Date )
 
     date : Date = Date()
