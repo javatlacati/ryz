@@ -38,10 +38,16 @@ import java.io.PrintStream;
  */
 class BehaviorAssertionStrategy extends AssertStrategy {
 
+    private Class  currentClass;
+    private Object objectToInvokeOn;
 
     @Override
     boolean assertSpec(Object o, String elementDescription) {
         Class c = (Class)o;
+        if( !c.equals(currentClass)){
+            currentClass = c;
+            objectToInvokeOn = null;
+        }
         logger.finest("o = " + o);
         logger.finest("elementDescription = " + elementDescription);
         if( "new".equals(elementDescription) ){
@@ -84,14 +90,15 @@ class BehaviorAssertionStrategy extends AssertStrategy {
         logger.finest("firstSpace = " + firstSpace);
         String methodName = methodDefinition.substring(firstSpace, i);
         logger.finest("methodName = " + methodName);
-        // and ommiting the last parenthesis
+        // and omitting the last parenthesis
         String methodArgs = methodDefinition.substring(i+1, methodDefinition.length()-1);
 
         // The second part is what happens with the method.
         // might modify the stdout or stderr return something or modify some variable
         // there should be always a "=" separating the "thing" with the value
-        String object = methodResult.split("=")[0].trim();
-        String expectedValue = methodResult.split("=")[1];
+        String[] split = methodResult.split("=");
+        String object = split[0].trim();
+        String expectedValue = split.length == 2 ? split[1] : "";
 
         // If the method write to stdout check that
         if( "stdout".equals(object) || "result".equals(object)) {
@@ -107,11 +114,11 @@ class BehaviorAssertionStrategy extends AssertStrategy {
             try {
                 Class<?> [] parameterTypes  = parameterTypes(methodArgs);
                 Object[] arguments          = arguments(methodArgs);
+                objectToInvokeOn = objectToInvoke(c, instruction);
                 invocationResult            =
                         String.valueOf(
                             c.getMethod(methodName, parameterTypes)
-                            .invoke(objectToInvoke(c, instruction), arguments))
-                        ;
+                            .invoke(objectToInvokeOn, arguments));
             } catch (Exception e) {
                 throw new AssertionError(e);
             } finally {
@@ -140,7 +147,11 @@ class BehaviorAssertionStrategy extends AssertStrategy {
     }
 
     private Object objectToInvoke(Class c, String instruction) {
-        return "invokevirtual".equals(instruction) ? createInstance(c) : null;
+        return "invokevirtual".equals(instruction) ?
+                    objectToInvokeOn == null ?
+                            ( objectToInvokeOn = createInstance(c) ):
+                            objectToInvokeOn
+                : null;
     }
 
     private Object createInstance(Class c) {

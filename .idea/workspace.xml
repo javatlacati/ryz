@@ -19,9 +19,8 @@
   <component name="ChangeListManager">
     <list default="true" id="36296a06-84e0-411b-b5b5-827a5c8b4c69" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ryz/compiler/AttributeTransformer.java" afterPath="$PROJECT_DIR$/src/ryz/compiler/AttributeTransformer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" afterPath="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test-resources/03.attributes/InferFromLiteralsSpec.ryz" afterPath="$PROJECT_DIR$/test-resources/03.attributes/InferFromLiteralsSpec.ryz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/logging.properties" afterPath="$PROJECT_DIR$/resources/logging.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/ryz/compiler/BehaviorAssertionStrategy.java" afterPath="$PROJECT_DIR$/test/ryz/compiler/BehaviorAssertionStrategy.java" />
     </list>
     <ignored path="ryz.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,8 +93,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -108,17 +107,8 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LineTransformer.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="183" column="121" selection-start="7111" selection-end="7111" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AttributeInitializationSpec.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/AttributeInitializationSpec.ryz">
+      <file leaf-file-name="ImportOutsideSpec.ryz" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportOutsideSpec.ryz">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
@@ -126,19 +116,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InferFromLiteralsSpec.ryz" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/InferFromLiteralsSpec.ryz">
+      <file leaf-file-name="BehaviorSpec.ryz" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test-resources/04.methods/BehaviorSpec.ryz">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="1014" selection-end="1014" vertical-scroll-proportion="0.875">
+            <state line="11" column="0" selection-start="437" selection-end="437" vertical-scroll-proportion="0.48214287">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BehaviorSpec.ryz" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test-resources/04.methods/BehaviorSpec.ryz">
+      <file leaf-file-name="BehaviorAssertionStrategy.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/ryz/compiler/BehaviorAssertionStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="68" selection-start="368" selection-end="436" vertical-scroll-proportion="0.0">
+            <state line="100" column="64" selection-start="4142" selection-end="4142" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="logging.properties" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/logging.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="65" column="51" selection-start="2904" selection-end="2904" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AssertStrategy.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/ryz/compiler/AssertStrategy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="19" selection-start="2175" selection-end="2175" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -147,7 +155,34 @@
       <file leaf-file-name="AttributeTransformer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ryz/compiler/AttributeTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="74" selection-start="4739" selection-end="4739" vertical-scroll-proportion="-11.88">
+            <state line="109" column="74" selection-start="4739" selection-end="4739" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StructuralType.ryz" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/07.structural-typing/StructuralType.ryz">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="2" selection-start="2" selection-end="2" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SimpleBlockSpec.ryz" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/06.blocks/SimpleBlockSpec.ryz">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImportSpec.ryz" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -167,12 +202,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/ryz/compiler/InitialState.java" />
-        <option value="$PROJECT_DIR$/.idea/ant.xml" />
         <option value="$PROJECT_DIR$/test-resources/spec-definition-readme.txt" />
         <option value="$PROJECT_DIR$/test-resources/test-roadmap.txt" />
         <option value="$PROJECT_DIR$/test-resources/TODO-Notes.txt" />
-        <option value="$PROJECT_DIR$/resources/logging.properties" />
         <option value="$PROJECT_DIR$/test-resources/04.methods/BehaviorSpec.ryz" />
         <option value="$PROJECT_DIR$/src/ryz/compiler/RyzClass.java" />
         <option value="$PROJECT_DIR$/src/ryz/compiler/InsideMethodState.java" />
@@ -183,6 +215,9 @@
         <option value="$PROJECT_DIR$/src/ryz/compiler/AttributeTransformer.java" />
         <option value="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" />
         <option value="$PROJECT_DIR$/test-resources/03.attributes/InferFromLiteralsSpec.ryz" />
+        <option value="$PROJECT_DIR$/resources/logging.properties" />
+        <option value="$PROJECT_DIR$/test/ryz/compiler/BehaviorAssertionStrategy.java" />
+        <option value="$PROJECT_DIR$/test-resources/03.attributes/GetSetSpec.ryz" />
       </list>
     </option>
   </component>
@@ -321,6 +356,8 @@
       <sortByType ProjectPane="false" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -489,6 +526,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="compiler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AssertStrategy.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ryz" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -571,9 +630,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -592,9 +649,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.08436445" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.08436445" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -789,6 +846,24 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" />
       <extension name="snapshooter" />
@@ -816,24 +891,6 @@
       <envs />
       <properties />
       <listeners />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -1039,25 +1096,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="25" width="1439" height="875" extended-state="0" />
+    <frame x="-5" y="25" width="1451" height="879" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47945204" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.47820163" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.569863" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40136987" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24931881" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32717678" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44657534" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2801161" sideWeight="0.3260274" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969718" sideWeight="0.6635884" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2801161" sideWeight="0.5205479" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27769783" sideWeight="0.3678474" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6328767" sideWeight="0.99861306" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60490465" sideWeight="0.99861306" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.569863" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879817" sideWeight="0.7242744" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494331" sideWeight="0.7242744" order="2" side_tool="false" content_ui="combo" />
@@ -1078,7 +1135,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Infer from literals. Added, boolean, String, Date, and Regexp literals.&#10;&#10;Renemed the clas InferFromPrimitivesSpec.ryz to" />
+    <option name="LAST_COMMIT_MESSAGE" value="Using ISO 8601format for date literals ( yyyy-MM-dd )  instead of dd-MM-yyyy" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1094,6 +1151,7 @@
     <MESSAGE value="Added basic type inference for integer literals: &#10;&#10;+ i = 0 &#10;&#10;Defines a integer &#10;&#10;&#10;Renamed &quot;attributes&quot; for &quot;variables&quot; in state classes. &#10;&#10;Renamed some specs to be more meaningful" />
     <MESSAGE value="s/thing/think" />
     <MESSAGE value="Infer from literals. Added, boolean, String, Date, and Regexp literals.&#10;&#10;Renemed the clas InferFromPrimitivesSpec.ryz to" />
+    <MESSAGE value="Using ISO 8601format for date literals ( yyyy-MM-dd )  instead of dd-MM-yyyy" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1115,60 +1173,44 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportOutsideSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="60" selection-start="5136" selection-end="5136" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzClassState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="7" selection-start="2129" selection-end="2129" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/06.blocks/SimpleBlockSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="15" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="244" column="27" selection-start="8399" selection-end="8399" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/test-roadmap.txt">
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/ScopeMethodSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/TODO-Notes.txt">
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/ReturnSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="8" selection-start="143" selection-end="143" vertical-scroll-proportion="0.09009009">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/LocalVarSpec.ryz">
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/MethodAttributeMethodSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/TestCompiler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="16" selection-start="3264" selection-end="3264" vertical-scroll-proportion="0.042613637">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/LocalVariableSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="178" selection-end="178" vertical-scroll-proportion="0.3409091">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/InvokeMethodSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test-resources/04.methods/ClassMethodSpec.ryz">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1178,35 +1220,58 @@
         <state line="0" column="2" selection-start="2" selection-end="2" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/AttributeTransformer.java">
+    <entry file="file://$PROJECT_DIR$/test-resources/06.blocks/SimpleBlockSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="74" selection-start="4739" selection-end="4739" vertical-scroll-proportion="-11.88">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/AttributeInitializationSpec.ryz">
+    <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
+    <entry file="file://$PROJECT_DIR$/test-resources/05.import/ImportOutsideSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="183" column="121" selection-start="7111" selection-end="7111" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/AttributeTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="109" column="74" selection-start="4739" selection-end="4739" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/AssertStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="19" selection-start="2175" selection-end="2175" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/logging.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="51" selection-start="2904" selection-end="2904" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/BehaviorAssertionStrategy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="64" selection-start="4142" selection-end="4142" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/04.methods/BehaviorSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="68" selection-start="368" selection-end="436" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test-resources/03.attributes/InferFromLiteralsSpec.ryz">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="1014" selection-end="1014" vertical-scroll-proportion="0.875">
+        <state line="11" column="0" selection-start="437" selection-end="437" vertical-scroll-proportion="0.48214287">
           <folding />
         </state>
       </provider>
