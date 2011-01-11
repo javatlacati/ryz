@@ -45,7 +45,7 @@ attributes.inference.FromPrimitive{
   __ y = 'y'
    + z = 'ñ'
 
-   // date TODO: deeply review this literal, I thing a number of fails could come from there.
+   // date TODO: deeply review this literal, I think a number of bugs may originate here.
    reyesMagos = 06-01-2011
 
    // TODO: regexp : /\d{4}/  -> Pattern.compile("\\d{4}").matcher()
