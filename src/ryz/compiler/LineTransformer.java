@@ -67,7 +67,7 @@ abstract class LineTransformer {
         return currentClass;
     }
 
-    protected String scapeName(String name) {
+    protected static String scapeName(String name) {
         if( javaKeywords.contains(name)){
             return name + "$";
         } else if( "Int".equals(name)){ //TODO: Int should be a user defined type, not a keyword
@@ -79,13 +79,13 @@ abstract class LineTransformer {
     
     public abstract void transform(String line, List<String> generatedSource);
 
-    protected String checkObjectInitialization(String initialValue) {
+    protected static String checkObjectInitialization(String initialValue) {
         if( Character.isUpperCase(initialValue.charAt(0)) && initialValue.matches(".*\\(.*\\)")){
             initialValue = "new " + initialValue;
         }
         return initialValue;
     }
-    protected String inferType(String initialValue ) {
+    protected static String inferType(String initialValue ) {
         Matcher m = Pattern.compile("(.*)\\(.*\\)").matcher(initialValue);
         if( Character.isUpperCase(initialValue.charAt(0)) && m.matches()){
             return m.group(1);
@@ -180,8 +180,16 @@ class PackageClassTransformer extends LineTransformer {
                 String className = scapeName(possibleClass);
                 //TODO: solve what to do with public/nonpublic class in the same source file
                 generatedSource.add(String.format("/*import static*/import static java.lang.System.out;%n"));
-                generatedSource.add(String.format("public class %s %s %s { %n" +
+                generatedSource.add(String.format(
+                        "public class %s %s %s { %n" +
                         "    private final static java.text.DateFormat $sdf$ =new java.text.SimpleDateFormat(\"yyyy-MM-dd hh:mm:ss\");%n"+
+                        "    private final static java.util.Date $sdf$GetDate(String aDate){%n" +
+                        "      try {%n" +
+                        "        return $sdf$.parse(aDate);%n" +
+                        "      } catch( java.text.ParseException pe ) {%n" +
+                        "        throw new IllegalStateException(\"Error in the compiler while identifying a date literal. Original message: \" + pe.getMessage());\n" +
+                        "      }%n" +
+                        "    }%n"+
                         "    private final %s self = this;%n",
                         className,
                         extendsOrImplements,

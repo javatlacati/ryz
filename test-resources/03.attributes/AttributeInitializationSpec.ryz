@@ -1,10 +1,17 @@
 /*
 className: attribute.initialized.Second
-attributes: private i : java.lang.Integer, private s: java.lang.String ,private second : attribute.initialized.Second
+attributes: private-instance i : java.lang.Integer, private-instance s: java.lang.String ,\
+                private-instance second : attribute.initialized.Second, private-static o : java.lang.Integer, \
+                private-instance p : java.lang.String, private-instance q : java.lang.String
 classFile: attribute/initialized/Second.class
 */
 attribute.initialized.Second {
     i : Integer =  Integer(0)
     s : String  =  String("s")
     second : Second = Second()
+    ns : String = "some string"
+    __ ni : Integer = Integer(1)
+    __ o : Integer
+    p : String = ns
+    q : String = p
 }

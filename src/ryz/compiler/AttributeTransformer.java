@@ -28,100 +28,75 @@
 
 package ryz.compiler;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+
+// Some utility functions
+import static ryz.compiler.LineTransformer.checkObjectInitialization;
+import static ryz.compiler.LineTransformer.inferType;
+import static ryz.compiler.LineTransformer.scapeName;
 
 /**
  * Date: 1/10/11
  * Time: 2:08 PM
  */
 class AttributeTransformer extends LineTransformer {
+
+    private static final String literalInitialValue = " = %s;";
+    private static final String regexInitialValue = " = java.util.regex.Pattern.compile(\"%s\");%n";
+    private static final String dateInitialValue = " = $sdf$GetDate(\"%s 00:00:00\");";
+    private static final String blockInitialValue = " = /* block */ new Runnable(){%n    public void run(){%n";
+
+
+    // [+#~-] hola ...
+    private final static Pattern scopePattern = regexp("([+#~-])\\s*.+");
+    private final static Pattern blockPattern = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=(\\s*)?\\{");
+
+
+    private static final List<Match> matchers = Arrays.asList(
+        // + __ hola : String
+        Match.declaration(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)")),
+        // + __ hola = String()
+        Match.initialization(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
+        // + __ hola : String = a
+        Match.typeAndInit(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)")),
+        // + __ hola : String = a() // not used yet
+        Match.typeAndInit(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
+        // + __ hola = 1
+        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\d+)"),             "int",       literalInitialValue),
+        // + __ hola = "uno"
+        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*\")"),           "String",   literalInitialValue),
+        // + __ hola = true
+        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(true|false)"),       "boolean",  literalInitialValue),
+        // + __ hola = 'c'
+        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*('.')"),              "char",     literalInitialValue),
+        // + __ hola = 2011-01-06
+        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\d{4}-\\d{2}-\\d{2})"), "java.util.Date", dateInitialValue),
+        // + __ hola = /^(\d*)$/
+        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/"),       "java.util.regex.Pattern", regexInitialValue),
+        // hola = {
+        // }
+        Match.literal(blockPattern, "Runnable", blockInitialValue)
+
+    );
+
+    private static Pattern regexp(String re) {
+        return Pattern.compile(re);
+    }
+
     private final boolean includeScope;
 
-    public AttributeTransformer(RyzClassState state, boolean includeScope ) {
+    public AttributeTransformer(RyzClassState state, boolean includeScope) {
         super(state);
         this.includeScope = includeScope;
     }
+
     public AttributeTransformer(RyzClassState state) {
         this(state, true);
     }
-    // [+#~-] hola ...
-    private final Pattern scopePattern
-            = Pattern.compile("([+#~-])\\s*.+");
-    // hola : adios
-    private final Pattern pattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:\\s*(\\w+)");
-    // hola : adios = xyz
-    private final Pattern initializedPattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
-    // hola: adios = Xyz()
-    private final Pattern initializedFromInvocation
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*:" +
-                              "\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
-
-
-
-    // hola = 0 // TODO:  how to test ( and capture ) the presence of "__" ?
-    private final Pattern attributeIntegerInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(\\d+)");
-    // __ hola = 0
-    private final Pattern classAttributeIntegerInferencePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*(\\d+)");
-
-    // hola = "s"
-    private final Pattern attributeStringInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(\".*\")");
-    // __ hola = "s" // TODO:  how to test ( and capture ) the presence of "__" ?
-    private final Pattern classAttributeStringInferencePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*(\".*\")");
-
-
-    // hola = true
-    private final Pattern attributeBooleanInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(true|false)");
-    // __ hola = false
-    private final Pattern classAttributeBooleanInferencePattern
-            = Pattern.compile("[+#~-]??\\s*_{0,2}\\s*(\\w+)\\s*=\\s*(true|false)");
-
-
-    // hola = 'a'
-    private final Pattern attributeCharacterInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*('.')");
-    // __ hola = 'b'
-    private final Pattern classAttributeCharacterInferencePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*('.')");
-
-    // hola = '31-12-2010'
-    private final Pattern attributeDateInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(\\d{4}-\\d{2}-\\d{2})");
-
-    // __ hola = '31-12-2010'
-    private final Pattern classAttributeDateInferencePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*(\\d{4}-\\d{2}-\\d{2})");
-
-    // hola = /^\d{2}-\d{2}-\d{4}$/
-    private final Pattern attributeRegexInferencePattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/");
-
-    // __ hola = /^\d{2}-\d{2}-\d{4}$/
-    private final Pattern classAttributeRegexInferencePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/");
-
-
-    // TODO:  create test to infer from method call a = someMethod()
-    // hola = adios()
-    private final Pattern inferenceFromInvocationPattern
-            = Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))");
-
-    // __ hola : adios = xyz
-    private final Pattern initializedClassAttributePattern
-            = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)");
-
-    // a = {\n}
-    private final Pattern blockPattern =
-             Pattern.compile("[+#~-]??\\s*(\\w+)\\s*=\\s*\\{");
-
 
 
 
@@ -129,132 +104,153 @@ class AttributeTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
 
 
-        Matcher matcher = pattern.matcher(line);
-
-        // TODO: plenty of room for refactoring here :)
-        //TODO: default must be final
-        String attributeName = null;
-        String attributeType = null;
-        String instanceOrStatic = "";
-        String initialValue = ";"; // is ";" or  "= xyz";
-        if( matcher.matches()){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(matcher.group(2));
-
-        } else if( (matcher = initializedClassAttributePattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(matcher.group(2));
-            initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(3))) + ";";
-            instanceOrStatic = "static";
-
-        } else if ( (matcher = initializedFromInvocation.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(matcher.group(2));
-            initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(3))) + ";";
-
-        } else if( (matcher = initializedPattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(matcher.group(2));
-            initialValue = " = "+ scapeName(matcher.group(3)) + ";";
-
-        } else if( (matcher = inferenceFromInvocationPattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = scapeName(inferType(matcher.group(2)));
-            initialValue = " = "+ scapeName(checkObjectInitialization(matcher.group(2))) + ";";
-        } else if( (matcher = blockPattern.matcher(line)).matches() ){
-
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "Runnable"; //TODO: should use class "Block" interface instead
-
-            initialValue = String.format(" = /* block */ new Runnable(){%n    public void run(){%n");
+        Variable variable = null;
+        for (Match matcher : matchers) {
+            variable = matcher.matches(line, variable);
+        }
+        if (blockPattern.matcher(line).matches()) {
             currentClass().insideBlock();
-
-        } else if( ( matcher = attributeIntegerInferencePattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "int";
-            initialValue  = " = "+ matcher.group(2) + ";";
-        } else if( (matcher = classAttributeIntegerInferencePattern.matcher(line)).matches()) {
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "int";
-            initialValue  = " = "+ matcher.group(2) + ";";
-            instanceOrStatic = "static";
-        } else if( ( matcher = attributeStringInferencePattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "String";
-            initialValue  = " = "+ matcher.group(2) + ";";
-        } else if( (matcher = classAttributeStringInferencePattern.matcher(line)).matches()) {
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "String";
-            initialValue  = " = "+ matcher.group(2) + ";";
-            instanceOrStatic = "static";
-        } else if( ( matcher = attributeBooleanInferencePattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "boolean";
-            initialValue  = " = "+ matcher.group(2) + ";";
-        } else if( (matcher = classAttributeBooleanInferencePattern.matcher(line)).matches()) {
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "boolean";
-            initialValue  = " = "+ matcher.group(2) + ";";
-            instanceOrStatic = "static";
-        } else if( ( matcher = attributeCharacterInferencePattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "char";
-            initialValue  = " = "+ matcher.group(2) + ";";
-        } else if( (matcher = classAttributeCharacterInferencePattern.matcher(line)).matches()) {
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "char";
-            initialValue  = " = "+ matcher.group(2) + ";";
-            instanceOrStatic = "static";
-        } else if( ( matcher = attributeDateInferencePattern.matcher(line)).matches() ){ // TODO: this will get messy very quickly, refactor
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "java.util.Date";
-            initialValue  = String.format(";{%n" +
-                    "    try {%n" +
-                    "      %s = $sdf$.parse(\"%s 00:00:00\");%n" +
-                    "    } catch( java.text.ParseException pe ) {%n" +
-                    "      throw new IllegalStateException(\"Error in the compiler while identifying a date literal. Original message: \" + pe.getMessage());\n" +
-                    "    }%n" +
-                    "  }%n", attributeName, matcher.group(2));
-        } else if( (matcher = classAttributeDateInferencePattern.matcher(line)).matches()) { // TODO: this will get messy very quickly, refactor
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "java.util.Date";
-            initialValue  = String.format(";{%n" +
-                    "    try {%n" +
-                    "      %s = $sdf$.parse(\"%s 00:00:00\");%n" +
-                    "    } catch( java.text.ParseException pe ) {%n" +
-                    "      throw new IllegalStateException(\"Error in the compiler while identifying a date literal. Original message: \" + pe.getMessage());\n" +
-                    "    }%n" +
-                    "  }%n", attributeName, matcher.group(2));
-            instanceOrStatic = "static";
-        } else if( ( matcher = attributeRegexInferencePattern.matcher(line)).matches() ){
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "java.util.regex.Pattern";
-            initialValue  = String.format(" = java.util.regex.Pattern.compile(\"%s\");%n", matcher.group(2).replaceAll("\\\\","\\\\\\\\"));
-        } else if( (matcher = classAttributeRegexInferencePattern.matcher(line)).matches()) {
-            attributeName = scapeName(matcher.group(1));
-            attributeType = "java.util.regex.Pattern";
-            initialValue  = String.format(" = java.util.regex.Pattern.compile(\"%s\");%n", matcher.group(2).replaceAll("\\\\","\\\\\\\\")     );
-            instanceOrStatic = "static";
         }
 
 
-
-
-
-        if( attributeName != null ) {
+        if (variable != null) {
             String accessModifier = getScope(line, this.includeScope, scopePattern, "private");
-            boolean added = currentClass().addVariable( accessModifier , attributeName, attributeType );
-            String type = added ? attributeType : "" ;
+            boolean added = currentClass().addVariable(accessModifier, variable.name, variable.type);
+            String type = added ? variable.type : "";
 
-            generatedSource.add( String.format("    /*attribute*/%s %s %s %s %s %n",
-                accessModifier,
-                instanceOrStatic,
-                type,
-                attributeName,
-                initialValue));
+            generatedSource.add(String.format("    /*attribute*/%s %s %s %s %s %n",
+                    accessModifier,
+                    variable.staticOrInstance,
+                    type,
+                    variable.name,
+                    variable.initialValue));
 
         }
 
+    }
+
+
+}
+
+abstract class Match {
+
+    final Pattern pattern;
+
+    public Match(Pattern pattern) {
+        this.pattern = pattern;
+    }
+
+    Variable matches(String line, Variable variable) {
+        Matcher m = pattern.matcher(line);
+        if (m.matches()) {
+            return variableFrom(m);
+        }
+        return variable;
+    }
+
+    static String staticOrInstance(Matcher matcher) {
+        return matcher.group(1) == null ? "" : "static";
+    }
+
+    protected abstract Variable variableFrom(Matcher matcher);
+
+    static Match declaration(Pattern pattern) {
+        return new DeclarationMatcher(pattern);
+    }
+
+    public static Match initialization(Pattern pattern) {
+        return new InitMatcher(pattern);
+    }
+
+    public static Match typeAndInit(Pattern pattern) {
+        return new TypeWithInitMatcher(pattern);
+    }
+
+    public static Match literal(Pattern pattern, String literalType, String format) {
+        return new LiteralMatcher(pattern, literalType, format);
+    }
+}
+
+class TypeWithInitMatcher extends Match {
+    public TypeWithInitMatcher(Pattern pattern) {
+        super(pattern);
+    }
+
+    @Override
+    protected Variable variableFrom(Matcher matcher) {
+        return new Variable(scapeName(matcher.group(2)),
+                scapeName(matcher.group(3)),
+                staticOrInstance(matcher),
+                " = " + scapeName(checkObjectInitialization(matcher.group(4))) + ";");
+    }
+}
+
+class InitMatcher extends Match {
+    public InitMatcher(Pattern pattern) {
+        super(pattern);
+    }
+
+    @Override
+    protected Variable variableFrom(Matcher matcher) {
+        return new Variable(scapeName(matcher.group(2)),
+                scapeName(inferType(matcher.group(3))),
+                staticOrInstance(matcher),
+                " = " + scapeName(checkObjectInitialization(matcher.group(3))) + ";");
+    }
+}
+
+class DeclarationMatcher extends InitMatcher {
+    public DeclarationMatcher(Pattern pattern) {
+        super(pattern);
+    }
+
+    @Override
+    protected Variable variableFrom(Matcher matcher) {
+        Variable v = super.variableFrom(matcher);
+        v.initialValue = ";";
+        return v;
+    }
+}
+
+class LiteralMatcher extends Match {
+
+    private final String literalType;
+    private final String format;
+
+    public LiteralMatcher(Pattern pattern, String literalType, String format) {
+        super(pattern);
+        this.literalType = literalType;
+        this.format = format;
+    }
+
+    @Override
+    protected Variable variableFrom(Matcher matcher) {
+        return new Variable(scapeName(matcher.group(2)),
+                literalType,
+                staticOrInstance(matcher),
+                String.format(format,
+                        matcher.group(3).replaceAll("\\\\", "\\\\\\\\")));
+    }
+}
+
+
+class Variable {
+    String name;
+    String type;
+    String staticOrInstance = "";
+    String initialValue = ";";
+
+
+    Variable(String name, String type) {
+        this.name = name;
+        this.type = type;
+
+    }
+
+    Variable(String name, String type, String staticOrInstance, String initialValue) {
+        this(name, type);
+        this.staticOrInstance = staticOrInstance;
+        this.initialValue = initialValue;
     }
 
 }
