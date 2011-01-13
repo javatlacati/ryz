@@ -8,11 +8,11 @@ methods.class.ClassMethod{
     name:String
     name(): String {
         name.toString()
-        ^ name
+        name
     }
     main() {
     }
     __ count() : Integer {
-        ^ 0
+        0
     }
 }

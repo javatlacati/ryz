@@ -9,6 +9,6 @@ local.variable.Name{
     name(): String {
         local : String ="Oh oh"
         name = local
-        ^ name
+        name
     }
 }

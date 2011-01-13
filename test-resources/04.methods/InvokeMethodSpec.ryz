@@ -8,6 +8,6 @@ methods.invoke.InvokeMethod{
     name:String
     name(): String {
         name.toString()
-        ^ name
+        name
     }
 }

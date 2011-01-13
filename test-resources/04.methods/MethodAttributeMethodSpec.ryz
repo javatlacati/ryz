@@ -7,10 +7,10 @@ classFile: methods/package$/Second.class
 methods.package.Second{
     name:String
     name():String {
-        ^ name
+      name
     }
     lastName:String
     lastName() : String{
-        ^ lastName
+      lastName
     }
 }

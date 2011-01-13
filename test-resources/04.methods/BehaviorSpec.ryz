@@ -19,19 +19,19 @@ methods.invoke.InvokeStatement{
     out.println("Hello Oscar") // TODO: change to:  out.print "Hello world"
   }
   __ createInstance():InvokeStatement {
-    ^ InvokeStatement()
+    InvokeStatement()
   }
   /**
    * Needed to validate if the creation of an instance
    * of this class is always: methods.invoke.InvokeStatement@0
     */
   hashCode(): Int  {
-     ^ 0
+     0
   }
 
   modifyNumber() : Int {
     self.increment()
-     ^ number
+     number
   }
   increment() {
     number = 2
