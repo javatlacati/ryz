@@ -216,7 +216,31 @@ class PackageClassTransformer extends LineTransformer {
     }
 
 }
+class MultilineStringTransformer extends LineTransformer {
 
+    private String indentation;
+
+    public MultilineStringTransformer(RyzClassState state, int indentation) {
+        super(state);
+        StringBuilder builder = new StringBuilder();
+        for( int i = 0 ; i < indentation ; i++ ) {
+            builder.append(" ");
+        }
+        this.indentation = builder.toString();
+
+    }
+
+    @Override
+    public void transform(String line, List<String> generatedSource) {
+        if( line.equals("\"")){
+            String last = generatedSource.remove(generatedSource.size()-1);
+            generatedSource.add(last.substring(0,last.length()-4)+"\";" + lineSeparator);
+            currentClass().outsideMultilineString();
+        } else {
+            generatedSource.add( "+\""+indentation+line.replace("\"", "\\\"")+"\\n\""+ lineSeparator );
+        }
+    }
+}
 class CommentTransformer extends LineTransformer {
     CommentTransformer(RyzClassState state) {
         super(state);

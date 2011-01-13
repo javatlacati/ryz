@@ -29,8 +29,6 @@
 package ryz.compiler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -94,9 +92,17 @@ public abstract class RyzClassState {
         ryzClass().state.previousState();    
     }
 
+    public void insideMultilineString(int indentation) {
+        ryzClass.setState( new InsideMultiLineStringState(ryzClass(), this, indentation));
+    }
+
     protected void ensureVariablesHolderInitialized(String method) {
         if( ryzClass().variables().get( method ) == null ){
             ryzClass().variables().put( method , new ArrayList<String>());
         }
+    }
+
+    public void outsideMultilineString() {
+        ryzClass().state.previousState();
     }
 }

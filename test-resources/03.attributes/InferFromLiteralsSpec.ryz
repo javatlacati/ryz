@@ -14,7 +14,8 @@ attributes: public-instance i : int , protected-static j : int , default-instanc
                 private-instance c : java.lang.Object, private-instance d : java.lang.String
 
 methods:
-behavior :
+behavior : invokevirtual printMultiline()| stdout=    This\n    is a\n    multiline\n    string in "Ryz",\
+           invokevirtual getMultiline() | result= Other\n multiline\n string
 */
 attributes.inference.FromLiteral{
 
@@ -34,7 +35,6 @@ attributes.inference.FromLiteral{
   ~ __ p = "default"
   -    q = "secret"
     __ r = "private 'by' default"
-  //TODO try way more complex string literals including multiline string
 
   // boolean
   +s= false
@@ -69,6 +69,28 @@ attributes.inference.FromLiteral{
 
    //TODO add money literal  Money amount = '$1.00'
 
+
+  // Multli line string use the spaces between the first " and the text
+  // as identation for the string.
+  // The following uses 4 spaces indentation
+  multiline = "    This
+    is a
+    multiline
+    string in "Ryz"
+  "
+  // Can we print it?
+  printMultiline() {
+    out.print( multiline )
+  }
+
+  // Can we return it?
+  getMultiline():String {
+     other = " Other
+     multiline
+     string
+     "
+     other
+  }
 
 
 }

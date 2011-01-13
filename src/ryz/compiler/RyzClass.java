@@ -190,4 +190,12 @@ public class RyzClass {
     public void insideBlock() {
         state.insideBlock();
     }
+
+    public void insideMultilineString(int indentation) {
+        state.insideMultilineString(indentation);
+    }
+
+    public void outsideMultilineString() {
+        state.outsideMultilineString();
+    }
 }

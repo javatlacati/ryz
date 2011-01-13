@@ -46,6 +46,7 @@ import static ryz.compiler.LineTransformer.scapeName;
 class AttributeTransformer extends LineTransformer {
 
     private static final String literalInitialValue = " = %s;";
+    private static final String multiLineInitialValue = " =  %s\\n\"";
     private static final String regexInitialValue = " = java.util.regex.Pattern.compile(\"%s\");%n";
     private static final String dateInitialValue = " = $sdf$GetDate(\"%s 00:00:00\");";
     private static final String blockInitialValue = " = /* block */ new Runnable(){%n    public void run(){%n";
@@ -54,6 +55,7 @@ class AttributeTransformer extends LineTransformer {
     // [+#~-] hola ...
     private final static Pattern scopePattern = regexp("([+#~-])\\s*.+");
     private final static Pattern blockPattern = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=(\\s*)?\\{");
+    private static final Pattern multilineString = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*[^\"])");
 
 
     private static final List<Match> matchers = Arrays.asList(
@@ -67,6 +69,8 @@ class AttributeTransformer extends LineTransformer {
         Match.typeAndInit(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
         // + __ hola = 1
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\d+)"),             "int",       literalInitialValue),
+        // + __ hola = "uno
+        Match.literal(multilineString, "String",   multiLineInitialValue),
         // + __ hola = "uno"
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*\")"),           "String",   literalInitialValue),
         // + __ hola = true
@@ -112,6 +116,28 @@ class AttributeTransformer extends LineTransformer {
         }
         if (blockPattern.matcher(line).matches()) {
             currentClass().insideBlock();
+        } else if( multilineString.matcher(line).matches()){
+            // TODO: find out why there is no match here.
+            //Matcher matcher = multilineString.matcher(line);
+            //String string = matcher.group(3);
+            //int indentation = string.lastIndexOf(' ', 0 );
+
+            // In the mean time we will count the identation "by hand"
+            // TODO fix this
+            int indentation = -1;
+            for( char c : variable.initialValue.toCharArray() ) {
+                if( c == '\"'){
+                    indentation = 0;
+                }
+                if( c == ' ' && indentation >= 0 ) {
+                    indentation++;
+                }
+                if( c != ' ' && indentation > 0 ) {
+                    break;
+                }
+
+            }
+            currentClass().insideMultilineString(indentation);
         }
 
 
@@ -231,7 +257,7 @@ class LiteralMatcher extends Match {
                 literalType,
                 staticOrInstance(matcher),
                 String.format(format,
-                        matcher.group(3).replaceAll("\\\\", "\\\\\\\\")));
+                        matcher.group(3).replaceAll("\\\\", "\\\\\\\\")));// only for regex
     }
 }
 
