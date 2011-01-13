@@ -117,26 +117,12 @@ class AttributeTransformer extends LineTransformer {
         if (blockPattern.matcher(line).matches()) {
             currentClass().insideBlock();
         } else if( multilineString.matcher(line).matches()){
-            // TODO: find out why there is no match here.
-            //Matcher matcher = multilineString.matcher(line);
-            //String string = matcher.group(3);
-            //int indentation = string.lastIndexOf(' ', 0 );
-
-            // In the mean time we will count the identation "by hand"
-            // TODO fix this
-            int indentation = -1;
-            for( char c : variable.initialValue.toCharArray() ) {
-                if( c == '\"'){
-                    indentation = 0;
-                }
-                if( c == ' ' && indentation >= 0 ) {
-                    indentation++;
-                }
-                if( c != ' ' && indentation > 0 ) {
-                    break;
-                }
-
-            }
+            //If a multiline string is found
+            //get the identation to be used in the
+            // new lines
+            Matcher matcher = multilineString.matcher(line);
+            matcher.matches();
+            int indentation = matcher.group(3).lastIndexOf(' ');
             currentClass().insideMultilineString(indentation);
         }
 

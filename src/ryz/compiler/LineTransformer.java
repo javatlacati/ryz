@@ -237,6 +237,7 @@ class MultilineStringTransformer extends LineTransformer {
             generatedSource.add(last.substring(0,last.length()-4)+"\";" + lineSeparator);
             currentClass().outsideMultilineString();
         } else {
+            //TODO: add original file return (either \r\n or \n ) instead of just \n
             generatedSource.add( "+\""+indentation+line.replace("\"", "\\\"")+"\\n\""+ lineSeparator );
         }
     }
