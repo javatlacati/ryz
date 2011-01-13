@@ -79,7 +79,9 @@ class AttributeTransformer extends LineTransformer {
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/"),       "java.util.regex.Pattern", regexInitialValue),
         // hola = {
         // }
-        Match.literal(blockPattern, "Runnable", blockInitialValue)
+        Match.literal(blockPattern, "Runnable", blockInitialValue),
+        // hola = null
+        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(null)"),             "java.lang.Object",       literalInitialValue)
 
     );
 

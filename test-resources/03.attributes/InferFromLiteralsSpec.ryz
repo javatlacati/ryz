@@ -10,7 +10,8 @@ attributes: public-instance i : int , protected-static j : int , default-instanc
                 private-instance w : boolean, \
                 private-instance x : char, private-static y : char, public-instance z : char, \
                 private-instance guadalupe : java.util.Date, private-instance reyes: java.util.Date, \
-                private-instance a : java.util.regex.Pattern, private-static b : java.util.regex.Pattern
+                private-instance a : java.util.regex.Pattern, private-static b : java.util.regex.Pattern, \
+                private-instance c : java.lang.Object, private-instance d : java.lang.String
 
 methods:
 behavior :
@@ -24,7 +25,8 @@ attributes.inference.FromLiteral{
   - __ l = 3
     __ m = 4
 
-  // todo, test 0xFF, 010, and other possible formats
+  // TODO, test 0xFF, 010, and other possible formats
+  // TODO: add floating point literal
 
   // strings
   + __ n = "public"
@@ -46,13 +48,27 @@ attributes.inference.FromLiteral{
   __ y = 'y'
    + z = 'ñ'
 
-   // date TODO: deeply review this literal, I think a number of bugs may originate here.
+   // date
+   //TODO: deeply review this literal, I think a number of bugs may originate here.
    guadalupe  = 2010-12-12
    reyes      = 2011-01-06
 
+   //TODO add time 2010-12-31_23:59:59 ( the second before new year )
 
-   // TODO: regex : /\d{4}/  -> Pattern.compile("\\d{4}").matcher()
+
+   // regex
    a = /^ryz.*$/
    __ b = /^\d$/
+
+   // null  literal
+   c = null
+   d : String = null
+
+   //TODO interval literal: 1ms 1s 1m 1h 1d 1w 1month 1y
+   //
+
+   //TODO add money literal  Money amount = '$1.00'
+
+
 
 }
