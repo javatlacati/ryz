@@ -41,8 +41,8 @@ import java.util.regex.Pattern;
  */
 abstract class LineTransformer {
 
-    protected final String lineSeparator = System.getProperty("line.separator");
-    protected final Logger logger = Logger.getLogger(this.getClass().getName());
+    final String lineSeparator = System.getProperty("line.separator");
+    final Logger logger = Logger.getLogger(this.getClass().getName());
     private static final List<String> javaKeywords = Arrays.asList(
             "abstract","assert","boolean","break","byte","case","catch",
             "char","class","const","continue","default","do","double",
@@ -56,18 +56,18 @@ abstract class LineTransformer {
 
     private final RyzClass currentClass;
 
-    public LineTransformer(RyzClassState state) {
+    LineTransformer(RyzClassState state) {
         this.currentClass = state.ryzClass();
     }
 
 
 
 
-    public RyzClass currentClass() {
+    RyzClass currentClass() {
         return currentClass;
     }
 
-    protected static String scapeName(String name) {
+    static String scapeName(String name) {
         if( javaKeywords.contains(name)){
             return name + "$";
         } else if( "Int".equals(name)){ //TODO: Int should be a user defined type, not a keyword
@@ -79,13 +79,13 @@ abstract class LineTransformer {
     
     public abstract void transform(String line, List<String> generatedSource);
 
-    protected static String checkObjectInitialization(String initialValue) {
+    static String checkObjectInitialization(String initialValue) {
         if( Character.isUpperCase(initialValue.charAt(0)) && initialValue.matches(".*\\(.*\\)")){
             initialValue = "new " + initialValue;
         }
         return initialValue;
     }
-    protected static String inferType(String initialValue ) {
+    static String inferType(String initialValue) {
         Matcher m = Pattern.compile("(.*)\\(.*\\)").matcher(initialValue);
         if( Character.isUpperCase(initialValue.charAt(0)) && m.matches()){
             return m.group(1);
@@ -94,8 +94,8 @@ abstract class LineTransformer {
         
     }
 
-    protected String getScope(String line, boolean includeScope,
-                              Pattern pattern, String defaultScope){
+    String getScope(String line, boolean includeScope,
+                    Pattern pattern, String defaultScope){
 
         if( includeScope == false ) {
             return "";
@@ -207,18 +207,15 @@ class PackageClassTransformer extends LineTransformer {
             Class c = Class.forName(clazz);
             return c.isInterface();
         } catch (ClassNotFoundException e) {
-            if( !clazz.startsWith("java.lang")){
-                return isInterface("java.lang."+clazz);
-            } else {
-                return false;// should throw class not found exception actually.
-            }
+            return !clazz.startsWith("java.lang")
+                        && isInterface("java.lang." + clazz);
         }
     }
 
 }
 class MultilineStringTransformer extends LineTransformer {
 
-    private String indentation;
+    private final String indentation;
 
     public MultilineStringTransformer(RyzClassState state, int indentation) {
         super(state);

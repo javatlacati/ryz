@@ -33,7 +33,7 @@ import java.util.Arrays;
 /**
  * Date: 1/13/11
  */
-public class InsideMultiLineStringState extends RyzClassState {
+class InsideMultiLineStringState extends RyzClassState {
     private final RyzClassState previousState;
 
     public InsideMultiLineStringState(RyzClass ryzClass, RyzClassState currentState, int indentation) {

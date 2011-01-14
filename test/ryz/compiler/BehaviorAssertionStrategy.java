@@ -54,16 +54,10 @@ class BehaviorAssertionStrategy extends AssertStrategy {
 
             return !isNull(createInstance(c));
 
-        } else if(elementDescription.trim().startsWith("invokestatic")
-                || elementDescription.trim().startsWith("invokevirtual")){
-
-            return assertMethodInvocation(elementDescription, c);
-
-
-        } else {
-            //throw new UnsupportedOperationException(elementDescription);
-            return false;
-        }
+        } else
+            return (elementDescription.trim().startsWith("invokestatic")
+                        || elementDescription.trim().startsWith("invokevirtual"))
+                    && assertMethodInvocation(elementDescription, c);
 
     }
 
@@ -160,9 +154,9 @@ class BehaviorAssertionStrategy extends AssertStrategy {
             assert c.isInstance(v);
             return v;
         } catch (InstantiationException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         return null;
     }
@@ -179,16 +173,16 @@ class BehaviorAssertionStrategy extends AssertStrategy {
 
     @Override
     String getName(Object o) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Override
     String getType(Object o) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Override
     int getModifiers(Object o) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0;
     }
 }

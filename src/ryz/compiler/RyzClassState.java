@@ -42,14 +42,14 @@ import java.util.logging.Logger;
  */
 public abstract class RyzClassState {
 
-    protected static Logger logger = Logger.getLogger(RyzC.class.getName());
+    static final Logger logger = Logger.getLogger(RyzC.class.getName());
     private final RyzClass ryzClass;
-    List<LineTransformer> transformers;
+    private List<LineTransformer> transformers;
 
 
     // TODO: have the transformers initialized differently
     // TODO: I think there is too much passing of the "ryzClass" instance, perhaps is not needed.
-    protected RyzClassState(RyzClass ryzClass) {
+    RyzClassState(RyzClass ryzClass) {
         this.ryzClass = ryzClass;
     }
 
@@ -96,7 +96,7 @@ public abstract class RyzClassState {
         ryzClass.setState( new InsideMultiLineStringState(ryzClass(), this, indentation));
     }
 
-    protected void ensureVariablesHolderInitialized(String method) {
+    void ensureVariablesHolderInitialized(String method) {
         if( ryzClass().variables().get( method ) == null ){
             ryzClass().variables().put( method , new ArrayList<String>());
         }

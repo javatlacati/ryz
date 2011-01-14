@@ -148,9 +148,9 @@ class AttributeTransformer extends LineTransformer {
 
 abstract class Match {
 
-    final Pattern pattern;
+    private final Pattern pattern;
 
-    public Match(Pattern pattern) {
+    Match(Pattern pattern) {
         this.pattern = pattern;
     }
 
@@ -249,13 +249,13 @@ class LiteralMatcher extends Match {
 
 
 class Variable {
-    String name;
-    String type;
+    final String name;
+    final String type;
     String staticOrInstance = "";
     String initialValue = ";";
 
 
-    Variable(String name, String type) {
+    private Variable(String name, String type) {
         this.name = name;
         this.type = type;
 

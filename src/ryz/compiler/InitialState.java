@@ -37,7 +37,7 @@ import java.util.Arrays;
  * Date: Dec 11, 2010
  * Time: 12:18:48 AM
  */
-public class InitialState extends RyzClassState {
+class InitialState extends RyzClassState {
     public InitialState(RyzClass ryzClass) {
         super(ryzClass);
         transformers(Arrays.asList(

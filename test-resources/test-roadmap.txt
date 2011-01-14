@@ -2,10 +2,10 @@
 01.comments      - Single line, multiline.
 02.classes       - Top level, nested, inner, etc
 03.attributes    - With type inference
-04.methods       -
+04.methods       - with funny names
 05.import        - import, importFrom, importStatic
 06.blocks ( aka. closures ) - (param:Type):Type { /*body*/ }
-07.structural typing - Or status Duck type :)
+07.structural typing - Or static Duck type :)
 08.embedding     - To replace inheritance with composition
 09.nullObject    - Probably using an annotation @NullObjecteable ?
 10.Java interoperability - primitives, java.util. etc.
@@ -13,7 +13,7 @@
 12.reflection    -  o["name"] // returns x
 13.extension methods - __ java.util.List.each( l : List,  (e:E) )
 14.library       - ( control structures, basic types, etc )
-15.named-parameters
+15.named-parameters -
 16.varargs       - method( arguments: String* ) {...}
 17.self chaining - instead of void
 18.builder       - To create immutable objects

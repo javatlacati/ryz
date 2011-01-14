@@ -43,21 +43,20 @@ import java.util.logging.Logger;
  * Time: 4:08:07 PM
  * To change this template use File | Settings | File Templates.
  */
-public class RyzClass {
+class RyzClass {
     private final List<String> sourceLines;
     private final List<String> generatedSource = new ArrayList<String>();
     private String name;
     private String packageName;
     RyzClassState state;
 
-    private List<String> methods;
-    private Map<String, List<String>> variables = new HashMap<String,List<String>>();
-    private Logger logger = Logger.getLogger(this.getClass().getName());
+    private final List<String> methods;
+    private final Map<String, List<String>> variables = new HashMap<String,List<String>>();
     private final String sourceFile;
 
     public RyzClass(String sourceFile, List<String> sourceLines) {
         this.sourceFile = sourceFile;
-        if( logger.isLoggable(Level.FINEST)){
+        Logger logger=Logger.getLogger(this.getClass().getName());if( logger.isLoggable(Level.FINEST)){
             StringBuilder sb = new StringBuilder();
             for (String sourceLine : sourceLines) {
                 sb.append(sourceLine);
@@ -122,7 +121,7 @@ public class RyzClass {
 
     /**
      * Returns the list of translated source code.
-     * @return
+     * @return  A list containing all the generated source code
      */
     public List<String> outputLines() {
         return generatedSource;
@@ -138,7 +137,6 @@ public class RyzClass {
      */
     public void closeKey() {
         this.state.keyClosed();
-        ;
         //To change body of created methods use File | Settings | File Templates.
     }
 

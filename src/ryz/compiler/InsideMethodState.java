@@ -28,7 +28,6 @@
 
 package ryz.compiler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -72,16 +71,13 @@ public class InsideMethodState extends RyzClassState {
         ensureVariablesHolderInitialized(method);
         ensureVariablesHolderInitialized("instance");
 
-        String variable = variableName;//String.format("(%s)%s:%s", accessModifier, variableName, variableType);
-
-        logger.finest("variable = "+ variable);
+        logger.finest("variableName = "+ variableName);
         logger.finest("ryzClass().variables().get(method) = " + ryzClass().variables().get(method));
         logger.finest("ryzClass().variables().get(\"instance\") = " +ryzClass().variables().get("instance"));
-        logger.finest("ryzClass().variables().get(method).contains(variable) = " + ryzClass().variables().get(method).contains(variable));
-        if(!ryzClass().variables().get(method).contains(variable) && !ryzClass().variables().get("instance").contains(variableName) ){
-            return ryzClass().variables().get(method).add(variable);
-        }
-        return false;
+        logger.finest("ryzClass().variables().get(method).contains(variableName) = " + ryzClass().variables().get(method).contains(variableName));
+        return !ryzClass().variables().get(method).contains(variableName)
+                && !ryzClass().variables().get("instance").contains(variableName)
+                && ryzClass().variables().get(method).add(variableName);
 
     }
 

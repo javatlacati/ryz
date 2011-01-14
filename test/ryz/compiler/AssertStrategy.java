@@ -123,7 +123,7 @@ abstract class AssertStrategy {
      * @return - An array of elements or things to validate.
      * @see #assertDefinition(Class,  java.util.Properties, String)
      */
-    public abstract Object[] getObjectsToValidate(Class clazz);
+    protected abstract Object[] getObjectsToValidate(Class clazz);
 
     /**
      * Subclasses should return the name of the thing to be validated.

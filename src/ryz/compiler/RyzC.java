@@ -62,7 +62,7 @@ import static java.lang.System.err;
  */
 public class RyzC {
 
-    private static Logger logger = Logger.getLogger(RyzC.class.getName());
+    private static final Logger logger = Logger.getLogger(RyzC.class.getName());
     
     public static void main( String [] args ) throws IOException {
         RyzC c = RyzC.getCompiler();
@@ -91,10 +91,10 @@ public class RyzC {
      */
     private File output = new File("");
 
-    /**
+  /**
      * Holds a representation of the Ryz classes compiled during this session.
      */
-    private List<RyzClass> classes = new ArrayList<RyzClass>();
+    private final List<RyzClass> classes = new ArrayList<RyzClass>();
 
     /**
      * Specify the source path directories for the compiler to use.
@@ -154,8 +154,8 @@ public class RyzC {
 
     /**
      * Compiles a java source code file from the given RyzClass
-      * @param currentClass
-     * @throws IOException
+      * @param currentClass  - The class to be transformed into .class file
+     * @throws IOException   - If it is not possible to write the file
      */
     private void createClassDefinition( RyzClass currentClass ) throws IOException {
         //System.out.println("outputLines = " + outputLines);
@@ -189,7 +189,7 @@ public class RyzC {
                 toRemove.add( s ) ;
             }
         }
-        if( packageString == "" ){
+        if( "".equals(packageString) ){
             writer.write(
                "package load.test;\n" +
                " public class First{\n" +
@@ -241,8 +241,7 @@ public class RyzC {
      * @return a list of strings each one containing one line.
      */
     private List<String> readLines(File f){
-        String separator = System.getProperty("line.separator");
-        separator = "\n";//TODO: fix this for Windows 
+        String separator = "\n"; // System.gerProperty("line.separator");
         return Arrays.asList(readFile( f ).split(separator));
     }
 
@@ -263,7 +262,7 @@ public class RyzC {
         }
     }
 
-    /**
+  /**
      * Utility method to read all all the input into the output. Use by the
      * "readFile" method
      * @param input - The input to read from.

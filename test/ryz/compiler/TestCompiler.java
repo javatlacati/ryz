@@ -63,11 +63,11 @@ public class TestCompiler {
     private TestUtil testUtil;
     
 
-    private AssertStrategy attributesAssertion = new AttributesAssertStrategy();
-    private AssertStrategy methodsAssertion    = new MethodsAssertStrategy();
-    private AssertStrategy implementsAssertion = new ImplementsAssertStrategy();
-    private AssertStrategy extendsAssertion    = new ExtendsAssertionStrategy();
-    private AssertStrategy assertBehaviour     = new BehaviorAssertionStrategy();
+    private final AssertStrategy attributesAssertion = new AttributesAssertStrategy();
+    private final AssertStrategy methodsAssertion    = new MethodsAssertStrategy();
+    private final AssertStrategy implementsAssertion = new ImplementsAssertStrategy();
+    private final AssertStrategy extendsAssertion    = new ExtendsAssertionStrategy();
+    private final AssertStrategy assertBehaviour     = new BehaviorAssertionStrategy();
 
 
     @BeforeMethod
