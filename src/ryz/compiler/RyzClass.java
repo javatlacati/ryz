@@ -48,7 +48,7 @@ class RyzClass {
     private final List<String> generatedSource = new ArrayList<String>();
     private String name;
     private String packageName;
-    RyzClassState state;
+    private RyzClassState state;
 
     private final List<String> methods;
     private final Map<String, List<String>> variables = new HashMap<String,List<String>>();
@@ -56,7 +56,8 @@ class RyzClass {
 
     public RyzClass(String sourceFile, List<String> sourceLines) {
         this.sourceFile = sourceFile;
-        Logger logger=Logger.getLogger(this.getClass().getName());if( logger.isLoggable(Level.FINEST)){
+        Logger logger= Logger.getLogger(this.getClass().getName());
+        if( logger.isLoggable(Level.FINEST)){
             StringBuilder sb = new StringBuilder();
             for (String sourceLine : sourceLines) {
                 sb.append(sourceLine);
@@ -66,13 +67,13 @@ class RyzClass {
         }
         this.sourceLines = sourceLines;
         this.methods = new ArrayList<String>();
-        setState(new InitialState(this));
+        state(new InitialState(this));
     }
 
 
     public void setClassName(String theClassName ) {
         this.name = theClassName.trim();
-        state.nextState();
+        state().nextState();
     }
 
 
@@ -128,7 +129,7 @@ class RyzClass {
     }
 
     private List<LineTransformer> transformers() {
-        return state.transformers();
+        return state().transformers();
     }
 
     /**
@@ -136,21 +137,21 @@ class RyzClass {
      * to the previous state.
      */
     public void closeKey() {
-        this.state.keyClosed();
+        this.state().keyClosed();
         //To change body of created methods use File | Settings | File Templates.
     }
 
     public void addMethod(String methodName, String methodType) {
         this.methods.add(methodName + ":" + methodType );// TODO: add args
-        state.nextState();
+        state().nextState();
     }
 
-    public void setState(RyzClassState classState) {
+    public void state(RyzClassState classState) {
         this.state = classState;
     }
 
     public boolean addVariable(String accessModifier, String variableName, String variableType) {
-        return state.addVariable( accessModifier, variableName, variableType);
+        return state().addVariable(accessModifier, variableName, variableType);
     }
 
     /**
@@ -158,7 +159,7 @@ class RyzClass {
      * interpreted anymore
      */
     public void insideComment() {
-        state.insideComment();
+        state().insideComment();
     }
 
     /**
@@ -166,7 +167,7 @@ class RyzClass {
      * previous state
      */
     public void outsideComment() {
-        state.outsideComment();
+        state().outsideComment();
     }
 
     public String sourceFile() {
@@ -186,14 +187,18 @@ class RyzClass {
     }
 
     public void insideBlock() {
-        state.insideBlock();
+        state().insideBlock();
     }
 
     public void insideMultilineString(int indentation) {
-        state.insideMultilineString(indentation);
+        state().insideMultilineString(indentation);
     }
 
     public void outsideMultilineString() {
-        state.outsideMultilineString();
+        state().outsideMultilineString();
+    }
+
+    RyzClassState state() {
+        return state;
     }
 }

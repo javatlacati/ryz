@@ -28,7 +28,6 @@
 
 package ryz.compiler;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -61,11 +60,11 @@ public class InsideClassState extends RyzClassState {
 
     @Override
     void previousState() {
-        ryzClass().setState(new InitialState(ryzClass()));
+        ryzClass().state(new InitialState(ryzClass()));
     }
 
     @Override
     void nextState() {
-        ryzClass().setState(new InsideMethodState(ryzClass()));
+        ryzClass().state(new InsideMethodState(ryzClass()));
     }
 }

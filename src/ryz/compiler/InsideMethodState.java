@@ -57,12 +57,12 @@ public class InsideMethodState extends RyzClassState {
     @Override
     void previousState() {
         ryzClass().markLastLineAsReturn();
-        ryzClass().setState(new InsideClassState(ryzClass()));
+        ryzClass().state(new InsideClassState(ryzClass()));
     }
 
     @Override
     void nextState() {
-        ryzClass().setState(new InitialState(ryzClass()));
+        ryzClass().state(new InitialState(ryzClass()));
     }
 
     @Override

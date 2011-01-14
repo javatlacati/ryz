@@ -63,12 +63,12 @@ public class InsideBlockState extends RyzClassState {
 
     @Override
     void previousState() {
-        ryzClass().setState(previousState);
+        ryzClass().state(previousState);
     }
 
     @Override
     void nextState() {
-        ryzClass().setState(previousState);
+        ryzClass().state(previousState);
     }
 
     @Override

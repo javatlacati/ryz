@@ -78,22 +78,22 @@ public abstract class RyzClassState {
     }
 
     public void insideComment() {
-        ryzClass().setState(new InsideCommentState(ryzClass(), this));
+        ryzClass().state(new InsideCommentState(ryzClass(), this));
     }
 
     public void outsideComment() {
-        ryzClass().state.previousState();
+        ryzClass().state().previousState();
     }
 
     public void insideBlock(){
-        ryzClass.setState( new InsideBlockState(ryzClass(), this ));
+        ryzClass.state(new InsideBlockState(ryzClass(), this));
     }
     public void keyClosed() {
-        ryzClass().state.previousState();    
+        ryzClass().state().previousState();
     }
 
     public void insideMultilineString(int indentation) {
-        ryzClass.setState( new InsideMultiLineStringState(ryzClass(), this, indentation));
+        ryzClass.state(new InsideMultiLineStringState(ryzClass(), this, indentation));
     }
 
     void ensureVariablesHolderInitialized(String method) {
@@ -103,6 +103,6 @@ public abstract class RyzClassState {
     }
 
     public void outsideMultilineString() {
-        ryzClass().state.previousState();
+        ryzClass().state().previousState();
     }
 }

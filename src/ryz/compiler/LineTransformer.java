@@ -267,7 +267,7 @@ class ClosingKeyTransformer extends LineTransformer {
     @Override
     public void transform(String line, List<String> generatedSource) {
         if( line.startsWith("}")) { // or ends with }
-            String indentation = currentClass().state instanceof InsideMethodState ?
+            String indentation = currentClass().state() instanceof InsideMethodState ?
 
                     "    " : "/**/";
             generatedSource.add(indentation +line + lineSeparator);
