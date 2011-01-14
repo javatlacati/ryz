@@ -54,10 +54,11 @@ class BehaviorAssertionStrategy extends AssertStrategy {
 
             return !isNull(createInstance(c));
 
-        } else
+        } else {
             return (elementDescription.trim().startsWith("invokestatic")
                         || elementDescription.trim().startsWith("invokevirtual"))
                     && assertMethodInvocation(elementDescription, c);
+        }
 
     }
 
