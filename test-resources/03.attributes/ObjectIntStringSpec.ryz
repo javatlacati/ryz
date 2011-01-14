@@ -1,6 +1,8 @@
 /*
 className: attribute.package$.ObjectIntString
-attributes: private s:java.lang.String, private name:java.lang.String, private other:java.lang.Object
+attributes: private s:java.lang.String,\
+            private name:java.lang.String,\
+            private other:java.lang.Object
 classFile: attribute/package$/ObjectIntString.class
 */
 attribute.package.ObjectIntString {

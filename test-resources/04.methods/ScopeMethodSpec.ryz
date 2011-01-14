@@ -5,18 +5,22 @@ extends: java.lang.Object
 implements: 
 attributes:private-instance s : java.lang.String
 methods: private-instance privateMethod:void, \
-         public-instance publicMethod:void, public-instance otherPublicMethod: void, \
+         public-instance publicMethod:void,\
+         public-instance otherPublicMethod: void, \
          protected-instance protectedMethod:void,\
          default-instance packageMethod: void, \
-         public-static publicClassMethod:void, public-static otherPublicClassMethod: void, \
+         public-static publicClassMethod:void,\
+         public-static otherPublicClassMethod: void, \
          private-static privateClassMethod:void, \
          protected-static protectedClassMethod:void,\
          default-static packageClassMethod: void, \
          private-instance privateStringMethod:java.lang.String, \
-         public-instance publicStringMethod:java.lang.String, public-instance otherPublicStringMethod: java.lang.String, \
+         public-instance publicStringMethod:java.lang.String,\
+         public-instance otherPublicStringMethod: java.lang.String, \
          protected-instance protectedStringMethod:java.lang.String,\
          default-instance packageStringMethod: java.lang.String, \
-         public-static publicStringClassMethod:java.lang.String, public-static otherPublicStringClassMethod: java.lang.String, \
+         public-static publicStringClassMethod:java.lang.String,\
+         public-static otherPublicStringClassMethod: java.lang.String, \
          private-static privateStringClassMethod:java.lang.String, \
          protected-static protectedStringClassMethod:java.lang.String,\
          default-static packageStringClassMethod: java.lang.String, \

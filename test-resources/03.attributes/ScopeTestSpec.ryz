@@ -1,6 +1,10 @@
 /*
 className: access.test.ScopeTest
-attributes: private s:java.lang.String, public a:java.lang.String, protected b:java.lang.String, private c : java.lang.String, default d : java.lang.String
+attributes: private-instance s:java.lang.String,\
+            public-instance a:java.lang.String,\
+            protected-instance b:java.lang.String,\
+            private-instance c : java.lang.String,\
+            default-instance d : java.lang.String
 classFile: access/test/ScopeTest.class
 */
 access.test.ScopeTest {

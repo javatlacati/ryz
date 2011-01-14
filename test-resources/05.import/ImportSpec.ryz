@@ -6,12 +6,12 @@ classFile: import$/class$/First.class
 */
 import.class.First {
 
-    import( java.util.Date )
+    import ( java.util.Date )
 
     date : Date = Date()
 
     endDate() : Date {
-        ^   Date()
+     Date()
     }
 
 }

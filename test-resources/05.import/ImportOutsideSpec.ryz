@@ -7,7 +7,7 @@ attributes: private-instance date: java.util.Date
 methods: public-instance endDate:java.util.Date
 behavior :
 */
-import( java.util.Date )
+import ( java.util.Date )
 imports.ImportOutside{
    date : Date = Date()
 

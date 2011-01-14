@@ -127,9 +127,8 @@ class ImportTransformer extends LineTransformer {
 
     @Override
     public void transform(String line, List<String> generatedSource) {
-        if( line.startsWith("import(")){
-            logger.finest("line = " + line);
-            Matcher m = importPattern.matcher(line);
+        Matcher m = importPattern.matcher(line);
+        if( m.matches() ){
             if( m.matches() ) {
                 generatedSource.add( String.format("import %s;%n", m.group(1)));
             }

@@ -3,15 +3,30 @@ className: attributes.inference.FromLiteral
 classFile: attributes/inference/FromLiteral.class
 extends: java.lang.Object
 implements:
-attributes: public-instance i : int , protected-static j : int , default-instance k : int , private-static l : int , private-static m: int, \
-                public-static n : java.lang.String, protected-instance o : java.lang.String, default-static p : java.lang.String, \
-                private-instance q : java.lang.String, private-static r : java.lang.String,\
-                public-instance s: boolean,  protected-static t : boolean,  default-instance u : boolean,  private-static v : boolean, \
-                private-instance w : boolean, \
-                private-instance x : char, private-static y : char, public-instance z : char, \
-                private-instance guadalupe : java.util.Date, private-instance reyes: java.util.Date, \
-                private-instance a : java.util.regex.Pattern, private-static b : java.util.regex.Pattern, \
-                private-instance c : java.lang.Object, private-instance d : java.lang.String
+attributes: public-instance i : int ,\
+            protected-static j : int ,\
+            default-instance k : int ,\
+            private-static l : int ,\
+            private-static m: int, \
+            public-static n : java.lang.String,\
+            protected-instance o : java.lang.String,\
+            default-static p : java.lang.String, \
+            private-instance q : java.lang.String,\
+            private-static r : java.lang.String,\
+            public-instance s: boolean,\
+            protected-static t : boolean,\
+            default-instance u : boolean,\
+            private-static v : boolean, \
+            private-instance w : boolean, \
+            private-instance x : char,\
+            private-static y : char,\
+            public-instance z : char, \
+            private-instance guadalupe : java.util.Date,\
+            private-instance reyes: java.util.Date, \
+            private-instance a : java.util.regex.Pattern,\
+            private-static b : java.util.regex.Pattern, \
+            private-instance c : java.lang.Object,\
+            private-instance d : java.lang.String
 
 methods:
 behavior : invokevirtual printMultiline()| stdout=    This\n    is a\n    multiline\n    string in "Ryz",\

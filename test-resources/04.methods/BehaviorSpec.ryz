@@ -7,9 +7,9 @@ attributes:
 methods: public-static main : void , \
          public main : void
 behavior : new,  invokestatic main([Ljava.lang.String;) | stdout=Hello Oscar\n,\
-invokestatic createInstance() | result=methods.invoke.InvokeStatement@0,\
-invokevirtual toString() | result=methods.invoke.InvokeStatement@0,\
-invokevirtual modifyNumber() | result=2
+          invokestatic createInstance() | result=methods.invoke.InvokeStatement@0,\
+          invokevirtual toString() | result=methods.invoke.InvokeStatement@0,\
+          invokevirtual modifyNumber() | result=2
 */
 methods.invoke.InvokeStatement{
 

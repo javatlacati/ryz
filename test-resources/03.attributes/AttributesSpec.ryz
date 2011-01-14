@@ -12,7 +12,7 @@ attributes.instance.InstanceAttributes {
   }
 
   name():String {
-    ^ name
+    name
   }
 
 }
