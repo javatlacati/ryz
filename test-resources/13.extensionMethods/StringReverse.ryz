@@ -15,10 +15,7 @@ extension.methods.StringReverse {
      out.println(result)
 
   }
-  reverse(): String {
-   s = StringBuilder()
-   s.toString()
-  }
   __ java.lang.String.reverse( s : String ) : String {
+    StringBuilder( s ).reverse().toString()
   }
 }
