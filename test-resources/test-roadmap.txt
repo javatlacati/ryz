@@ -1,6 +1,8 @@
 00.loading       - Load classes dynamically
 01.comments      - Single line, multiline.
 02.classes       - Top level, nested, inner, etc
+  02.1 Constructor with block - ArrayList({add("hola")}) 
+  02.2 Double brace init - ArrayList(){ add("hola") }
 03.attributes    - With type inference
 04.methods       - with funny names
 05.import        - import, importFrom, importStatic
@@ -19,3 +21,4 @@
 18.builder       - To create immutable objects
 19.multiple classes per file
 20.multiline strings
+21.generics
