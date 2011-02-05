@@ -1,0 +1,21 @@
+/*
+className: extension.methods.StringReverse
+classFile: extension/methods/StringReverse.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:
+behavior :  invokestatic main([Ljava.lang.String;) | stdout=Ryz\n
+*/
+extension.methods.StringReverse {
+  main() {
+     word = "zyR"
+     result = word.reverse()
+     out.println(result)
+
+  }
+  __ java.lang.String.reverse( s : String ) : String {
+    StringBuilder( s ).reverse().toString()
+  }
+}

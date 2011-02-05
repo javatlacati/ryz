@@ -1,0 +1,13 @@
+/*
+className: attributes.local.LocalVars  
+methods: public-instance main: void, public-static main: void
+classFile: attributes/local/LocalVars.class
+*/
+ attributes.local.LocalVars {
+import( java.util.Date )
+
+  main() {
+    a = Date()
+    a = Date()
+  }
+}

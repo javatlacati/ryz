@@ -1,0 +1,21 @@
+/*
+className: methods.class$.ClassMethod
+attributes:  private name:java.lang.String
+methods:  public name: java.lang.String ,\
+          public main: void,\
+          public-static main:void,\
+          public-static count: java.lang.Integer
+classFile: methods/class$/ClassMethod.class
+*/
+methods.class.ClassMethod{
+    name:String
+    name(): String {
+        name.toString()
+        name
+    }
+    main() {
+    }
+    __ count() : Integer {
+        0
+    }
+}
