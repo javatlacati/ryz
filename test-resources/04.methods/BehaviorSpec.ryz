@@ -4,8 +4,15 @@ classFile: methods/invoke/InvokeStatement.class
 extends: java.lang.Object
 implements: 
 attributes:  
-methods: public-static main : void , \
-         public main : void
+methods: public-instance main(): void,\
+          public-static main([Ljava.lang.String;):void,\
+         public-static createInstance() :  methods.invoke.InvokeStatement, \
+         public-instance hashCode() : int, \
+         public-instance modifyNumber() : int, \
+         public-instance increment() : void
+
+
+
 behavior : new,  invokestatic main([Ljava.lang.String;) | stdout=Hello Oscar\n,\
           invokestatic createInstance() | result=methods.invoke.InvokeStatement@0,\
           invokevirtual toString() | result=methods.invoke.InvokeStatement@0,\

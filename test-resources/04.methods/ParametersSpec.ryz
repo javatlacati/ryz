@@ -1,0 +1,15 @@
+/*
+className: methods.Parameters
+classFile: methods/Parameters.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:  
+methods: public-instance hello(java.lang.String) : void
+behavior : 
+*/
+methods.Parameters {
+  hello( who : String ) {
+  }
+
+}

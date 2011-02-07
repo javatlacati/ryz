@@ -31,6 +31,7 @@ package ryz.compiler;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -58,6 +59,8 @@ abstract class AssertStrategy {
     private final static int DEFAULT    = 0x5c13d641; // default
     private final static int STATIC     = 0xcacdce6e;  // static
     private final static int INSTANCE   = 0x21169495; // instance
+    //used to debug
+    private String methodMessage;
 
     /**
      * Asserts the given class fulfils the definition on the spec.
@@ -98,6 +101,7 @@ abstract class AssertStrategy {
              // They may be java.lang.reflect.Method or java.lang.reflect.Field
              // etc.
              // see @getObjectsToValidate
+             logger.finest(String.format("Validating: elementSpecification %s to %s %n", elementSpecification, Arrays.toString(getObjectsToValidate(clazz))));
              for( Object o : getObjectsToValidate(clazz) ){
                 // Do perform the validation 
                 if( assertSpec( o, elementSpecification) ){
@@ -107,8 +111,9 @@ abstract class AssertStrategy {
              }
              // Assert matched the spec or no
              assert matched :
-                    String.format("%s validating \"%s\" didn't fulfilled: \"%s\"",
-                             file,  propertyToValidate(), elementSpecification);
+                    String.format("%s validating \"%s\" didn't fulfilled: \"%s\" additionalInfo: %n%s ",
+                             file,  propertyToValidate(), elementSpecification, methodMessage);
+             methodMessage = "";
          }
      }
 
@@ -131,6 +136,17 @@ abstract class AssertStrategy {
      * @return - The name of that thing
      */
     abstract String getName(Object o);
+
+    /**
+     * Subclasses should return the name of the parameters if applicable.
+     *  This is specially relevant in methods.
+     * @param itemUnderReview - The item to be validated.
+     * @return The name of the parameter this item has ( if applicable ) or empty string if none.
+     */
+    String getParameters(Object itemUnderReview) {
+        return "";
+    }
+
 
     /**
      * Return the type of the thing to be validated, some subclasses might not
@@ -158,26 +174,38 @@ abstract class AssertStrategy {
      * if the name, the type and the access modifier are:
      *  "name", "java.lang.String" and "public" respectively.<br/>
      *
-     * Subclasses may override this method to provide different assertion . 
-     * @param o - The thing to validate/assert
+     * Subclasses may override this method to provide different assertion .
+     * @param itemUnderReview - The thing to validate/assert
      * @param elementDescription - A String representation to which
      * the validation will be performed against
      * @return  true if the passed object has the same name, type and access modifier
      * as described in the "elementDescription"
      */
-    boolean assertSpec(Object o, String elementDescription) {
+    boolean assertSpec(Object itemUnderReview, String elementDescription) {
 
         String[] nameType = getNameTypePairs(elementDescription);
 
-        String name        = getNameFromSpec(nameType[0].trim());
+        String namePart = nameType[0].trim();
+        String name        = getNameFromSpec(namePart);
+        String parameters  = getParametersFromSpec( namePart);
         String type        = nameType[1].trim();
-        String modifier    = getModifierFromSpec( nameType[0].trim() );
+        String modifier    = getModifierFromSpec( namePart );
 
-        return name.equals(getName(o))
-                    && type.equals(getType(o))
-                    && sameModifier(modifier, getModifiers(o));
-
+        StringBuilder b = new StringBuilder("");
+        b.append("itemUnderReview = ").append(itemUnderReview).append("\n");
+        b.append("comparing to   = ").append(elementDescription).append("\n");
+        b.append("parameters = ").append(parameters).append("\n");
+        b.append("getParameters(itemUnderReview) = ").append(getParameters(itemUnderReview)).append("\n");
+        b.append("parameters.equals(getParameters(itemUnderReview)) = ").append(parameters.equals(getParameters(itemUnderReview))).append("\n");
+        methodMessage = b.toString();
+        logger.finest(methodMessage);
+        return name.equals(getName(itemUnderReview))
+                && parameters.equals(getParameters(itemUnderReview))
+                && type.equals(getType(itemUnderReview))
+                && sameModifier(modifier, getModifiers(itemUnderReview));
     }
+
+
 
     private String[] getNameTypePairs(String elementDescription) {
         return elementDescription.contains(":") ?
@@ -259,7 +287,16 @@ abstract class AssertStrategy {
      * @return a string representing name of the thing.
      */
     private String getNameFromSpec(String spec) {
-        return spec.split(" ")[1];
+        return spec.split(" ")[1].split("\\(")[0];
+    }
+    protected String getParametersFromSpec(String namePart){
+        String[] parts = namePart.split(" ")[1].split("\\(");
+        if( parts.length == 1 ) {
+            return "";
+        }
+        String params = parts[1];
+        params=params.substring(0,params.length()-1);
+        return  params;
     }
     /**
      * Test if the given object is null.
@@ -332,6 +369,18 @@ class MethodsAssertStrategy extends AssertStrategy {
         return ((Method) o).getName();
     }
 
+    @Override String getParameters( Object o ) {
+        StringBuilder builder = new StringBuilder();
+        for( Class c : ((Method) o).getParameterTypes()) {
+            builder.append(c.getName());
+            builder.append(",");
+        }
+        if( builder.length() > 0 ) {
+            builder.deleteCharAt(builder.length()-1);
+        }
+        return builder.toString();
+    }
+
     @Override
     String getType(Object o) {
         return ((Method) o).getReturnType().getName();
@@ -349,8 +398,8 @@ class MethodsAssertStrategy extends AssertStrategy {
 class ImplementsAssertStrategy extends AssertStrategy {
 
     @Override
-    public boolean assertSpec(Object o, String elementDescription) {
-        return ((Class)o).getName().equals(elementDescription);
+    public boolean assertSpec(Object itemUnderReview, String elementDescription) {
+        return ((Class) itemUnderReview).getName().equals(elementDescription);
 
     }
 
@@ -385,8 +434,8 @@ class ImplementsAssertStrategy extends AssertStrategy {
  */
 class ExtendsAssertionStrategy extends AssertStrategy {
     @Override
-    public boolean  assertSpec(Object o, String elementDescription) {
-        return ((Class)o).getName().equals(elementDescription);
+    public boolean  assertSpec(Object itemUnderReview, String elementDescription) {
+        return ((Class) itemUnderReview).getName().equals(elementDescription);
 
     }
 

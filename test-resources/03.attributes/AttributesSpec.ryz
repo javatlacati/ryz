@@ -1,7 +1,7 @@
 /*
 className: attributes.instance.InstanceAttributes
 attributes: private name : java.lang.String   
-methods: public assignName : void, public name : java.lang.String 
+methods: public assignName() : void, public name() : java.lang.String
 classFile: attributes/instance/InstanceAttributes.class
 */
 attributes.instance.InstanceAttributes {

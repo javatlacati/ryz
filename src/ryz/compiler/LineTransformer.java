@@ -267,7 +267,6 @@ class ClosingKeyTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         if( line.startsWith("}")) { // or ends with }
             String indentation = currentClass().state() instanceof InsideMethodState ?
-
                     "    " : "/**/";
             generatedSource.add(indentation +line + lineSeparator);
             this.currentClass().closeKey();
@@ -290,7 +289,10 @@ class MethodTransformer extends LineTransformer {
     // hola() {
     private final Pattern voidMethodPattern = Pattern.compile("[+#~-]??\\s*(\\w+)\\(\\)\\s*\\{");
     // __ hola() {
-    private final Pattern voidClassMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\(\\)\\s*\\s*\\{");
+    private final Pattern voidClassMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*(\\w+)\\(\\)\\s*\\{");
+
+    //hola( args : String ) {
+    private final Pattern methodWithParam = Pattern.compile("(\\w+)\\((.*)\\)\\s*\\{");
 
     MethodTransformer(RyzClassState state) {
         super(state);
@@ -306,6 +308,8 @@ class MethodTransformer extends LineTransformer {
         String methodName = null;
         String methodType = null;
         String instanceOrStatic = null;
+        String parameters = "";
+        // define the values
 
         if( (matcher = methodPattern.matcher(line)).matches() ) {
             accessModifier = getScope(line, true, scopeInstancePattern, "public");
@@ -333,7 +337,6 @@ class MethodTransformer extends LineTransformer {
                 methodName = scapeName(matcher.group(1));
                 instanceOrStatic = "";
             }
-
         } else if( ( matcher = voidClassMethodPattern.matcher(line)).matches()){
 
             accessModifier = getScope(line, true, voidScopeClassPattern, "public");
@@ -341,16 +344,53 @@ class MethodTransformer extends LineTransformer {
             methodType = "void";
             methodName = scapeName(matcher.group(1));
             instanceOrStatic = "static";
+        } else if ( ( matcher = methodWithParam.matcher(line)).matches() ) {
+
+            String matchedParameters = matcher.group(2);
+
+            logger.info(parameters);
+
+            accessModifier = getScope(line, true, voidScopeClassPattern, "public");
+            methodType = "void";
+            methodName = scapeName(matcher.group(1));
+            instanceOrStatic = "";
+            parameters = transformParameters(generatedSource, matchedParameters);
+
+
         }
+
+        // build the source
         if( methodName != null ) {
             logger.finest(String.format("scope %s for line %s %n", accessModifier, line));
-            generatedSource.add( String.format("    /*method*/%s %s %s %s() {%n",
+            generatedSource.add( String.format("    /*method*/%s %s %s %s(%s) {%n",
                 accessModifier,
                 instanceOrStatic,
                 methodType,
-                methodName));
+                methodName,
+                parameters));
             currentClass().addMethod(methodName, methodType);
         }
+    }
+
+    private final String transformParameters(List<String> generatedSource, String matchedParameters) {
+        String parameters;// Transform the parameters as if they were variables
+        // start --
+        int linesSoFar = generatedSource.size();
+        LineTransformer lineTransformer = new AttributeTransformer(
+                                                    this.currentClass().state(),
+                                                    false);
+
+        lineTransformer.transform( matchedParameters .trim(), generatedSource );
+        StringBuilder builder = new StringBuilder();
+        for( String s : generatedSource.subList(linesSoFar,
+                            generatedSource.size())) {
+            builder.append(s.substring(0,s.length()-3));
+            builder.append(",");
+        }
+        builder.deleteCharAt(builder.length()-1);
+        parameters = builder.toString();
+        // -- finish
+        return parameters;
     }
 }
 // Handles, temporarily the "return" of the method. Eventually the return
@@ -386,7 +426,7 @@ class StatementTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         Matcher m = statementPattern.matcher(line);
         if( m.matches() ) {
-            generatedSource.add( String.format("    /*invocation*/%s;%n",
+            generatedSource.add(String.format("    /*invocation*/%s;%n",
                     line));
             
         }

@@ -42,13 +42,13 @@ class BehaviorAssertionStrategy extends AssertStrategy {
     private Object objectToInvokeOn;
 
     @Override
-    boolean assertSpec(Object o, String elementDescription) {
-        Class c = (Class)o;
+    boolean assertSpec(Object itemUnderReview, String elementDescription) {
+        Class c = (Class) itemUnderReview;
         if( !c.equals(currentClass)){
             currentClass = c;
             objectToInvokeOn = null;
         }
-        logger.finest("o = " + o);
+        logger.finest("itemUnderReview = " + itemUnderReview);
         logger.finest("elementDescription = " + elementDescription);
         if( "new".equals(elementDescription) ){
 

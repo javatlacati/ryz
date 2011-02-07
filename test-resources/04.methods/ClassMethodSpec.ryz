@@ -2,8 +2,8 @@
 className: methods.class$.ClassMethod
 attributes:  private name:java.lang.String
 methods:  public name: java.lang.String ,\
-          public main: void,\
-          public-static main:void,\
+          public-instance main(): void,\
+          public-static main([Ljava.lang.String;):void,\
           public-static count: java.lang.Integer
 classFile: methods/class$/ClassMethod.class
 */
