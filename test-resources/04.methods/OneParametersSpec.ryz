@@ -1,6 +1,6 @@
 /*
-className: methods.Parameters
-classFile: methods/Parameters.class
+className: methods.parameters.OneParametersTest
+classFile: methods/parameters/OneParametersTest.class
 otherClasses: 
 extends: java.lang.Object
 implements: 
@@ -8,8 +8,7 @@ attributes:
 methods: public-instance hello(java.lang.String) : void
 behavior : 
 */
-methods.Parameters {
+methods.parameters.OneParametersTest {
   hello( who : String ) {
   }
-
 }

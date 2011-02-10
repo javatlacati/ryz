@@ -72,6 +72,8 @@ abstract class LineTransformer {
             return name + "$";
         } else if( "Int".equals(name)){ //TODO: Int should be a user defined type, not a keyword
             return "int";
+        } else if( name.endsWith("*")) {
+            return name.substring(0,name.length()-1) + " ... ";
         }
 
         return name;
@@ -380,13 +382,20 @@ class MethodTransformer extends LineTransformer {
                                                     this.currentClass().state(),
                                                     false);
 
-        lineTransformer.transform( matchedParameters .trim(), generatedSource );
+        for( String param : matchedParameters.trim().split("\\s*,\\s*")) {
+            lineTransformer.transform(param, generatedSource);
+        }
         StringBuilder builder = new StringBuilder();
         for( String s : generatedSource.subList(linesSoFar,
                             generatedSource.size())) {
             builder.append(s.substring(0,s.length()-3));
             builder.append(",");
         }
+        int removeN = generatedSource.size() - linesSoFar;
+        for( int i = 0 ; i < removeN ; i++ ) {
+            generatedSource.remove(generatedSource.size()-1);
+        }
+
         builder.deleteCharAt(builder.length()-1);
         parameters = builder.toString();
         // -- finish

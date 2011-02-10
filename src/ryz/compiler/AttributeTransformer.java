@@ -59,6 +59,8 @@ class AttributeTransformer extends LineTransformer {
 
 
     private static final List<Match> matchers = Arrays.asList(
+         // hola : String* // varargs
+         Match.declaration(regexp("(__)?(\\w+)\\s*:\\s*((\\w+)\\*)")),
         // + __ hola : String
         Match.declaration(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)")),
         // + __ hola = String()
@@ -146,6 +148,9 @@ class AttributeTransformer extends LineTransformer {
 
 }
 
+/**
+ * Abstract class to match variables declaration.
+ */
 abstract class Match {
 
     private final Pattern pattern;
@@ -166,25 +171,29 @@ abstract class Match {
         return matcher.group(1) == null ? "" : "static";
     }
 
-    protected abstract Variable variableFrom(Matcher matcher);
-
+    // Factory methods
     static Match declaration(Pattern pattern) {
         return new DeclarationMatcher(pattern);
     }
 
-    public static Match initialization(Pattern pattern) {
+    static Match initialization(Pattern pattern) {
         return new InitMatcher(pattern);
     }
 
-    public static Match typeAndInit(Pattern pattern) {
+    static Match typeAndInit(Pattern pattern) {
         return new TypeWithInitMatcher(pattern);
     }
 
-    public static Match literal(Pattern pattern, String literalType, String format) {
+    static Match literal(Pattern pattern, String literalType, String format) {
         return new LiteralMatcher(pattern, literalType, format);
     }
+    protected abstract Variable variableFrom(Matcher matcher);
+
 }
 
+/**
+ * Matches variable declaration such as xyz : Type = InitialValue
+ */
 class TypeWithInitMatcher extends Match {
     public TypeWithInitMatcher(Pattern pattern) {
         super(pattern);
@@ -199,6 +208,9 @@ class TypeWithInitMatcher extends Match {
     }
 }
 
+/**
+ * Matches variableName '=' InitialValue
+ */
 class InitMatcher extends Match {
     public InitMatcher(Pattern pattern) {
         super(pattern);
@@ -213,6 +225,9 @@ class InitMatcher extends Match {
     }
 }
 
+/**
+ * Matches name ':' Type
+ */
 class DeclarationMatcher extends InitMatcher {
     public DeclarationMatcher(Pattern pattern) {
         super(pattern);
@@ -226,6 +241,9 @@ class DeclarationMatcher extends InitMatcher {
     }
 }
 
+/**
+ * Matches literals
+ */
 class LiteralMatcher extends Match {
 
     private final String literalType;

@@ -1,0 +1,25 @@
+/*
+className: methods.parameters.MultiParametersSpec
+classFile: methods/parameters/MultiParametersSpec.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods: 
+behavior :
+*/
+methods.parameters.MultiParametersSpec{
+  main(){
+    self.greet( "Hola %s", 10, "Hugo", "Paco", "Luis")
+  }
+  greet( format : String, times : Int , people: String* ){
+    /*
+      //Would do something like this in the future
+     1.to(times).do({
+      people.each((name:String){
+        out.printf( format, name )
+      })
+      out.println()
+     })
+     */
+  }
+}
