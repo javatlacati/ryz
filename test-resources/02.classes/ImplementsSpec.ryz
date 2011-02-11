@@ -2,8 +2,6 @@
 className: simple.inheritance.Runner
 implements: java.lang.Runnable
 classFile: simple/inheritance/Runner.class
-
-
 */
 simple.inheritance.Runner : Runnable {
     run() {

@@ -33,8 +33,6 @@ import java.io.PrintStream;
 
 /**
  * User: oscarryz
- * Date: Dec 31, 2010
- * Time: 11:42:06 AM
  */
 class BehaviorAssertionStrategy extends AssertStrategy {
 

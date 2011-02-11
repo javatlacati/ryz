@@ -1,7 +1,5 @@
 /*
 className: load.test.Spec
-#attributes: i:int
-#methods: i:int
 classFile: load/test/Spec.class
 */
 load.test.Spec {
