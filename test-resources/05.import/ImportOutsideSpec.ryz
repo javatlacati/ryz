@@ -1,0 +1,17 @@
+/*
+className: imports.ImportOutside
+classFile: imports/ImportOutside.class
+extends: java.lang.Object
+implements: 
+attributes: private-instance date: java.util.Date
+methods: public-instance endDate:java.util.Date
+behavior :
+*/
+import ( java.util.Date )
+imports.ImportOutside{
+   date : Date = Date()
+
+    endDate() : Date {
+      Date()
+    }
+}

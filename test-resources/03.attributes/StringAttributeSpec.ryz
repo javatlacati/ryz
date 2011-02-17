@@ -1,0 +1,12 @@
+/*
+className: attribute.package$.Class
+attributes: private s:java.lang.String,\
+            private name:java.lang.String,\
+            private lastName:java.lang.String
+classFile: attribute/package$/Class.class
+*/
+attribute.package.Class {
+    s:String
+    name:String
+    lastName: String
+}
