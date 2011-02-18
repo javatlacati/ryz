@@ -10,9 +10,9 @@ ryz.programming.Language {
 
 
 Currently uses Intellj IDEA 10 CE ( http://www.jetbrains.com/idea/download/index.html )
-to compile and TestNG testing framework plugin included in the IDE.
+to compile and test using TestNG testing framework plugin included with the IDE.
 
-After loading the project, execute the Run configuration "ryz.compiler"
+After loading the project, execute the: Run configuration "ryz.compiler" option.
 
 Java source files for the RyzC are in folder:
 /src
