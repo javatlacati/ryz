@@ -6,12 +6,14 @@
   <property name="src" location="src"/>
   <property name="test" location="test"/>
   <property name="build" location="out/build"/>
+  <property name="build-test" location="out/build-test"/>
   <property name="dist"  location="dist"/>
 
 
   <path id="cp">
    <pathelement location="lib/testng-5.14.10.jar"/>
    <pathelement location="${build}"/>
+   <pathelement location="${build-test}"/>
   </path>
 
 
@@ -24,6 +26,7 @@
     <tstamp/>
     <!-- Create the build directory structure used by compile -->
     <mkdir dir="${build}"/>
+    <mkdir dir="${build-test}"/>
   </target>
 
   <target name="compile" depends="init"
@@ -34,9 +37,9 @@
 
   <target name="test" depends="compile" 
         description="run test unit">
-        <javac classpathref="cp" srcdir="${test}" destdir="${build}"/>
+        <javac classpathref="cp" srcdir="${test}" destdir="${build-test}"  debug="true"/>
         <testng classpathref="cp">
-            <classfileset dir="${build}" includes="**/*/TestCompiler.class" />
+            <classfileset dir="${build-test}" includes="**/*.class" />
             <jvmarg line="-Duser.language=EN -Djava.util.logging.config.file=resources/logging.properties" />
         </testng>
   </target>
@@ -47,7 +50,7 @@
     <mkdir dir="${dist}/lib"/>
 
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/lib/ryzc-${DSTAMP}.jar" basedir="${build}"/>
+    <jar jarfile="${dist}/ryzc-${DSTAMP}.jar" basedir="${build}"/>
   </target>
 
 
@@ -55,6 +58,7 @@
         description="clean up" >
     <!-- Delete the ${build} and ${dist} directory trees -->
     <delete dir="${build}"/>
+    <delete dir="${build-test}"/>
     <delete dir="${dist}"/>
   </target>
 </project>

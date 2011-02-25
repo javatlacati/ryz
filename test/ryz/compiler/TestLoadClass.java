@@ -83,12 +83,15 @@ public class TestLoadClass {
     public void testFileNotFound() throws IOException {
 
         // Redirect standard error
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        System.setErr(new PrintStream(baos));
-
-        testUtil.compile("NonExisting.ryz");
-
-        assert baos.toString().equals("RyzC: file not found NonExisting.ryz\n");
+        PrintStream stderr  = System.err;
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            System.setErr(new PrintStream(baos));
+            testUtil.compile("NonExisting.ryz");
+            assert baos.toString().equals(String.format("RyzC: file not found NonExisting.ryz%n"));
+        } finally { 
+            System.setErr( stderr );
+        }
 
     }
 
