@@ -388,7 +388,7 @@ class MethodTransformer extends LineTransformer {
         StringBuilder builder = new StringBuilder();
         for( String s : generatedSource.subList(linesSoFar,
                             generatedSource.size())) {
-            builder.append(s.substring(0,s.length()-4)); //TODO: FIX UNIX/Windows \n bug
+            builder.append(s.substring(0,s.length()-(lineSeparator.length() + 2 ))); 
             builder.append(",");
         }
        // remove last ","

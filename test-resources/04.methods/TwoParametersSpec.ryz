@@ -5,9 +5,8 @@ extends: java.lang.Object
 implements: 
 attributes:  
 methods: 
-behavior : invokestatic main([Ljava.lang.String;) | stdout=Hello Ryz\r\nHola Ryz\r\n,\
+behavior : invokestatic main([Ljava.lang.String;) | stdout=Hello Ryz%nHola Ryz%n,\
            invokevirtual concatenate() | result=ab
-TODO: FIX UNIX/Windows \n bug           
 */
 methods.parameters.TwoParametersSpec{
   main(){
