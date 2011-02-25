@@ -67,6 +67,15 @@ class BehaviorAssertionStrategy extends AssertStrategy {
    2.- invoke it
    3.- assert the expected output
     */
+        // replace %n in the properties
+        // currently java.util.Properties ( from which the behavior spec is read) 
+        logger.warning( elementDescription );
+        elementDescription = elementDescription.replaceAll("%n" ,
+                                 LineTransformer.lineSeparator);
+
+        logger.warning( elementDescription );
+
+
 
         //TODO: clean up probably using regexp
         // get the first part something like:  invokestatic methodname() |

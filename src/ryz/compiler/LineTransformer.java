@@ -41,7 +41,8 @@ import java.util.regex.Pattern;
  */
 abstract class LineTransformer {
 
-    final String lineSeparator = System.getProperty("line.separator");
+    final static String lineSeparator = System.getProperty("line.separator");
+    final static String lineSeparatorRepresentation = lineSeparator.equals("\n")?"\\n":"\\r\\n";
     final Logger logger = Logger.getLogger(this.getClass().getName());
     private static final List<String> javaKeywords = Arrays.asList(
             "abstract","assert","boolean","break","byte","case","catch",
@@ -222,6 +223,7 @@ class PackageClassTransformer extends LineTransformer {
 class MultilineStringTransformer extends LineTransformer {
 
     private final String indentation;
+    private boolean atLestOneLineProcessed = false;
 
     public MultilineStringTransformer(RyzClassState state, int indentation) {
         super(state);
@@ -237,11 +239,15 @@ class MultilineStringTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         if( line.equals("\"")){
             String last = generatedSource.remove(generatedSource.size()-1);
-            generatedSource.add(last.substring(0,last.length()-5)+"\";" + lineSeparator);//TODO UNIX/Windows bug
+            logger.finest( "Last line written: " + last );
+            int lsl = lineSeparator.length();
+            generatedSource.add(last.substring(0,last.length() - (lsl + (atLestOneLineProcessed?5:2)))+"\";" + lineSeparator);
             currentClass().outsideMultilineString();
         } else {
+            // append 4 - 5 chars at the end for "newline" : [\,n,", lineSeparator]
             //TODO: add original file return (either \r\n or \n ) instead of just \n
-            generatedSource.add( "+\""+indentation+line.replace("\"", "\\\"")+"\\n\""+ lineSeparator );
+            generatedSource.add( "+\""+indentation+line.replace("\"", "\\\"")+ lineSeparatorRepresentation+"\""+ lineSeparator );
+            atLestOneLineProcessed = true;
         }
     }
 }

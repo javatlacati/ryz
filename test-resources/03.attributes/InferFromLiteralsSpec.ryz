@@ -29,11 +29,17 @@ attributes: public-instance i : int ,\
             private-instance d : java.lang.String
 
 methods:
-behavior : invokevirtual printMultiline()| stdout=    This\n    is a\n    multiline\n    string in "Ryz",\
-           invokevirtual getMultiline() | result= Other\n multiline\n string, \
-           invokevirtual getMultiline2() | result=Yet\nOne\nMore
+behavior : invokevirtual ml()|stdout= hola%n,\
+           invokevirtual printMultiline()| stdout=    This%n    is a%n    multiline%n    string in "Ryz",\
+           invokevirtual getMultiline() | result= Other%n multiline%n string, \
+           invokevirtual getMultiline2() | result=Yet%nOne%nMore
 */
 attributes.inference.FromLiteral{
+    ml() {
+        ml = " hola
+        "
+        out.print(ml)
+    }
 
   // integers
   +    i = 0

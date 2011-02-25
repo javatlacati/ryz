@@ -206,12 +206,14 @@ public class RyzC {
         for (String s : outputLines) {
             writer.write(s);
         }
-        logger.finest("sWriter = \n" + sWriter);
         writer.close();
 
         //TODO: findout how to pass the classpath on to the compiler to include external libraries
         // Get the java compiler for this platform
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        if( compiler == null ) { 
+            throw new IllegalStateException("Couldn't get java compiler. Make sure the javac is in the execution path. (HINT puth JAVA_HOME/bin before in the path )");
+        }
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(
                 null,
                 null,
@@ -219,14 +221,19 @@ public class RyzC {
 
         fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(output));
         // Compile the file
-        compiler
-                .getTask(null,
+        boolean succesfullCompilation = 
+                compiler
+                    .getTask(null,
                         fileManager,
                         null,
                         null,
                         null,
                         fileManager.getJavaFileObjectsFromFiles(Arrays.asList(sourceFile)))
                 .call();
+        if(!succesfullCompilation  /* && debug flag set */) { 
+            logger.fine("sWriter = \n" + sWriter);
+        }
+
         fileManager.close();
 
         // delete the file

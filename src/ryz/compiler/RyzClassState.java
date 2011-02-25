@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  */
 public abstract class RyzClassState {
 
-    static final Logger logger = Logger.getLogger(RyzC.class.getName());
+    final Logger logger = Logger.getLogger(this.getClass().getName());
     private final RyzClass ryzClass;
     private List<LineTransformer> transformers;
 
