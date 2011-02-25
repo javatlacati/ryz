@@ -13,10 +13,11 @@ methods: public-instance main(): void,\
 
 
 
-behavior : new,  invokestatic main([Ljava.lang.String;) | stdout=Hello Oscar\n,\
+behavior : new,  invokestatic main([Ljava.lang.String;) | stdout=Hello Oscar\r\n,\
           invokestatic createInstance() | result=methods.invoke.InvokeStatement@0,\
           invokevirtual toString() | result=methods.invoke.InvokeStatement@0,\
           invokevirtual modifyNumber() | result=2
+TODO: FIX UNIX/Windows \n bug          
 */
 methods.invoke.InvokeStatement{
 

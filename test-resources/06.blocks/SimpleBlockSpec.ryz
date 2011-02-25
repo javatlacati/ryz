@@ -6,7 +6,8 @@ extends: java.lang.Object
 implements: 
 attributes:  
 methods:
-behavior : invokestatic main([Ljava.lang.String;) | stdout=Hello from a block\n
+behavior : invokestatic main([Ljava.lang.String;) | stdout=Hello from a block\r\n
+TODO: FIX UNIX/Windows \n bug  
 */
 blocks.SimpleBlock {
   a = {

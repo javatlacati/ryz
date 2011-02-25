@@ -1,4 +1,5 @@
 syntax:glob
 
+test-output/
 out/
 .DS_Store

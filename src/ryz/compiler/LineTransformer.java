@@ -237,7 +237,7 @@ class MultilineStringTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         if( line.equals("\"")){
             String last = generatedSource.remove(generatedSource.size()-1);
-            generatedSource.add(last.substring(0,last.length()-4)+"\";" + lineSeparator);
+            generatedSource.add(last.substring(0,last.length()-5)+"\";" + lineSeparator);//TODO UNIX/Windows bug
             currentClass().outsideMultilineString();
         } else {
             //TODO: add original file return (either \r\n or \n ) instead of just \n
@@ -363,6 +363,7 @@ class MethodTransformer extends LineTransformer {
     }
 
     private final String transformParameters(List<String> generatedSource, String matchedParameters) {
+        logger.finest("matchedParameters= "+matchedParameters);
         if( matchedParameters.equals("")) {
             return "";
         }
@@ -381,7 +382,7 @@ class MethodTransformer extends LineTransformer {
         StringBuilder builder = new StringBuilder();
         for( String s : generatedSource.subList(linesSoFar,
                             generatedSource.size())) {
-            builder.append(s.substring(0,s.length()-3));
+            builder.append(s.substring(0,s.length()-4)); //TODO: FIX UNIX/Windows \n bug
             builder.append(",");
         }
        // remove last ","

@@ -6,8 +6,8 @@ implements:
 attributes:  
 methods:  public-instance varArgs([Ljava.lang.String;):void
 behavior : invokestatic main([Ljava.lang.String;) | \
-  stdout=[uno]\n[uno - dos]\n[uno - dos - tres]\n[a - b - c]\n
-
+  stdout=[uno]\r\n[uno - dos]\r\n[uno - dos - tres]\r\n[a - b - c]\r\n
+TODO: FIX UNIX/Windows \n bug  
 */
 methods.parameters.VarArgsParameterSpec{
    main(){

@@ -8,7 +8,7 @@ methods:
 behavior :
 */
 hello.HelloRyz{
-  main( args: String * ) {
+  main( args: String* ) {
 
     // Sort descending
     args.sort!( (a:String, b.String ) {
@@ -20,6 +20,5 @@ hello.HelloRyz{
     args.each((value:String){
       out.print "Hello %s".% value 
     })
-
   }
 }
