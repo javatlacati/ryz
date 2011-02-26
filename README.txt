@@ -42,4 +42,8 @@ http://groups.google.com/group/ryz-lang
 Twitter: @ryz_language
 
 
+[Testgn]
+
+This project uses TesNG <http://testng.org>  testing framework redistributed under Apache 2.0 license. You may find a copy of the license in lib/APACHE-LICENSE.txt
+
 
