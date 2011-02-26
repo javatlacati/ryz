@@ -241,7 +241,7 @@ class MultilineStringTransformer extends LineTransformer {
             String last = generatedSource.remove(generatedSource.size()-1);
             logger.finest( "Last line written: " + last );
             int lsl = lineSeparator.length();
-            generatedSource.add(last.substring(0,last.length() - (lsl + (atLestOneLineProcessed?5:2)))+"\";" + lineSeparator);
+            generatedSource.add(last.substring(0,last.length() - (lsl + (atLestOneLineProcessed?3:2)))+"\";" + lineSeparator);
             currentClass().outsideMultilineString();
         } else {
             // append 4 - 5 chars at the end for "newline" : [\,n,", lineSeparator]
