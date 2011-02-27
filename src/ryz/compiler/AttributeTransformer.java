@@ -49,7 +49,7 @@ class AttributeTransformer extends LineTransformer {
     private static final String literalInitialValue = " = %s;";
     private static final String multiLineInitialValue = " =  %s"+lineSeparatorRepresentation+"\"";
     private static final String regexInitialValue = " = java.util.regex.Pattern.compile(\"%s\");%n";
-    private static final String dateInitialValue = " = $sdf$GetDate(\"%s 00:00:00\");";
+    private static final String dateInitialValue = " = ryz.lang.DateLiteral.valueOf(\"%s 00:00:00\");";
     private static final String blockInitialValue = " = /* block */ new Runnable(){%n    public void run(){%n";
 
 

@@ -26,35 +26,20 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ryz.compiler;
-
-import java.util.Arrays;
+package ryz.lang;
 
 /**
- * In the initial state we are out or everywhere.
- * 
- * User: oscarryz
- * Date: Dec 11, 2010
+ * User: oreyes
+ * Date: 2/27/11
+ * Time: 2:41 AM
  */
-class InitialState extends RyzClassState {
-    public InitialState(RyzClass ryzClass) {
-        super(ryzClass);
-        transformers(Arrays.asList(
-                new PackageClassTransformer(this),
-                new ImportTransformer(this),
-                new CommentTransformer(this),
-                new ClosingKeyTransformer(this)//,
-        ));
-    }
-
-
-    @Override
-    void previousState() {
-        ryzClass().state(new InitialState(ryzClass()));
-    }
-
-    @Override
-    void nextState() {
-        ryzClass().state(new InsideClassState(ryzClass()));
+public class DateLiteral {
+    private final static java.text.DateFormat dateFormat =new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    public final static java.util.Date valueOf(String aDate){
+        try {
+            return dateFormat.parse(aDate);
+        } catch( java.text.ParseException pe ) {
+            throw new IllegalStateException("Error in the compiler while identifying a date literal. Original message: " + pe.getMessage());
+        }
     }
 }

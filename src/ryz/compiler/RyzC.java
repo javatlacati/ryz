@@ -29,24 +29,28 @@
 package ryz.compiler;
 
 
+import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.SimpleJavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 import static java.lang.System.err;
 
@@ -161,9 +165,7 @@ public class RyzC {
         //System.out.println("outputLines = " + outputLines);
         // write the  class
         logger.finest("className=["+currentClass.name()+"]");
-        File sourceFile = new File(currentClass.name() + ".java");
-        StringWriter sWriter = new StringWriter();
-        Writer writer = new SourceWriter( new FileWriter(sourceFile), sWriter);
+        Writer writer = new StringWriter();
 
         writer.write(String.format("//-- Create from: %s %n" , currentClass.sourceFile()));
 
@@ -177,13 +179,11 @@ public class RyzC {
         for( String s: outputLines){
             if( s.startsWith("package") && !packageWritten) {
                 packageString = s;
-                //writer.write( packageString );
                 packageWritten = true;
 
             }
             if( s.startsWith("import")){
                 importString = s;
-                //writer.write( importString );
             }
             if(s.startsWith("package") || s.startsWith("import")){
                 toRemove.add( s ) ;
@@ -208,36 +208,49 @@ public class RyzC {
         }
         writer.close();
 
-        //TODO: findout how to pass the classpath on to the compiler to include external libraries
+        JavaFileObject source = new JavaSourceFromString(currentClass.name(), writer.toString());
+
         // Get the java compiler for this platform
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        if( compiler == null ) { 
-            throw new IllegalStateException("Couldn't get java compiler. Make sure the javac is in the execution path. (HINT puth JAVA_HOME/bin before in the path )");
+        if( compiler == null ) {
+            throw new IllegalStateException("Couldn't get java compiler. Make " +
+                    "sure the javac is in the execution path. (HINT put " +
+                    "JAVA_HOME/bin before in the path )");
         }
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(
                 null,
                 null,
                 null);
 
+        //TODO: parametrize options
+        Iterable<String> options = logger.isLoggable(Level.FINEST) ? Arrays.asList("-verbose") : null ;
+        //TODO: parametrize CLASSPATH
+        List<File> classPath = Arrays.asList(new File("./lib/"), new File("./out/build/"));
+
         fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(output));
+        fileManager.setLocation(StandardLocation.CLASS_PATH, classPath);
+
+        DiagnosticCollector<JavaFileObject> collector = new DiagnosticCollector<JavaFileObject>();
         // Compile the file
-        boolean succesfullCompilation = 
+        Iterable<? extends JavaFileObject> compilationUnits = Arrays.asList(source);
+        boolean succesfullCompilation =
                 compiler
                     .getTask(null,
                         fileManager,
+                        collector,
+                        options,
                         null,
-                        null,
-                        null,
-                        fileManager.getJavaFileObjectsFromFiles(Arrays.asList(sourceFile)))
+                            compilationUnits)
                 .call();
-        if(!succesfullCompilation  /* && debug flag set */) { 
-            logger.fine("sWriter = \n" + sWriter);
+        if(!succesfullCompilation  || logger.isLoggable( Level.FINEST ) ) { 
+            logger.fine("writer = \n" + writer);
+            logger.info( collector.getDiagnostics().toString());
         }
 
         fileManager.close();
 
         // delete the file
-        sourceFile.deleteOnExit();
+        //sourceFile.deleteOnExit();
 
 
     }
@@ -316,31 +329,19 @@ public class RyzC {
 
 
 }
-class SourceWriter extends Writer {
 
-    private final Writer a;
-    private final Writer b;
+//http://www.java2s.com/Tutorial/Java/0120__Development/CompilingfromMemory.htm
+class JavaSourceFromString extends SimpleJavaFileObject {
+  final String code;
 
-    public SourceWriter(Writer b, Writer a) {
-        this.b = b;
-        this.a = a;
-    }
+  JavaSourceFromString(String name, String code) {
+    super(URI.create("string:///" + name.replace('.', '/') + Kind.SOURCE.extension), Kind.SOURCE);
+    this.code = code;
+  }
 
-    @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
-        a.write(cbuf, off, len );
-        b.write(cbuf, off, len );
-    }
 
     @Override
-    public void flush() throws IOException {
-        a.flush();
-        b.flush();
-    }
-
-    @Override
-    public void close() throws IOException {
-        a.close();
-        b.close();
-    }
+  public CharSequence getCharContent(boolean ignoreEncodingErrors) {
+    return code;
+  }
 }

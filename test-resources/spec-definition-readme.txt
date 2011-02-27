@@ -35,8 +35,23 @@ methods: public name: java.lang.String ,\
          public-static main:void, \
          public-static count: java.lang.Integer
 behavior : new,\
-           invokestatic main([Ljava.lang.String;) | stdout=Hello, world\n
+           invokestatic main([Ljava.lang.String;) | stdout=Hello, world%n
 */
+
+
+New lines should be specified using the sequence "%n" to provide platform specific
+line separator.
+
+If a comman is needed in the specification, a backslash could be used to scape it
+but, since the .properties file format already uses that, the backslash itself
+hast to be scaped:
+
+As example:
+
+/*
+behavior invokestatic main( [Ljava.lang.String;)|stdout=Hello\\, world!%n
+*/
+
 
 
 

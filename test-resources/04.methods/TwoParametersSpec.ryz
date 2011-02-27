@@ -16,7 +16,7 @@ methods.parameters.TwoParametersSpec{
   giveMessage( message : String , to: String ) {
     out.printf(message, to )
   }
-  _ a : String
+  __ a : String
     b : String
   concatenate( a : String , b : String ) : String {
     sb = StringBuilder()

@@ -25,36 +25,16 @@
  * ( INCLUDING NEGLIGENCE OR OTHERWISE ) ARISING IN ANY WAY OUT OF THE USE  OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package ryz.compiler;
-
-import java.util.Arrays;
-
-/**
- * In the initial state we are out or everywhere.
- * 
- * User: oscarryz
- * Date: Dec 11, 2010
- */
-class InitialState extends RyzClassState {
-    public InitialState(RyzClass ryzClass) {
-        super(ryzClass);
-        transformers(Arrays.asList(
-                new PackageClassTransformer(this),
-                new ImportTransformer(this),
-                new CommentTransformer(this),
-                new ClosingKeyTransformer(this)//,
-        ));
-    }
-
-
-    @Override
-    void previousState() {
-        ryzClass().state(new InitialState(ryzClass()));
-    }
-
-    @Override
-    void nextState() {
-        ryzClass().state(new InsideClassState(ryzClass()));
-    }
+// TODO: find out how to compile this class before the compiler itself is built
+// This have to be kicked by a previously written compiler
+ryz.lang.Bool {
+   ifTrue( r : Runnable ) : Bool  {
+    r.run()
+    self
+   }
+   ifFalse( r : Runnable ) : Bool  {
+    r.run()
+    self
+   }
 }
+

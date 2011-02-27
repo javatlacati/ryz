@@ -95,7 +95,7 @@ abstract class AssertStrategy {
 
         // The values to validate  are separated by comma,
         // we split and validate each one and we assert this class complies.
-         for( String elementSpecification : values.split(",")){
+         for( String elementSpecification : values.split("(?<!\\\\),")){ // using negative look behind: http://stackoverflow.com/questions/4962925/escape-comma-when-using-string-split/4963037#4963037
              boolean matched = false;
              // Iterates the objects to validate.
              // They may be java.lang.reflect.Method or java.lang.reflect.Field

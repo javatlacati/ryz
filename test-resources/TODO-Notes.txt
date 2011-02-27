@@ -5,3 +5,13 @@
 - Args, varargs, named args
 - extension methods
 - get/set properties like generation
+
+- Indicate what lines haven't been processed 
+- Compile using a classpath  ( to load existing classes ) 
+- Work on blocks.
+    - Block literal
+    - Block invocation
+    - Block identification
+
+- Extension methods 
+    - For core libraries ( if, for, while etc )

@@ -69,11 +69,8 @@ class BehaviorAssertionStrategy extends AssertStrategy {
     */
         // replace %n in the properties
         // currently java.util.Properties ( from which the behavior spec is read) 
-        logger.warning( elementDescription );
         elementDescription = elementDescription.replaceAll("%n" ,
-                                 LineTransformer.lineSeparator);
-
-        logger.warning( elementDescription );
+                                 LineTransformer.lineSeparator).replaceAll("\\\\,",",");
 
 
 

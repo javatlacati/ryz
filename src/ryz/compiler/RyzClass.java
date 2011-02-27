@@ -40,12 +40,12 @@ import java.util.logging.Logger;
  *
  * @author oscarryz
  * Date: Dec 2, 2010
- * Time: 4:08:07 PM
- * To change this template use File | Settings | File Templates.
  */
 class RyzClass {
+
     private final List<String> sourceLines;
     private final List<String> generatedSource = new ArrayList<String>();
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
     private String name;
     private String packageName;
     private RyzClassState state;
@@ -55,13 +55,14 @@ class RyzClass {
     private final String sourceFile;
 
     public RyzClass(String sourceFile, List<String> sourceLines) {
+
         this.sourceFile = sourceFile;
-        Logger logger= Logger.getLogger(this.getClass().getName());
+
         if( logger.isLoggable(Level.FINEST)){
             StringBuilder sb = new StringBuilder();
             for (String sourceLine : sourceLines) {
                 sb.append(sourceLine);
-                sb.append("\n");
+                sb.append(LineTransformer.lineSeparator); 
             }
             logger.finest(sb.toString());
         }
@@ -92,7 +93,7 @@ class RyzClass {
         return this.methods;
     }
 
-    /**
+      /**
         *  Map of list of names of the variables ( and variables ) defined in this class.
         * For instance, for method test() the variable a could have been defined,
         *  if variable a is redefined, this map will help to know if it was already there.
@@ -112,9 +113,16 @@ class RyzClass {
      */
     public void transformSourceCode() {
 
+        logger.info("Processing " + sourceFile );    
+        int lineno = 0;
         for( String line : sourceLines ) {
+            lineno++;
+            int lsf = generatedSource.size();
             for( LineTransformer t : transformers() ) {
                 t.transform( line, generatedSource );
+            }
+            if( lsf == generatedSource.size() && !(line.trim().equals(""))  ) { 
+              logger.info("Not processed ["+lineno+"]:"+  line );
             }
         }
         
@@ -138,7 +146,6 @@ class RyzClass {
      */
     public void closeKey() {
         this.state().keyClosed();
-        //To change body of created methods use File | Settings | File Templates.
     }
 
     public void addMethod(String methodName, String methodType) {

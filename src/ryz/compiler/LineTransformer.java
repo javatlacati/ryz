@@ -189,14 +189,6 @@ class PackageClassTransformer extends LineTransformer {
                 generatedSource.add(String.format("/*import static*/import static java.lang.System.out;%n"));
                 generatedSource.add(String.format(
                         "public class %s %s %s { %n" +
-                        "    private final static java.text.DateFormat $sdf$ =new java.text.SimpleDateFormat(\"yyyy-MM-dd hh:mm:ss\");%n"+
-                        "    private final static java.util.Date $sdf$GetDate(String aDate){%n" +
-                        "      try {%n" +
-                        "        return $sdf$.parse(aDate);%n" +
-                        "      } catch( java.text.ParseException pe ) {%n" +
-                        "        throw new IllegalStateException(\"Error in the compiler while identifying a date literal. Original message: \" + pe.getMessage());\n" +
-                        "      }%n" +
-                        "    }%n"+
                         "    private final %s self = this;%n",
                         className,
                         extendsOrImplements,
@@ -261,6 +253,8 @@ class CommentTransformer extends LineTransformer {
         if( line.startsWith("/*")
           || line.startsWith("//")
           || line.endsWith("*/") ){
+                generatedSource.add(line + lineSeparator);
+        }else if( currentClass().state() instanceof InsideCommentState  ) { 
                 generatedSource.add(line + lineSeparator);
         }
         if( line.startsWith("/*")){

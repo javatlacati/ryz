@@ -26,35 +26,14 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package ryz.compiler;
+package ryz.lang;
 
-import java.util.Arrays;
-
-/**
- * In the initial state we are out or everywhere.
- * 
- * User: oscarryz
- * Date: Dec 11, 2010
- */
-class InitialState extends RyzClassState {
-    public InitialState(RyzClass ryzClass) {
-        super(ryzClass);
-        transformers(Arrays.asList(
-                new PackageClassTransformer(this),
-                new ImportTransformer(this),
-                new CommentTransformer(this),
-                new ClosingKeyTransformer(this)//,
-        ));
-    }
-
-
-    @Override
-    void previousState() {
-        ryzClass().state(new InitialState(ryzClass()));
-    }
-
-    @Override
-    void nextState() {
-        ryzClass().state(new InsideClassState(ryzClass()));
+//TODO: delete this java source file when a mechanism to "pre-compile" the Ryz
+// version is found
+public class Bool { 
+    public Bool ifTrue( Runnable r ) { 
+        r.run();
+        return this;
     }
 }
+
