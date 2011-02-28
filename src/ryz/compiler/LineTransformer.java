@@ -230,15 +230,42 @@ class MultilineStringTransformer extends LineTransformer {
     @Override
     public void transform(String line, List<String> generatedSource) {
         if( line.equals("\"")){
+            // End of multiline string was found. 
+            // We have to remove the ficticous line
             String last = generatedSource.remove(generatedSource.size()-1);
             logger.finest( "Last line written: " + last );
+            // And replace it with the original one
+            // To do it we have to trim the ficticious end of line added:
+
+            // first we need to know some lenghts 
+            // line separator lenght: \n or \r\n ( 1 or 2 )
             int lsl = lineSeparator.length();
-            generatedSource.add(last.substring(0,last.length() - (lsl + (atLestOneLineProcessed?3:2)))+"\";" + lineSeparator);
+            // line separator reprenentation lenght ( 2 or 4 ) 
+            int lsrl = lineSeparatorRepresentation.length();
+            // And get the original line 
+            int originalStringSize = last.length() - (lsl + (atLestOneLineProcessed?( lsrl + 1 ):2));
+
+            String originalString  = last.substring( 0, originalStringSize );
+            generatedSource.add( originalString + "\";" + lineSeparator);
             currentClass().outsideMultilineString();
         } else {
-            // append 4 - 5 chars at the end for "newline" : [\,n,", lineSeparator]
-            //TODO: add original file return (either \r\n or \n ) instead of just \n
-            generatedSource.add( "+\""+indentation+line.replace("\"", "\\\"")+ lineSeparatorRepresentation+"\""+ lineSeparator );
+            // Add the line.
+            // For instance if line is:
+            //    a value
+            // transform it to something like:
+            //  +"   a value\n"\n
+            //That is
+            //  string literal  : \"
+            //  original string scaping all the " to \"
+            //  line terminaror representation: \n ( or \r\n in windows ) 
+            //  line separator  : \n  ( or \r\n in windows )
+            generatedSource.add( "+\"" 
+                                + indentation
+                                +line.replace("\"", "\\\"") 
+                                + lineSeparatorRepresentation 
+                                + "\"" + lineSeparator );
+            // set the state to know that at least one of these 
+            // was modified.
             atLestOneLineProcessed = true;
         }
     }
