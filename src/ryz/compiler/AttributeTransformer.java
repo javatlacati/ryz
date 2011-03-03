@@ -50,7 +50,7 @@ class AttributeTransformer extends LineTransformer {
     private static final String multiLineInitialValue = " =  %s"+lineSeparatorRepresentation+"\"";
     private static final String regexInitialValue = " = java.util.regex.Pattern.compile(\"%s\");%n";
     private static final String dateInitialValue = " = ryz.lang.DateLiteral.valueOf(\"%s 00:00:00\");";
-    private static final String blockInitialValue = " = /* block */ new Runnable(){%n    public void run(){%n";
+    private static final String blockInitialValue = " = /* block */ new ryz.lang.Block(){%n    public void run(){%n";
 
 
     // [+#~-] hola ...
@@ -86,7 +86,7 @@ class AttributeTransformer extends LineTransformer {
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/"),       "java.util.regex.Pattern", regexInitialValue),
         // hola = {
         // }
-        Match.literal(blockPattern, "Runnable", blockInitialValue),
+        Match.literal(blockPattern, "ryz.lang.Block", blockInitialValue),
         // hola = null
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(null)"),             "java.lang.Object",       literalInitialValue)
 
@@ -114,19 +114,8 @@ class AttributeTransformer extends LineTransformer {
         for (Match matcher : matchers) {
             variable = matcher.matches(line, variable);
         }
-        if (blockPattern.matcher(line).matches()) {
-            currentClass().insideBlock();
-        } else if( multilineString.matcher(line).matches()){
-            //If a multiline string is found
-            //get the identation to be used in the
-            // new lines
-            Matcher matcher = multilineString.matcher(line);
-            matcher.matches();
-            int indentation = matcher.group(3).lastIndexOf(' ');
-            currentClass().insideMultilineString(indentation);
-        }
 
-
+        // add the variable to the class 
         if (variable != null) {
             String accessModifier = getScope(line, this.includeScope, "private");
             boolean added = currentClass().addVariable(accessModifier, variable.name, variable.type);
@@ -143,6 +132,20 @@ class AttributeTransformer extends LineTransformer {
                     variable.initialValue));
 
         }
+
+        // and change the class state
+        if (blockPattern.matcher(line).matches()) {
+            currentClass().insideBlock();
+        } else if( multilineString.matcher(line).matches()){
+            //If a multiline string is found
+            //get the identation to be used in the
+            // new lines
+            Matcher matcher = multilineString.matcher(line);
+            matcher.matches();
+            int indentation = matcher.group(3).lastIndexOf(' ');
+            currentClass().insideMultilineString(indentation);
+        }
+        
 
     }
 

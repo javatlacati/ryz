@@ -37,7 +37,7 @@ import java.util.Arrays;
  * Date: Jan 7, 2011
  * Time: 4:42:24 PM
  */
-public class InsideBlockState extends RyzClassState {
+public class InsideBlockState extends InsideMethodState {
     private final RyzClassState previousState;
     public InsideBlockState(RyzClass ryzClass, RyzClassState state) {
         super( ryzClass );

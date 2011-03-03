@@ -13,6 +13,6 @@ blocks.SimpleBlock {
     out.println("Hello from a block")
   }
   main(){
-    a.run() // todo: should invoke: a() no a.run()
+    a()
   }
 }

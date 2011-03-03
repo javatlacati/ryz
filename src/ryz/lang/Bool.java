@@ -31,8 +31,8 @@ package ryz.lang;
 //TODO: delete this java source file when a mechanism to "pre-compile" the Ryz
 // version is found
 public class Bool { 
-    public Bool ifTrue( Runnable r ) { 
-        r.run();
+    public Bool ifTrue( Block b ) { 
+        b.run();
         return this;
     }
 }

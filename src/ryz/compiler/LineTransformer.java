@@ -487,7 +487,7 @@ class SimpleAssignmentTransformer extends LineTransformer {
 //TODO: watchout, this may eventually process anything
 class SingleValueLineTransformer extends LineTransformer {
 
-    private final Pattern singleValuePattern = Pattern.compile("\\w+|\\w+\\(\\)");
+    private final Pattern singleValuePattern = Pattern.compile("\\w+|(\\w+)\\(\\)");
     public SingleValueLineTransformer(RyzClassState state) {
         super(state);
     }
@@ -497,9 +497,41 @@ class SingleValueLineTransformer extends LineTransformer {
 
         Matcher m = singleValuePattern.matcher(line);
         if(m.matches()){
-            generatedSource.add( String.format("/*expression*/ %s;%n", checkObjectInitialization(line)));
+            logger.finest(currentClass().name() +" variables: "+ currentClass().variables().toString());
+            
+            String expression = checkObjectInitialization(line);
+
+            String invokedMethod = m.group(1);
+            if( isBlockInvocation( invokedMethod )) {
+                expression = invokedMethod+".run();";
+            }
+
+            generatedSource.add( String.format("/*expression*/ %s;%n", expression )) ;
 
         }
+    }
+    private String currentMethod() { 
+       return currentClass().methods().get( currentClass().methods().size()-1);
+    }
+    private boolean isBlockInvocation( String methodInvocationName ) { 
+        if( methodInvocationName == null ) { 
+            return false;
+        }
+        String possibleBlock = methodInvocationName + ":ryz.lang.Block";
+        boolean isBlock = false;
+        try { 
+            return  currentClass().variables().get(currentMethod()).contains(possibleBlock) && true;
+        }  catch( NullPointerException npe ) { 
+            // I'm really sorry for this, 
+            // but I'll fix it, I promise
+            // TODO: replace Npe catch by 
+            // extracting this method into 
+            // the class that has the state 
+            //information 
+            // The NPE may originate if there are no
+            // methods, or we are not inside a method
 
+        }
+        return currentClass().variables().get("instance").contains( possibleBlock );
     }
 }
