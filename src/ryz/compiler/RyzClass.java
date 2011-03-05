@@ -72,17 +72,20 @@ class RyzClass {
     }
 
 
-    public void setClassName(String theClassName ) {
+    public void className(String theClassName ) {
         this.name = theClassName.trim();
         state().nextState();
     }
 
 
-    public void setPackageName(String packageName) {
+    public void packageName(String packageName) {
         this.packageName = packageName;
     }
+    public String packageName() { 
+        return this.packageName;
+    }
 
-    public String name() {
+    public String className() {
         if( name == null ){
             throw new IllegalStateException("Should have name by now");
         }
@@ -211,5 +214,17 @@ class RyzClass {
 
     public void insideParameters() {
         state().insideParameters();
+    }
+    RyzClass reportExceptions() { 
+       for( int i = 0 ; i < generatedSource.size() ; i++ ) {
+           String s = generatedSource.get(i);
+           if( s.startsWith("    /*method*/")){
+               generatedSource.set( i ,
+                    s.substring( 0, s.length() - LineTransformer.lineSeparator.length() - 1 ) 
+                     + " throws Exception { " + LineTransformer.lineSeparator 
+               );
+           }
+       }
+       return this;
     }
 }

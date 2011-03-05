@@ -36,6 +36,7 @@ import javax.tools.SimpleJavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
+import javax.tools.Diagnostic;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -137,9 +138,14 @@ public class RyzC {
 
 
     //TODO: Move to Utility class when the time comes
-    private List<String> cleanLines(List<String> output) {
+    /**
+     * This method pre-process the input source file. 
+     * This helps to things like putting the single line comment in a separate line
+     * TODO: keep the original line numbre.
+     */
+    private List<String> cleanLines(List<String> input) {
         List<String> trimmed = new ArrayList<String>();
-        for( String s : output ){
+        for( String s : input ){
             String line = s.trim();
             // if line starts with single line comment: "//"
             // then put that line in the next one.
@@ -164,7 +170,7 @@ public class RyzC {
     private void createClassDefinition( RyzClass currentClass ) throws IOException {
         //System.out.println("outputLines = " + outputLines);
         // write the  class
-        logger.finest("className=["+currentClass.name()+"]");
+        logger.finest("className=["+currentClass.className()+"]");
         Writer writer = new StringWriter();
 
         writer.write(String.format("//-- Create from: %s %n" , currentClass.sourceFile()));
@@ -185,22 +191,15 @@ public class RyzC {
             if( s.startsWith("import")){
                 importString = s;
             }
-            if(s.startsWith("package") || s.startsWith("import")){
+            if(s.startsWith("import")){
                 toRemove.add( s ) ;
             }
         }
-        if( "".equals(packageString) ){
-            writer.write(
-               "package load.test;\n" +
-               " public class First{\n" +
-               "    private int i = 0;\n" +
-               "    public int i(){ return i;} \n" +
-               "}");
-        }
-
-        writer.write(packageString);
-        writer.write(importString);
+        // Before writing put package and imports at the top
+        outputLines.remove( packageString );
         outputLines.removeAll(toRemove);
+        outputLines.addAll(0,toRemove);
+        outputLines.add( 0, packageString );
         // to here
 
         for (String s : outputLines) {
@@ -208,7 +207,7 @@ public class RyzC {
         }
         writer.close();
 
-        JavaFileObject source = new JavaSourceFromString(currentClass.name(), writer.toString());
+        JavaFileObject source = new JavaSourceFromString(currentClass.className(), writer.toString());
 
         // Get the java compiler for this platform
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -247,7 +246,18 @@ public class RyzC {
             logger.info( collector.getDiagnostics().toString());
         }
 
-        fileManager.close();
+       fileManager.close();
+
+         if( !succesfullCompilation ) { 
+            for ( Diagnostic<? extends JavaFileObject> diagnostic : collector.getDiagnostics() ) { 
+                if("compiler.err.unreported.exception.need.to.catch.or.throw".equals(diagnostic.getCode())){
+                    createClassDefinition( currentClass.reportExceptions() );
+                    ClassInstrumentation.removeCheckedExceptions( currentClass, output );
+                    return;
+                }
+            }
+        }
+
 
         // delete the file
         //sourceFile.deleteOnExit();

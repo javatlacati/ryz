@@ -194,8 +194,8 @@ class PackageClassTransformer extends LineTransformer {
                         extendsOrImplements,
                         scapeName(possibleSuperClass),
                         className));
-                this.currentClass().setPackageName(packageName);
-                this.currentClass().setClassName(className);
+                this.currentClass().packageName(packageName);
+                this.currentClass().className(className);
             }
         }
     }
@@ -382,10 +382,10 @@ class MethodTransformer extends LineTransformer {
 
     private void addMainMethod(List<String> generatedSource) {
         generatedSource.add(String.format(
-                "public static void main( String [] args ) {\n" +
+                "    /*method*/public static void main( String [] args ) {\n" +
                "  new %s().main();\n" +
                "}\n" +
-               "public void main() {", currentClass().name()));
+               "    /*method*/public void main() {", currentClass().className()));
         currentClass().addMethod("main","void");
     }
 
@@ -497,7 +497,7 @@ class SingleValueLineTransformer extends LineTransformer {
 
         Matcher m = singleValuePattern.matcher(line);
         if(m.matches()){
-            logger.finest(currentClass().name() +" variables: "+ currentClass().variables().toString());
+            logger.finest(currentClass().className() +" variables: "+ currentClass().variables().toString());
             
             String expression = checkObjectInitialization(line);
 

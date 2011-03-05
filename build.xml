@@ -12,13 +12,12 @@
 
   <path id="cp">
    <pathelement location="lib/testng-5.14.10.jar"/>
+   <pathelement location="lib/javassist.jar"/>
    <pathelement location="${build}"/>
    <pathelement location="${build-test}"/>
   </path>
 
 
-  <!-- add testng ant task -->
-  <taskdef resource="testngtasks" classpath="lib/testng-5.14.10.jar"/>
   
 
   <target name="init">
@@ -29,12 +28,15 @@
     <mkdir dir="${build-test}"/>
   </target>
 
+  <target name="build" depends="compile" />
   <target name="compile" depends="init"
         description="compile the source " >
     <!-- Compile the java code from ${src} into ${build} -->
-    <javac srcdir="${src}" destdir="${build}" debug="true" />
+    <javac srcdir="${src}" classpathref="cp"  destdir="${build}" debug="true" />
   </target>
 
+  <!-- add testng ant task -->
+  <taskdef resource="testngtasks" classpath="lib/testng-5.14.10.jar"/>
   <target name="test" depends="compile" 
         description="run test unit">
         <javac classpathref="cp" srcdir="${test}" destdir="${build-test}"  debug="true"/>

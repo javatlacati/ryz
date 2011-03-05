@@ -74,7 +74,7 @@ public abstract class RyzClassState {
     abstract void nextState();
 
     public boolean addVariable(String accessModifier, String variableName, String variableType){
-        logger.finest (getClass().getSimpleName() + " RyzClass: "+ryzClass.name() +" (not) adding variable: " + variableName );
+        logger.finest (getClass().getSimpleName() + " RyzClass: "+ryzClass.className() +" (not) adding variable: " + variableName );
        return true;
     }
 
