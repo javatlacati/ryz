@@ -5,7 +5,7 @@ otherClasses:
 extends: java.lang.Object
 implements: 
 attributes:  
-methods:
+methods:  public test: void
 behavior : 
 #invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, it is true%n
 */

@@ -52,6 +52,19 @@ As example:
 behavior invokestatic main( [Ljava.lang.String;)|stdout=Hello\\, world!%n
 */
 
+This is the template to use in new XyzSpec.ryz files:
+
+/*
+className: some.Class
+classFile: some/Class.class
+otherClasses:
+extends: java.lang.Object
+implements:
+attributes:
+methods:
+behavior :
+*/
+
 
 
 
