@@ -88,7 +88,7 @@ abstract class LineTransformer {
     public abstract void transform(String line, List<String> generatedSource);
 
     static String checkObjectInitialization(String initialValue) {
-        if( Character.isUpperCase(initialValue.charAt(0)) && initialValue.matches(".*\\(.*\\)")){
+        if( Character.isUpperCase(initialValue.charAt(0)) && initialValue.matches("\\w*\\(.*\\)")){
             initialValue = "new " + initialValue;
         }
         return initialValue;
@@ -448,7 +448,7 @@ class ReturnTransformer extends LineTransformer {
 }
 class StatementTransformer extends LineTransformer {
 
-    private final Pattern statementPattern = Pattern.compile("\\w+\\.\\w+\\(.*\\)");//something.toString(somethingElse)
+    private final Pattern statementPattern = Pattern.compile("(\\w+)(\\.\\w+)*\\(.*\\)");//something.toString(somethingElse)
 
 
     StatementTransformer(RyzClassState state) {
@@ -459,12 +459,41 @@ class StatementTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         Matcher m = statementPattern.matcher(line);
         if( m.matches() ) {
+            logger.finest(currentClass().className() +" variables: "+ currentClass().variables().toString());
+
+            String expression = checkObjectInitialization(line);
+            String invokedMethod = m.group(1);
+            if( isBlockInvocation( invokedMethod )) {
+                expression = invokedMethod+".run();";
+            }
             generatedSource.add(String.format("    /*invocation*/%s;%n",
-                    line));
-            
+                    expression));
         }
-        
     }
+    private String currentMethod() {
+       return currentClass().methods().isEmpty() ? "---" : currentClass().methods().get( currentClass().methods().size()-1);
+    }
+    private boolean isBlockInvocation( String methodInvocationName ) {
+        if( methodInvocationName == null ) {
+            return false;
+        }
+        String possibleBlock = methodInvocationName + ":ryz.lang.Block";
+        try {
+                return currentClass().variables().get("instance").contains( possibleBlock ) || currentClass().variables().get(currentMethod()).contains(possibleBlock);
+        }  catch( NullPointerException npe ) {
+            // I'm really sorry for this,
+            // but I'll fix it, I promise
+            // TODO: replace Npe catch by
+            // extracting this method into
+            // the class that has the state
+            //information
+            // The NPE may originate if there are no
+            // methods, or we are not inside a method
+            return false;
+        }
+
+    }
+
 }
 class SimpleAssignmentTransformer extends LineTransformer {
 
@@ -487,7 +516,7 @@ class SimpleAssignmentTransformer extends LineTransformer {
 //TODO: watchout, this may eventually process anything
 class SingleValueLineTransformer extends LineTransformer {
 
-    private final Pattern singleValuePattern = Pattern.compile("\\w+|(\\w+)\\(\\)");
+    private final Pattern singleValuePattern = Pattern.compile("\\w+");
     public SingleValueLineTransformer(RyzClassState state) {
         super(state);
     }
@@ -497,41 +526,7 @@ class SingleValueLineTransformer extends LineTransformer {
 
         Matcher m = singleValuePattern.matcher(line);
         if(m.matches()){
-            logger.finest(currentClass().className() +" variables: "+ currentClass().variables().toString());
-            
-            String expression = checkObjectInitialization(line);
-
-            String invokedMethod = m.group(1);
-            if( isBlockInvocation( invokedMethod )) {
-                expression = invokedMethod+".run();";
-            }
-
-            generatedSource.add( String.format("/*expression*/ %s;%n", expression )) ;
-
+            generatedSource.add( String.format("/*expression*/ %s;%n", checkObjectInitialization(line))) ;
         }
-    }
-    private String currentMethod() { 
-       return currentClass().methods().get( currentClass().methods().size()-1);
-    }
-    private boolean isBlockInvocation( String methodInvocationName ) { 
-        if( methodInvocationName == null ) { 
-            return false;
-        }
-        String possibleBlock = methodInvocationName + ":ryz.lang.Block";
-        boolean isBlock = false;
-        try { 
-            return  currentClass().variables().get(currentMethod()).contains(possibleBlock) && true;
-        }  catch( NullPointerException npe ) { 
-            // I'm really sorry for this, 
-            // but I'll fix it, I promise
-            // TODO: replace Npe catch by 
-            // extracting this method into 
-            // the class that has the state 
-            //information 
-            // The NPE may originate if there are no
-            // methods, or we are not inside a method
-
-        }
-        return currentClass().variables().get("instance").contains( possibleBlock );
     }
 }

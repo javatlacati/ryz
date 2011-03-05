@@ -44,6 +44,7 @@ public class InsideParametersState extends RyzClassState {
         transformers(Arrays.asList(
                 new CommentTransformer(this),
                 new SimpleAssignmentTransformer(this),
+                new StatementTransformer(this),
                 new SingleValueLineTransformer(this)
         ));
 

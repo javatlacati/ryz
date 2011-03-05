@@ -1,13 +1,13 @@
-- To remove exception in the byte code use something like javassist see: so/4337281
+DONE - To remove exception in the byte code use something like javassist see: so/4337281
 - Support multiple public class in the same source
 - Create attribute and don't duplicate it when defined in method :-S
-- Create Bool class and simple blocks of code.
-- Args, varargs, named args
-- extension methods
+STARTED - Create Bool class and simple blocks of code.
+DONE - Args, varargs
+ named args with default values
 - get/set properties like generation
 
-- Indicate what lines haven't been processed 
-- Compile using a classpath  ( to load existing classes ) 
+DONE needs more work - Indicate what lines haven't been processed
+DONE needs more work - Compile using a classpath  ( to load existing classes )
 - Work on blocks.
     - Block literal
     - Block invocation

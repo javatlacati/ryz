@@ -29,6 +29,6 @@ methods.parameters.OneParametersTest {
 
   }
   doReverse(): String {
-    self.reverse( "!aloH" )
+    reverse( "!aloH" )
   }
 }
