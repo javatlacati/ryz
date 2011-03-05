@@ -42,8 +42,14 @@ http://groups.google.com/group/ryz-lang
 Twitter: @ryz_language
 
 
+3rd party libraries:
+
 [Testgn]
 
 This project uses TesNG <http://testng.org>  testing framework redistributed under Apache 2.0 license. You may find a copy of the license in lib/APACHE-LICENSE.txt
 
+
+[javassist]
+
+This project uses Javassit <http://www.jboss.org/javassist> bytecode manipulation library redistributed under Mozilla Public License v1.1 You may find a copyt fo the license in lib/MZL-License.html
 

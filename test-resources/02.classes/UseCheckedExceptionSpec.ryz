@@ -1,0 +1,19 @@
+/*
+className: classes.UseCheckedException
+classFile: classes/UseCheckedException.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:
+behavior : 
+#invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, it is true%n
+*/
+classes.UseCheckedException { 
+    import( java.io.File )
+
+    test() { 
+        file = File("sample")
+        file.createNewFile()        
+    }
+}
