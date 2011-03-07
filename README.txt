@@ -1,27 +1,35 @@
-// About -----------------------------------
+summary About Ryz
+
+= Introduction =
+
 ryz.programming.Language {
-  staticallyType = True
+  staticallyType = true
   paradigm = "Object Oriented"
   runsOn( jvm = True) {
       compilesTo = "Java bytecode"
   }
 }
-//------------------------------------------
 
+= Details =
 
-Currently uses Intellj IDEA 10 CE ( http://www.jetbrains.com/idea/download/index.html )
-to compile and test using TestNG testing framework plugin included with the IDE.
+Currently Ryz uses Intellj IDEA 10 CE and TestNG 
+testing framework plugin included with the IDE.
 
-After loading the project, execute the: Run configuration "ryz.compiler" option.
+http://www.jetbrains.com/idea/download/index.html
 
-Java source files for the RyzC are in folder:
+After loading the project, execute the option: 
+run configuration "ryz.compiler" 
+
+===Project structure===
+
 /src
-
-Java source files for the unit test are in folder:
 /test
-
-Ryz test source files are in folder:
 /test-resources
+
+src: Contains Java source files to compile Ryz source code.
+tes: Contains Java source file to test the RyzC 
+test-resources: Contains sample of the language.
+
 
 If test source file name ends in "Spec.ryz" it will be loaded by the
 testing framework, compiled and "asserted" against the specification
@@ -29,27 +37,25 @@ defined in the file header.
 
 (See /test-resources/spec-definition-readme.txt for a definition of the test spec)
 
-Further documentation will be placed on:
 
-http://code.google.com/p/ryz/w/list
+===3rd party libraries===
 
-The issue list is:
-http://code.google.com/p/ryz/issues/list
-
-The mailing list:
-http://groups.google.com/group/ryz-lang
-
-Twitter: @ryz_language
+Testgn
+This project uses TesNG http://testng.org testing framework
+redistributed under Apache 2.0 license.
+You may find a copy of the license in lib/APACHE-LICENSE.txt
 
 
-3rd party libraries:
+javassist
+This project uses Javassit http://www.jboss.org/javassist bytecode manipulation library
+redistributed under Mozilla Public License v1.1 
+You may find a copyt fo the license in lib/MZL-License.html
 
-[Testgn]
-
-This project uses TesNG <http://testng.org>  testing framework redistributed under Apache 2.0 license. You may find a copy of the license in lib/APACHE-LICENSE.txt
 
 
-[javassist]
+===Links===
 
-This project uses Javassit <http://www.jboss.org/javassist> bytecode manipulation library redistributed under Mozilla Public License v1.1 You may find a copyt fo the license in lib/MZL-License.html
-
+  * Docs: http://code.google.com/p/ryz/w/list
+  * Issues: http://code.google.com/p/ryz/issues/list
+  * Mailing list: http://groups.google.com/group/ryz-lang
+  * Twitter: @ryz_language
