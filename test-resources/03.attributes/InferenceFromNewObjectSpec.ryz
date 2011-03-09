@@ -1,0 +1,13 @@
+/*
+className: attribute.initialized.Third
+attributes:  private-instance i : java.lang.Integer, private-instance s: java.lang.String , private-instance third : attribute.initialized.Third,\
+                private-static classThird : attribute.initialized.Third
+classFile: attribute/initialized/Third.class
+Featuring type inference
+*/
+attribute.initialized.Third{
+    i     =  Integer(0)
+    s     = String("s")
+    third = Third()
+    - __ classThird = Third()
+}

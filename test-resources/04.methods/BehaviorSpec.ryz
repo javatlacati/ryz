@@ -1,0 +1,47 @@
+/*
+className: methods.invoke.InvokeStatement
+classFile: methods/invoke/InvokeStatement.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods: public-instance main(): void,\
+          public-static main([Ljava.lang.String;):void,\
+         public-static createInstance() :  methods.invoke.InvokeStatement, \
+         public-instance hashCode() : int, \
+         public-instance modifyNumber() : int, \
+         public-instance increment() : void
+
+
+
+behavior : new,  invokestatic main([Ljava.lang.String;) | stdout=Hello Oscar%n,\
+          invokestatic createInstance() | result=methods.invoke.InvokeStatement@0,\
+          invokevirtual toString() | result=methods.invoke.InvokeStatement@0,\
+          invokevirtual modifyNumber() | result=2
+*/
+methods.invoke.InvokeStatement{
+
+  number : Int = 0
+
+  main(){
+    out.println("Hello Oscar") // TODO: change to:  out.print "Hello world"
+  }
+  __ createInstance():InvokeStatement {
+    InvokeStatement()
+  }
+  /**
+   * Needed to validate if the creation of an instance
+   * of this class is always: methods.invoke.InvokeStatement@0
+    */
+  hashCode(): Int  {
+     0
+  }
+
+  modifyNumber() : Int {
+    self.increment()
+     number
+  }
+  increment() {
+    number = 2
+  }
+
+}

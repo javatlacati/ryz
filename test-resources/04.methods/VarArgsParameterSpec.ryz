@@ -1,0 +1,25 @@
+/*
+className: methods.parameters.VarArgsParameterSpec
+classFile: methods/parameters/VarArgsParameterSpec.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public-instance varArgs([Ljava.lang.String;):void
+behavior : invokestatic main([Ljava.lang.String;) | \
+  stdout=[uno]%n[uno\\, dos]%n[uno\\, dos\\, tres]%n[a\\, b\\, c]%n
+*/
+methods.parameters.VarArgsParameterSpec{
+   main(){
+    self.varArgs("uno")
+    self.varArgs("uno","dos")
+    self.varArgs("uno", "dos", "tres")
+    out.println(self.otherVarArs("a", "b", "c").toString())
+   }
+   import( java.util.* )
+   varArgs( many : String* ){
+    out.println(Arrays.toString(many))
+   }
+   otherVarArs( many: String* ) : List {
+      Arrays.asList( many )
+   }
+}

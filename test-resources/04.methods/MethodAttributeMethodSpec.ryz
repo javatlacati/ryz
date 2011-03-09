@@ -1,0 +1,18 @@
+/*
+className: methods.package$.Second
+attributes: private name:java.lang.String ,\
+            private lastName:java.lang.String
+methods: public name: java.lang.String ,\
+         public lastName: java.lang.String
+classFile: methods/package$/Second.class
+*/
+methods.package.Second{
+    name:String
+    name():String {
+      name
+    }
+    lastName:String
+    lastName() : String{
+      lastName
+    }
+}

@@ -1,0 +1,7 @@
+/*
+className: simple.inheritance.Class
+extends: java.lang.Thread
+classFile: simple/inheritance/Class.class
+*/
+simple.inheritance.Class : Thread {
+}
