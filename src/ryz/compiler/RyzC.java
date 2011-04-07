@@ -214,16 +214,16 @@ public class RyzC {
         if( compiler == null ) {
             throw new IllegalStateException("Couldn't get java compiler. Make " +
                     "sure the javac is in the execution path. (HINT put " +
-                    "JAVA_HOME/bin before in the path )");
+                    "JAVA_HOME/bin before in the path ) JAVA_HOME="+System.getProperty("java.home"));
         }
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(
                 null,
                 null,
                 null);
 
-        //TODO: parametrize options
+        //TODO: parameterize options
         Iterable<String> options = logger.isLoggable(Level.FINEST) ? Arrays.asList("-verbose") : null ;
-        //TODO: parametrize CLASSPATH
+        //TODO: parameterize CLASSPATH
         List<File> classPath = Arrays.asList(new File("./lib/"), new File("./out/build/"));
 
         fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(output));
@@ -242,7 +242,7 @@ public class RyzC {
                             compilationUnits)
                 .call();
         if(!succesfullCompilation  || logger.isLoggable( Level.FINEST ) ) { 
-            logger.fine("writer = \n" + writer);
+            logger.fine( numberedContent( writer.toString() ) );
             logger.info( collector.getDiagnostics().toString());
         }
 
@@ -263,6 +263,21 @@ public class RyzC {
         //sourceFile.deleteOnExit();
 
 
+    }
+    /**
+     * Adds line number to the passed string.
+     */
+    private final String numberedContent( final String content ) { 
+        int i = 1;
+        StringBuilder numberedContent = new StringBuilder();
+        for( String line : content.split("\n")) {
+            numberedContent.append( i++ );
+            numberedContent.append( i <= 10 ? ' ' : "" );
+            numberedContent.append( ' ' );
+            numberedContent.append( line );
+            numberedContent.append( '\n' );
+        }
+        return numberedContent.toString();
     }
 
     /**

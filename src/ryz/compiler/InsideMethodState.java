@@ -48,7 +48,8 @@ public class InsideMethodState extends RyzClassState {
                 new ReturnTransformer(this),
                 new StatementTransformer(this),
                 new SimpleAssignmentTransformer(this),
-                new SingleValueLineTransformer(this)
+                new SingleValueLineTransformer(this),
+                new InlineBlockTransformer(this)
         ));
     }
 

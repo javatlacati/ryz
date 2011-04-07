@@ -8,6 +8,8 @@ the following format:
 className:  Fully qualified class name expected after compilation
 classFile:  Name of the .class file generated after the compilation.
             This should be deleted by the testing framework after each run.
+otherClasses: Other .class files generated ( such as inner classes ) to 
+            be deleted.            
 extends:    Fully qualified class name this object inherits from.
 implements: Comma separated of fully qualified interfaces implemented
             by this class.
@@ -27,6 +29,7 @@ As example:
 /*
 className: methods.class$.ClassMethod
 classFile: methods/class$/ClassMethod.class
+otherClasses: methods/class$/ClassMethod$1.class
 extends: java.lang.Thread
 implements: java.lang.Runnable
 attributes:  private name:java.lang.String, private-static t : java.lang.String

@@ -13,11 +13,11 @@ attributes: public-instance i : int ,\
             default-static p : java.lang.String, \
             private-instance q : java.lang.String,\
             private-static r : java.lang.String,\
-            public-instance s: boolean,\
-            protected-static t : boolean,\
-            default-instance u : boolean,\
-            private-static v : boolean, \
-            private-instance w : boolean, \
+            public-instance s: ryz.lang.Bool,\
+            protected-static t : ryz.lang.Bool,\
+            default-instance u : ryz.lang.Bool,\
+            private-static v : ryz.lang.Bool, \
+            private-instance w : ryz.lang.Bool, \
             private-instance x : char,\
             private-static y : char,\
             public-instance z : char, \

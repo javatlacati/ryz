@@ -45,7 +45,8 @@ import static ryz.compiler.LineTransformer.scapeName;
  * Time: 2:08 PM
  */
 class AttributeTransformer extends LineTransformer {
-
+	
+	private static final String boolInitialValue    = " = ryz.lang.Bool.valueOf(%s);";
     private static final String literalInitialValue = " = %s;";
     private static final String multiLineInitialValue = " =  %s"+lineSeparatorRepresentation+"\"";
     private static final String regexInitialValue = " = java.util.regex.Pattern.compile(\"%s\");%n";
@@ -78,7 +79,7 @@ class AttributeTransformer extends LineTransformer {
         // + __ hola = "uno"
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*\")"),           "String",   literalInitialValue),
         // + __ hola = true
-        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(true|false)"),       "boolean",  literalInitialValue),
+        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(true|false)"),       "ryz.lang.Bool",  boolInitialValue),
         // + __ hola = 'c'
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*('.')"),              "char",     literalInitialValue),
         // + __ hola = 2011-01-06

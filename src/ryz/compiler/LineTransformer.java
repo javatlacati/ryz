@@ -293,20 +293,32 @@ class CommentTransformer extends LineTransformer {
     }
 }
 class ClosingKeyTransformer extends LineTransformer {
-    ClosingKeyTransformer(RyzClassState state) {
-        super(state);
-    }
+     ClosingKeyTransformer(RyzClassState state) {
+         super(state);
+     }
 
-    @Override
-    public void transform(String line, List<String> generatedSource) {
+     @Override
+     public void transform(String line, List<String> generatedSource) {
         if( line.startsWith("}")) { // or ends with }
-            String indentation = currentClass().state() instanceof InsideMethodState ?
-                    "    " : "/**/";
-            generatedSource.add(indentation +line + lineSeparator);
-            this.currentClass().closeKey();
-        }
-    }
+            logger.finest("currentClass().state() = " +  currentClass().state() ); 
+            String indentation = "";
+            if( currentClass().state() instanceof InsideBlockState ) { 
+                 indentation = "/*ib*/";
+                 this.currentClass().closeKey();
+                 generatedSource.add(indentation +line + ";"+lineSeparator);
+            } else if( currentClass().state() instanceof InsideMethodState ) { 
+                indentation = "    ";
+                generatedSource.add(indentation +line + lineSeparator);
+                 this.currentClass().closeKey();
+             }  else { 
+                 indentation = "/**/";
+             generatedSource.add(indentation +line + lineSeparator);
+                 this.currentClass().closeKey();
+             }
+         }
+     }
 }
+
 class MethodTransformer extends LineTransformer {
 
 
@@ -446,9 +458,25 @@ class ReturnTransformer extends LineTransformer {
         }
     }
 }
+class InlineBlockTransformer extends LineTransformer {
+    Pattern statementPattern = Pattern.compile("((\\w+)(\\.\\w+)*)\\(\\s*\\(\\s*\\)\\s*\\{");//something.toString(somethingElse)
+    InlineBlockTransformer(RyzClassState state) {
+        super(state);
+    }
+    public void transform(String line, List<String> generatedSource) {
+        Matcher m = statementPattern.matcher(line);
+        if( m.matches() ) {
+            logger.finest("line matched " + line );
+            currentClass().insideBlock();
+            generatedSource.add( String.format("    /*invocationwithblock*/ %s(new ryz.lang.Block(){%n    public void run(){%n",m.group(1)));
+            
+                        
+        }
+    }
+}
 class StatementTransformer extends LineTransformer {
 
-    private final Pattern statementPattern = Pattern.compile("(\\w+)(\\.\\w+)*\\(.*\\)");//something.toString(somethingElse)
+    Pattern statementPattern = Pattern.compile("(\\w+)(\\.\\w+)*\\(.*\\)");//something.toString(somethingElse)
 
 
     StatementTransformer(RyzClassState state) {
@@ -497,7 +525,7 @@ class StatementTransformer extends LineTransformer {
 }
 class SimpleAssignmentTransformer extends LineTransformer {
 
-    private final Pattern assignPattern = Pattern.compile("(\\w+\\s*=\\s*\\w+\\s*)");
+    private final Pattern assignPattern = Pattern.compile("(\\w+\\s*=\\s*(?!(true|false)$)\\w+\\s*)");
 
     SimpleAssignmentTransformer(RyzClassState state) {
         super(state);

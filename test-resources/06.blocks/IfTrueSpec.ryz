@@ -9,13 +9,13 @@ methods:
 behavior : invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, it is true%n
 */
 blocks.IfTrue {
-    import(ryz.lang.Bool)
+    import(ryz.lang.Bool) // TODO: shouldn't need to import ryz.lang.*
     main() {
         r = (){
             out.println("Yeap!, it is true")
         }
 
-        value = Bool()
+        value = true 
         value.ifTrue( r )
     }
 }

@@ -74,6 +74,6 @@ public class InsideBlockState extends InsideMethodState {
     @Override
     public void keyClosed() {
         ryzClass().outputLines().add(String.format("};%n"));
-        super.keyClosed();    //To change body of overridden methods use File | Settings | File Templates.
+        super.keyClosed();
     }
 }

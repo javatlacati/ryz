@@ -31,9 +31,25 @@ package ryz.lang;
 //TODO: delete this java source file when a mechanism to "pre-compile" the Ryz
 // version is found
 public class Bool { 
+	private final static Bool true$ = new True();
+	private final static Bool false$ = new False();
+	
+	public static final Bool valueOf( boolean value ) {
+	  return value ? true$ : false$;
+	}
     public Bool ifTrue( Block b ) { 
-        b.run();
         return this;
+    }
+    private static class True extends Bool { 
+    	private True(){}
+    	@Override
+    	public Bool ifTrue( Block b ) {
+    	    b.run();
+    	    return this;
+    	}
+    }
+    private static class False extends Bool { 
+    	private False(){}
     }
 }
 
