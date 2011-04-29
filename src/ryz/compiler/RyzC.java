@@ -47,11 +47,11 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.lang.System.err;
 
@@ -68,7 +68,24 @@ import static java.lang.System.err;
 public class RyzC {
 
     private static final Logger logger = Logger.getLogger(RyzC.class.getName());
-    
+    private static final Map<Character,String> operatorMap = new HashMap<Character,String>(){{
+      put('+',"$plus");
+      put('-',"$minus");
+      put('*',"$star");
+      put('/',"$slash");
+      put('%',"$percent");
+      put('<',"$lt");
+      put('>',"$gt");
+      put('=',"$eq");
+      put('!',"$em");
+      put('&',"$amp");
+      put('^',"$up");
+      put('|',"$bar");
+      put('?',"$qm");
+      put(':',"$colon");
+      //+ - * / % < > = ! & ^ | ? :
+    }};
+
     public static void main( String [] args ) throws IOException {
         RyzC c = RyzC.getCompiler();
         c.sourceDirs(new File("."));
@@ -144,9 +161,52 @@ public class RyzC {
      * TODO: keep the original line numbre.
      */
     private List<String> cleanLines(List<String> input) {
+        List<String> result = trimLines(input);
+        result  = splitLineComments(result);
+        result = substituteNonTextMethods( result );
+        return result;
+    }
+
+    private List<String> substituteNonTextMethods(List<String> input) {
+        List<String> result = new ArrayList<String>();
+        Pattern pattern = Pattern.compile("[+#~-]??\\s*(__)?\\s*([+\\-*/%<>=!&^|?:]+)\\s*\\(");
+
+
+
+        for (String line : input) {
+            if(line.startsWith("//")){
+                continue;
+            }
+            Matcher m = pattern.matcher(line);
+            if( m.lookingAt() ) {
+                String methodName = m.group(0);
+                methodName = methodName.substring(0,methodName.length()-1);
+                System.out.println("methodName = " + methodName);
+                StringBuilder sb = new StringBuilder();
+                for( char c : methodName.toCharArray() ){
+                    sb.append( operatorMap.get(c) );
+
+                }
+                sb.append(line.substring(methodName.length()));
+                result.add( sb.toString() );
+            }else {
+               result.add( line );
+           }
+        }
+        return result;
+    }
+
+    private List<String> trimLines(List<String> input) {
+        List<String> r = new ArrayList<String>();
+          for( String s : input ){
+              r.add( s.trim() );
+          }
+        return r;
+    }
+
+    private List<String> splitLineComments(List<String> input) {
         List<String> trimmed = new ArrayList<String>();
-        for( String s : input ){
-            String line = s.trim();
+        for( String line : input ){
             // if line starts with single line comment: "//"
             // then put that line in the next one.
             // to avoid problems.

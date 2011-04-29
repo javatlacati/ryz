@@ -1,0 +1,33 @@
+/*
+className: methods.NonTextMethodSpec
+classFile: methods/NonTextMethodSpec.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:
+methods: public-instance $plus(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $minus(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $plus(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $star(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $slash(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $percent(methods.NonTextMethodSpec) : methods.NonTextMethodSpec
+*/
+methods.NonTextMethodSpec {
+
+    +(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+    -(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+    *(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+    /(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+    %(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+}

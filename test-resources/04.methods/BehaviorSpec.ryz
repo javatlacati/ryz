@@ -5,7 +5,7 @@ extends: java.lang.Object
 implements: 
 attributes:  
 methods: public-instance main(): void,\
-          public-static main([Ljava.lang.String;):void,\
+         public-static main([Ljava.lang.String;):void,\
          public-static createInstance() :  methods.invoke.InvokeStatement, \
          public-instance hashCode() : int, \
          public-instance modifyNumber() : int, \
