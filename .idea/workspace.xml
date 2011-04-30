@@ -18,11 +18,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36296a06-84e0-411b-b5b5-827a5c8b4c69" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test-resources/04.methods/NonTextMethodSpec.ryz" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/logging.properties" afterPath="$PROJECT_DIR$/resources/logging.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" afterPath="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ryz/compiler/RyzC.java" afterPath="$PROJECT_DIR$/src/ryz/compiler/RyzC.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test-resources/04.methods/BehaviorSpec.ryz" afterPath="$PROJECT_DIR$/test-resources/04.methods/BehaviorSpec.ryz" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test-resources/04.methods/NonTextMethodSpec.ryz" afterPath="$PROJECT_DIR$/test-resources/04.methods/NonTextMethodSpec.ryz" />
     </list>
     <ignored path="ryz.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,6 +61,23 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </line_breakpoints>
+    <method_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java" line="169" class="ryz.compiler.RyzC" package="ryz.compiler">
+        <option name="WATCH_ENTRY" value="true" />
+        <option name="WATCH_EXIT" value="true" />
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </method_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -133,10 +148,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NonTextMethodSpec.ryz" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="NonTextMethodSpec.ryz" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test-resources/04.methods/NonTextMethodSpec.ryz">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="21" selection-start="581" selection-end="581" vertical-scroll-proportion="0.33027524">
+            <state line="85" column="0" selection-start="2847" selection-end="2847" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -145,7 +160,7 @@
       <file leaf-file-name="AssertStrategy.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/ryz/compiler/AssertStrategy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="436" column="20" selection-start="15551" selection-end="15551" vertical-scroll-proportion="0.0">
+            <state line="289" column="0" selection-start="12165" selection-end="12165" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -187,10 +202,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RyzC.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="RyzC.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="190" column="44" selection-start="6465" selection-end="6465" vertical-scroll-proportion="-13.461538">
+            <state line="188" column="0" selection-start="6352" selection-end="6352" vertical-scroll-proportion="0.29761904">
               <folding />
             </state>
           </provider>
@@ -199,7 +214,7 @@
       <file leaf-file-name="LineTransformer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="325" column="72" selection-start="12350" selection-end="12350" vertical-scroll-proportion="-3.4230769">
+            <state line="325" column="73" selection-start="12351" selection-end="12351" vertical-scroll-proportion="-3.4230769">
               <folding />
             </state>
           </provider>
@@ -241,9 +256,9 @@
         <option value="$PROJECT_DIR$/src/Ejemplo.java" />
         <option value="$PROJECT_DIR$/resources/logging.properties" />
         <option value="$PROJECT_DIR$/test-resources/04.methods/BehaviorSpec.ryz" />
-        <option value="$PROJECT_DIR$/src/ryz/compiler/RyzC.java" />
         <option value="$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java" />
         <option value="$PROJECT_DIR$/test-resources/04.methods/NonTextMethodSpec.ryz" />
+        <option value="$PROJECT_DIR$/src/ryz/compiler/RyzC.java" />
       </list>
     </option>
   </component>
@@ -952,7 +967,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39854544" sideWeight="0.5883905" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854062" sideWeight="0.6037736" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5626703" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29608127" sideWeight="0.9913669" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4034833" sideWeight="0.9913669" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -1101,13 +1116,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/AssertStrategy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="436" column="20" selection-start="15551" selection-end="15551" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ryz/compiler/AttributeTransformer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="60" column="59" selection-start="2923" selection-end="2954" vertical-scroll-proportion="0.0">
@@ -1122,23 +1130,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="44" selection-start="6465" selection-end="6465" vertical-scroll-proportion="-13.461538">
+        <state line="325" column="73" selection-start="12351" selection-end="12351" vertical-scroll-proportion="-3.4230769">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/LineTransformer.java">
+    <entry file="file://$PROJECT_DIR$/test/ryz/compiler/AssertStrategy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="325" column="72" selection-start="12350" selection-end="12350" vertical-scroll-proportion="-3.4230769">
+        <state line="289" column="0" selection-start="12165" selection-end="12165" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test-resources/04.methods/NonTextMethodSpec.ryz">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="21" selection-start="581" selection-end="581" vertical-scroll-proportion="0.33027524">
+        <state line="85" column="0" selection-start="2847" selection-end="2847" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ryz/compiler/RyzC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="188" column="0" selection-start="6352" selection-end="6352" vertical-scroll-proportion="0.29761904">
           <folding />
         </state>
       </provider>

@@ -181,11 +181,9 @@ public class RyzC {
             if( m.lookingAt() ) {
                 String methodName = m.group(0);
                 methodName = methodName.substring(0,methodName.length()-1);
-                System.out.println("methodName = " + methodName);
                 StringBuilder sb = new StringBuilder();
                 for( char c : methodName.toCharArray() ){
-                    sb.append( operatorMap.get(c) );
-
+                    sb.append(operatorMap.get(c));
                 }
                 sb.append(line.substring(methodName.length()));
                 result.add( sb.toString() );
