@@ -1,0 +1,22 @@
+/*
+className: methods.NonTextMethodInvocation
+classFile: methods/NonTextMethodInvocation.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:
+methods:
+behavior: invokestatic main([Ljava.lang.String;) | stdout=adding self to other%n
+*/
+methods.NonTextMethodInvocation {
+    i = 0
+    + ( other : NonTextMethodInvocation ) : NonTextMethodInvocation {
+        out.println("adding self to other")
+        self
+    }
+    main(){
+       a = NonTextMethodInvocation()
+       b = NonTextMethodInvocation()
+       a.+( b )
+    }
+}

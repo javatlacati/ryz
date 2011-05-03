@@ -323,7 +323,7 @@ class MethodTransformer extends LineTransformer {
 
 
     // hola():String{
-    private final Pattern methodPattern      = regexp("[+#~-]??\\s*([\\$?\\w]+)\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
+    private final Pattern methodPattern      = regexp("[+#~-]??\\s*([\\$?\\w]+)\\s*\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
     // __ hola() : String { 
     private final Pattern classMethodPattern = regexp("[+#~-]??\\s*_{2}\\s*(\\w+)\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
     // hola() {
@@ -476,7 +476,7 @@ class InlineBlockTransformer extends LineTransformer {
 }
 class StatementTransformer extends LineTransformer {
 
-    Pattern statementPattern = Pattern.compile("(\\w+)(\\.\\w+)*\\(.*\\)");//something.toString(somethingElse)
+    Pattern statementPattern = Pattern.compile("(\\w+)(\\.[\\$?\\w]+)*\\(.*\\)");//something.toString(somethingElse)
 
 
     StatementTransformer(RyzClassState state) {

@@ -163,11 +163,38 @@ public class RyzC {
     private List<String> cleanLines(List<String> input) {
         List<String> result = trimLines(input);
         result  = splitLineComments(result);
-        result = substituteNonTextMethods( result );
+        result = substituteNonTextMethodsDefinitions(result);
+        result = substituteNonTextMethodsInvocations(result);
         return result;
     }
 
-    private List<String> substituteNonTextMethods(List<String> input) {
+    private List<String> substituteNonTextMethodsInvocations(List<String> input) {
+        List<String> result = new ArrayList<String>();
+        Pattern pattern = Pattern.compile("\\.\\s*([+\\-*/%<>=!&^|?:]+)\\s*\\(");
+
+        for (String line : input) {
+            if(line.startsWith("//")){
+                continue;
+            }
+            Matcher m = pattern.matcher(line);
+            if( m.find() ) {
+
+                String methodName = m.group(1);
+                // todo: use m.start and m.end in the "substituteNonTextMethodsDefinitions" for substitution
+                StringBuilder sb = new StringBuilder(line.substring(0, m.start(1)));
+                for( char c : methodName.toCharArray() ){
+                    sb.append(operatorMap.get(c));
+                }
+                sb.append(line.substring(m.end(1)));
+                result.add( sb.toString() );
+            }else {
+               result.add( line );
+           }
+        }
+        return result;
+    }
+
+    private List<String> substituteNonTextMethodsDefinitions(List<String> input) {
         List<String> result = new ArrayList<String>();
         Pattern pattern = Pattern.compile("[+#~-]??\\s*(__)?\\s*([+\\-*/%<>=!&^|?:]+)\\s*\\(");
 
@@ -180,7 +207,10 @@ public class RyzC {
             Matcher m = pattern.matcher(line);
             if( m.lookingAt() ) {
                 String methodName = m.group(0);
-                methodName = methodName.substring(0,methodName.length()-1);
+
+                methodName = methodName.substring(0,methodName.length()-1).trim();
+
+
                 StringBuilder sb = new StringBuilder();
                 for( char c : methodName.toCharArray() ){
                     sb.append(operatorMap.get(c));
