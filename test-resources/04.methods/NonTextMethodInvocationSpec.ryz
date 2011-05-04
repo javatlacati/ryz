@@ -17,6 +17,6 @@ methods.NonTextMethodInvocation {
     main(){
        a = NonTextMethodInvocation()
        b = NonTextMethodInvocation()
-       a.+( b )
+       a . + ( b )
     }
 }
