@@ -250,52 +250,15 @@ public class RyzC {
         return trimmed;
     }
 
-    /**
+  /**
      * Compiles a java source code file from the given RyzClass
       * @param currentClass  - The class to be transformed into .class file
      * @throws IOException   - If it is not possible to write the file
      */
     private void createClassDefinition( RyzClass currentClass ) throws IOException {
-        //System.out.println("outputLines = " + outputLines);
-        // write the  class
-        logger.finest("className=["+currentClass.className()+"]");
-        Writer writer = new StringWriter();
+        String generatedSourceCode = getGeneratedSourceCodeFrom(currentClass);
 
-        writer.write(String.format("//-- Create from: %s %n" , currentClass.sourceFile()));
-
-        //TODO: move this to the RyzClass
-        // from here
-        String importString = "";
-        String packageString = "";
-        List<String> outputLines = currentClass.outputLines();
-        List<String> toRemove = new ArrayList<String>();
-        boolean packageWritten = false;
-        for( String s: outputLines){
-            if( s.startsWith("package") && !packageWritten) {
-                packageString = s;
-                packageWritten = true;
-
-            }
-            if( s.startsWith("import")){
-                importString = s;
-            }
-            if(s.startsWith("import")){
-                toRemove.add( s ) ;
-            }
-        }
-        // Before writing put package and imports at the top
-        outputLines.remove( packageString );
-        outputLines.removeAll(toRemove);
-        outputLines.addAll(0,toRemove);
-        outputLines.add( 0, packageString );
-        // to here
-
-        for (String s : outputLines) {
-            writer.write(s);
-        }
-        writer.close();
-
-        JavaFileObject source = new JavaSourceFromString(currentClass.className(), writer.toString());
+        JavaFileObject source = new JavaSourceFromString(currentClass.className(), generatedSourceCode);
 
         // Get the java compiler for this platform
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -330,18 +293,24 @@ public class RyzC {
                             compilationUnits)
                 .call();
         if(!succesfullCompilation  || logger.isLoggable( Level.FINEST ) ) { 
-            logger.fine( numberedContent( writer.toString() ) );
+            logger.fine( numberedContent( generatedSourceCode ) );
             logger.info( collector.getDiagnostics().toString());
         }
 
        fileManager.close();
 
          if( !succesfullCompilation ) { 
-            for ( Diagnostic<? extends JavaFileObject> diagnostic : collector.getDiagnostics() ) { 
+            for ( Diagnostic<? extends JavaFileObject> diagnostic : collector.getDiagnostics() ) {
                 if("compiler.err.unreported.exception.need.to.catch.or.throw".equals(diagnostic.getCode())){
-                    createClassDefinition( currentClass.reportExceptions() );
+                    createClassDefinition(currentClass.reportExceptions());
                     ClassInstrumentation.removeCheckedExceptions( currentClass, output );
                     return;
+                } else if ("compiler.err.cant.resolve.location" .equals( diagnostic.getCode())
+                                && isDifferentProblem(currentClass, diagnostic)) {
+                    createClassDefinition(resolveSymbol( currentClass,  diagnostic ));
+                    return;
+                } else {
+                    System.err.println( diagnostic.getCode() );
                 }
             }
         }
@@ -352,6 +321,113 @@ public class RyzC {
 
 
     }
+
+  /**
+     * Createa a string from the current class.
+     * @param currentClass - The class where to take the source code from.
+     * @return a string with the generated source code.
+     * @throws IOException - should not happen :P
+     */
+    private String getGeneratedSourceCodeFrom(RyzClass currentClass) throws IOException {
+        logger.finest("className=["+currentClass.className()+"]");
+        Writer writer = new StringWriter();
+
+        //TODO: move this to the RyzClass
+        // from here
+        String importString = "";
+        String packageString = "";
+        List<String> outputLines = currentClass.outputLines();
+        List<String> toRemove = new ArrayList<String>();
+        boolean packageWritten = false;
+        for( String s: outputLines){
+            if( s.startsWith("package") && !packageWritten) {
+                packageString = s;
+                packageWritten = true;
+
+            }
+            if( s.startsWith("import")){
+                importString = s;
+            }
+            if(s.startsWith("import")){
+                toRemove.add( s ) ;
+            }
+        }
+        // Before writing put package and imports at the top
+        outputLines.remove( packageString );
+        outputLines.removeAll(toRemove);
+        outputLines.addAll(0,toRemove);
+        outputLines.add( 0, packageString );
+        // to here
+
+        for (String s : outputLines) {
+            writer.write(s);
+        }
+        writer.close();
+        return writer.toString();
+    }
+
+
+  /**
+     * Check if the given class has already have a problem in the same position.
+     * @param currentClass - The clas with the problem
+     * @param diagnostic - The information of the new problem
+     * @return  true if the class have already had the same problem.
+     */
+    private boolean isDifferentProblem(RyzClass currentClass, Diagnostic<? extends JavaFileObject> diagnostic) {
+        return currentClass.isNewProblem(diagnostic.getCode(),
+                diagnostic.getStartPosition());
+    }
+
+  /**
+     * Tries to resolve the symbol by replacing the receiver as the first argument of the given method.
+     *  For instance if the symbol not found is "string.reverse()" tries to replace it for "reverse(string)"
+    *  and ask the current class to take the fixed source code and remember this error  to avoid it.
+     * @param currentClass - The class being fixed.
+     * @param diagnostic - The information of the error
+     * @return the instance of currentClass with fixed source code.
+     */
+    private RyzClass resolveSymbol(RyzClass currentClass, Diagnostic<? extends JavaFileObject> diagnostic) {
+        // Take the source code from the diagnostic
+        StringBuilder sb = null;
+        try {
+            sb = new StringBuilder(diagnostic.getSource().getCharContent(true));
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        // take information of the error.
+        int startPosition = (int) diagnostic.getStartPosition();
+        int position      = (int) diagnostic.getPosition();
+        int endPosition   = (int) diagnostic.getEndPosition();
+
+        // put the receiver as the first parameter of the method
+        String pieceInQuestion = sb.substring(startPosition, endPosition);
+        String receiver = pieceInQuestion.substring(0, position - startPosition);
+        String method = pieceInQuestion.substring(position - startPosition + 1);
+        sb.replace(startPosition, endPosition, method + "(" + receiver);
+
+        // remove the opening parenthesis
+        int p = endPosition;
+        while (true) {
+            char c = sb.charAt(p);
+            if( Character.isSpaceChar(c)) {
+                p++;
+            } else if (c == '('  ) {
+                sb.replace(p,++p, " ");
+            } else if (c == ')') {
+                break;
+            } else {
+                sb.insert(p, ',');
+                break;
+            }
+        }
+        // and finally let the current class take the new source code.
+        currentClass.markError( sb.toString(),
+                diagnostic.getCode(),
+                startPosition);
+        return currentClass;
+    }
+
+
     /**
      * Adds line number to the passed string.
      */

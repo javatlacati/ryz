@@ -11,11 +11,10 @@ behavior :  invokestatic main([Ljava.lang.String;) | stdout=Ryz\n
 extension.methods.StringReverse {
   main() {
      word = "zyR"
-     result = word.reverse()
-     out.println(result)
+     out.println(  word.reverse    ())
 
   }
-  __ java.lang.String.reverse( s : String ) : String {
+  __ reverse( s : String ) : String {
     StringBuilder( s ).reverse().toString()
   }
 }

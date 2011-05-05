@@ -1,0 +1,17 @@
+/*
+className: extension.methods.IntOperationSpec
+classFile: extension/methods/IntOperationSpec.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:
+behavior: invokestatic main([Ljava.lang.String;) | stdout=10%n
+*/
+extension.methods.IntOperationSpec {
+    main() {
+        a = Integer(5)
+        b = Integer(5)
+        out.println( a .+( b ) )
+    }
+}

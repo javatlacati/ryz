@@ -13,5 +13,9 @@ DONE needs more work - Compile using a classpath  ( to load existing classes )
     - Block invocation
     - Block identification
 
-- Extension methods 
+STARTED - Extension methods
     - For core libraries ( if, for, while etc )
+- Infer type from expresion ie:
+   result = some.method() // method type = int "result" should be declared as "int"
+- Casts // java int i = ( int ) 0L -> i : Int = Int( 0L )
+- FIX: int cannot be dereferenced when trying to perform a conversion in extension methods
