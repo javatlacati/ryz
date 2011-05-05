@@ -10,8 +10,10 @@ behavior: invokestatic main([Ljava.lang.String;) | stdout=10%n
 */
 extension.methods.IntOperationSpec {
     main() {
+        // cinco mas cinco ?
         a = Integer(5)
         b = Integer(5)
+        // diez!! :P
         out.println( a .+( b ) )
     }
 }
