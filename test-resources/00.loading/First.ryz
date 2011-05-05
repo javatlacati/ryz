@@ -1,0 +1,4 @@
+// The unit test doesn't attempt to compile this file
+// but the file must exist.
+load.test.First {
+}

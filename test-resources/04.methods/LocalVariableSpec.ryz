@@ -1,0 +1,15 @@
+/*
+className: local.variable.Name
+attributes:  private name:java.lang.String
+methods: public name: java.lang.String
+behavior: invokevirtual name() | result=Oh oh
+classFile: local/variable/Name.class
+*/
+local.variable.Name{
+    name:String
+    name(): String {
+        local : String ="Oh oh"
+        name = local
+        name
+    }
+}

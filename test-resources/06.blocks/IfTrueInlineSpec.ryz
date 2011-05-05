@@ -1,0 +1,18 @@
+/*
+className: blocks.IfTrueInline
+classFile: blocks/IfTrueInline.class
+otherClasses: blocks/IfTrueInline$1.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:
+behavior : invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, still true%n
+*/
+blocks.IfTrueInline {
+    main() { 
+        value = true
+        value.ifTrue((){
+            out.println("Yeap!, still true")
+        })
+   }
+}

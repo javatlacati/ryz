@@ -1,0 +1,17 @@
+/*
+className: method.Return
+classFile: method/Return.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods: 
+behavior :
+*/
+method.Return{
+  voidMethod() {
+    i : Int = intMethod()
+  }
+  intMethod() : Int {
+    0
+  }
+}
