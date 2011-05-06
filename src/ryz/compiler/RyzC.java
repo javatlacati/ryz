@@ -168,8 +168,19 @@ public class RyzC {
         return result;
     }
 
+    private String getReplacement( Matcher m ) {
+        String line = m.group(0);
+        String methodName = m.group(1);
+        StringBuilder sb = new StringBuilder(line.substring(0, m.start(1) - m.start( 0 )));
+        for( char c : methodName.toCharArray() ){
+            sb.append(operatorMap.get(c).replace("$","\\$"));
+        }
+        sb.append(line.substring(m.end(1) - m.start(0)));
+        return sb.toString();
+    }
     private List<String> substituteNonTextMethodsInvocations(List<String> input) {
         List<String> result = new ArrayList<String>();
+        // The pattern matches for instance .+ (
         Pattern pattern = Pattern.compile("\\.\\s*([+\\-*/%<>=!&^|?:]+)\\s*\\(");
 
         for (String line : input) {
@@ -177,19 +188,14 @@ public class RyzC {
                 continue;
             }
             Matcher m = pattern.matcher(line);
-            if( m.find() ) {
-
-                String methodName = m.group(1);
-                // todo: use m.start and m.end in the "substituteNonTextMethodsDefinitions" for substitution
-                StringBuilder sb = new StringBuilder(line.substring(0, m.start(1)));
-                for( char c : methodName.toCharArray() ){
-                    sb.append(operatorMap.get(c));
-                }
-                sb.append(line.substring(m.end(1)));
-                result.add( sb.toString() );
-            }else {
-               result.add( line );
-           }
+            StringBuffer sbf = new StringBuffer();
+            while( m.find() ) {
+                String replacement = getReplacement(m);
+                logger.finest("line = "+line+", replacement = " + replacement);
+                m.appendReplacement(sbf, replacement);
+            }
+            m.appendTail( sbf );
+            result.add( sbf.toString());
         }
         return result;
     }
@@ -375,8 +381,13 @@ public class RyzC {
      * @return  true if the class have already had the same problem.
      */
     private boolean isDifferentProblem(RyzClass currentClass, Diagnostic<? extends JavaFileObject> diagnostic) {
-        return currentClass.isNewProblem(diagnostic.getCode(),
-                diagnostic.getStartPosition());
+
+        boolean newProblem = currentClass.isNewProblem(diagnostic.getCode(),
+                diagnostic.getStartPosition(), diagnostic.getPosition());
+        if( newProblem == false ) {
+            System.out.println("diagnostic = " + diagnostic);
+        }
+        return newProblem;
     }
 
   /**
@@ -424,7 +435,7 @@ public class RyzC {
         // and finally let the current class take the new source code.
         currentClass.markError( sb.toString(),
                 diagnostic.getCode(),
-                startPosition);
+                startPosition, position);
         return currentClass;
     }
 

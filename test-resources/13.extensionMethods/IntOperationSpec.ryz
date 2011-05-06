@@ -10,6 +10,6 @@ behavior: invokestatic main([Ljava.lang.String;) | stdout=10%n
 */
 extension.methods.IntOperationSpec {
     main() {
-        out.println( 5 .+( 5 ) )
+        out.println( 5 .+( 5 ) .+ ( 5 ) .- (2) .-(3) )
     }
 }

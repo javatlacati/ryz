@@ -236,8 +236,8 @@ class RyzClass {
    * @param errorCode  - Indicates what the error was
    * @param startPosition - error start position
    */
-    public void markError(String fixedSourceCode, String errorCode, int startPosition) {
-        errors.add( CompilationError.new$(errorCode, startPosition));
+    public void markError(String fixedSourceCode, String errorCode, int startPosition, int position) {
+        errors.add( CompilationError.new$(errorCode, startPosition, position));
         this.generatedSource.clear();
         for( String line : fixedSourceCode.split("\n")) {
             this.generatedSource.add( line + "\n" );
@@ -246,13 +246,15 @@ class RyzClass {
 
   /**
      * Checks if the given information was already reported.
-     * @param code - The data of the error code.
-     * @param startPosition - where the error first happened.
-     * @return true if this exception was already reported.
-     * @see #markError(String, String, int)
+     *
+   * @param code - The data of the error code.
+   * @param startPosition - where the error first happened.
+   * @param position
+   * @return true if this exception was already reported.
+     * @see #markError(String, String, int, int)
      */
-    public boolean isNewProblem(String code, long startPosition) {
-        return !errors.contains(CompilationError.new$(code, startPosition));
+    public boolean isNewProblem(String code, long startPosition, long position) {
+        return !errors.contains(CompilationError.new$(code, startPosition, position));
     }
 
    /**
@@ -261,36 +263,39 @@ class RyzClass {
     private static class CompilationError {
         private final String errorCode;
         private final long startPosition;
+        private final long  position;
 
-        public CompilationError(String errorCode, long startPosition) {
+       public CompilationError(String errorCode, long startPosition, long position) {
             this.errorCode = errorCode;
             this.startPosition = startPosition;
+            this.position = position;
         }
 
-        public static CompilationError new$(String errorCode, long startPosition) {
-            return new CompilationError( errorCode, startPosition);
+        public static CompilationError new$(String errorCode, long startPosition, long position) {
+            return new CompilationError( errorCode, startPosition, position);
         }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+       @Override
+       public boolean equals(Object o) {
+           if (this == o) return true;
+           if (o == null || getClass() != o.getClass()) return false;
 
-            CompilationError that = (CompilationError) o;
+           CompilationError that = (CompilationError) o;
 
-            if (startPosition != that.startPosition) return false;
-            if (errorCode != null ? !errorCode.equals(that.errorCode) : that.errorCode != null)
-                return false;
+           if (position != that.position) return false;
+           if (startPosition != that.startPosition) return false;
+           if (errorCode != null ? !errorCode.equals(that.errorCode) : that.errorCode != null) return false;
 
-            return true;
-        }
+           return true;
+       }
 
-        @Override
-        public int hashCode() {
-            int result = errorCode != null ? errorCode.hashCode() : 0;
-            result = 31 * result + (int) (startPosition ^ (startPosition >>> 32));
-            return result;
-        }
-    }
+       @Override
+       public int hashCode() {
+           int result = errorCode != null ? errorCode.hashCode() : 0;
+           result = 31 * result + (int) (startPosition ^ (startPosition >>> 32));
+           result = 31 * result + (int) (position ^ (position >>> 32));
+           return result;
+       }
+   }
 
 }
