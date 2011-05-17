@@ -6,7 +6,7 @@ extends: java.lang.Object
 implements: 
 attributes:  
 methods:
-behavior :  invokestatic main([Ljava.lang.String;) | stdout=Ryz\n
+behavior :  invokestatic main([Ljava.lang.String;) | stdout=Ryz%n
 */
 extension.methods.StringReverse {
   main() {
