@@ -186,8 +186,8 @@ class PackageClassTransformer extends LineTransformer {
                         "extends";
                 String className = scapeName(possibleClass);
                 //TODO: solve what to do with public/nonpublic class in the same source file
-                generatedSource.add(String.format("/*import */import ryz.lang.Num;%n"));
-                generatedSource.add(String.format("/*import static*/import static ryz.lang.Num.*;%n"));
+                generatedSource.add(String.format("/*import */import ryz.lang.Extensions;%n"));
+                generatedSource.add(String.format("/*import static*/import static ryz.lang.Extensions.*;%n"));
                 generatedSource.add(String.format("/*import static*/import static java.lang.System.out;%n"));
                 generatedSource.add(String.format(
                         "public class %s %s %s { %n" +

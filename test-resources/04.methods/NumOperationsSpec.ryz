@@ -10,14 +10,14 @@ behavior: invokestatic main([Ljava.lang.String;) | stdout=2%n0%n1%n1%n0%nfalse%n
 */
 methods.NumOperationsSpec {
     main() {
-        out.println( Num.+(1,1) )
-        out.println( Num.-(1,1) )
-        out.println( Num.*(1,1) )
-        out.println( Num./(1,1) )
-        out.println( Num.%(1,1) )
-        out.println( Num.<(1,1) )
-        out.println( Num.>(1,1) )
-        out.println( Num.==(1,1) )
-        out.println( Num.!=(1,1) )
+        out.println( Extensions.+(1,1) )
+        out.println( Extensions.-(1,1) )
+        out.println( Extensions.*(1,1) )
+        out.println( Extensions./(1,1) )
+        out.println( Extensions.%(1,1) )
+        out.println( Extensions.<(1,1) )
+        out.println( Extensions.>(1,1) )
+        out.println( Extensions.==(1,1) )
+        out.println( Extensions.!=(1,1) )
     }
 }

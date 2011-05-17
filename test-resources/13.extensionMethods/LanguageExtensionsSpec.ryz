@@ -1,0 +1,15 @@
+/*
+className: extension.methods.LanguageExtensionsSpec
+classFile: extension/methods/LanguageExtensionsSpec.class
+otherClasses: extension/methods/LanguageExtensionsSpec$1.class
+extends: java.lang.Object
+behavior: invokevirtual testNull() | stdout=a is null%n
+*/
+extension.methods.LanguageExtensionsSpec {
+    testNull()  {
+        a = null
+        a.isNull((){
+            out.println("a is null")
+        })
+    }
+}

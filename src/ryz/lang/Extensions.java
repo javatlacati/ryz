@@ -34,8 +34,11 @@ package ryz.lang;
  * Date: 5/4/11
  * Time: 12:11 PM
  */
-public final class Num {
+public final class Extensions {
 
+    public static void isNull( Object value, Block b ) {
+        Bool.valueOf( value == null ).ifTrue( b );
+    }
     public static Bool ifTrue( Boolean condition , Block b ) {
         return Bool.valueOf(condition).ifTrue(b);
     }
