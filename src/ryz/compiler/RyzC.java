@@ -173,7 +173,8 @@ public class RyzC {
         String methodName = m.group(1);
         StringBuilder sb = new StringBuilder(line.substring(0, m.start(1) - m.start( 0 )));
         for( char c : methodName.toCharArray() ){
-            sb.append(operatorMap.get(c).replace("$","\\$"));
+            String mapped = operatorMap.get(c);
+            sb.append(( mapped == null ? c+"": mapped ) .replace("$", "\\$"));
         }
         sb.append(line.substring(m.end(1) - m.start(0)));
         return sb.toString();
@@ -181,7 +182,7 @@ public class RyzC {
     private List<String> substituteNonTextMethodsInvocations(List<String> input) {
         List<String> result = new ArrayList<String>();
         // The pattern matches for instance .+ (
-        Pattern pattern = Pattern.compile("\\.\\s*([+\\-*/%<>=!&^|?:]+)\\s*\\(");
+        Pattern pattern = Pattern.compile("\\.\\s*([+\\-*/%<>=!&^|?:\\w]+)\\s*\\(");
 
         for (String line : input) {
             if(line.startsWith("//")){

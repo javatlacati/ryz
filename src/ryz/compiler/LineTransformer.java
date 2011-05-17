@@ -461,7 +461,7 @@ class ReturnTransformer extends LineTransformer {
     }
 }
 class InlineBlockTransformer extends LineTransformer {
-    Pattern statementPattern = Pattern.compile("((\\w+)(\\.\\w+)*)\\(\\s*\\(\\s*\\)\\s*\\{");//something.toString(somethingElse)
+    Pattern statementPattern = Pattern.compile("((\\w+)\\s*(\\.\\s*[\\$\\w]+)*)\\s*\\(\\s*(\\(\\s*\\)|\\s*)\\s*\\{");//something.toString(somethingElse)
     InlineBlockTransformer(RyzClassState state) {
         super(state);
     }
@@ -478,7 +478,7 @@ class InlineBlockTransformer extends LineTransformer {
 }
 class StatementTransformer extends LineTransformer {
 
-    Pattern statementPattern = Pattern.compile("(\\w+)\\s*(\\.\\s*[\\$?\\w]+)*\\s*\\(.*\\)");//something.toString(somethingElse)
+    Pattern statementPattern = Pattern.compile("(\\w+)\\s*(\\.\\s*[\\$\\w]+)*\\s*\\(.*\\)");//something.toString(somethingElse)
 
 
     StatementTransformer(RyzClassState state) {

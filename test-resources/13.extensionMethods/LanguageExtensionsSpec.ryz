@@ -8,7 +8,7 @@ behavior: invokevirtual testNull() | stdout=a is null%n
 extension.methods.LanguageExtensionsSpec {
     testNull()  {
         a = null
-        a.isNull((){
+        a . isNull? ( {
             out.println("a is null")
         })
     }

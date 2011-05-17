@@ -36,7 +36,7 @@ package ryz.lang;
  */
 public final class Extensions {
 
-    public static void isNull( Object value, Block b ) {
+    public static void isNull$qm( Object value, Block b ) {
         Bool.valueOf( value == null ).ifTrue( b );
     }
     public static Bool ifTrue( Boolean condition , Block b ) {
