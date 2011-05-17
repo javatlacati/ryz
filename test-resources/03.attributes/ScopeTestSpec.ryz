@@ -1,0 +1,17 @@
+/*
+className: access.test.ScopeTest
+attributes: private-instance s:java.lang.String,\
+            public-instance a:java.lang.String,\
+            protected-instance b:java.lang.String,\
+            private-instance c : java.lang.String,\
+            default-instance d : java.lang.String
+classFile: access/test/ScopeTest.class
+*/
+access.test.ScopeTest {
+      s:String
+    + a:String = ":D"
+    # b:String = ":P"
+    - c:String = ":S"
+    ~ d:String = ":("
+}
+//:)

@@ -1,0 +1,39 @@
+/*
+className: methods.parameters.OneParametersTest
+classFile: methods/parameters/OneParametersTest.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:  
+methods: public-instance hello(java.lang.String) : void,\
+         public-instance reverse(java.lang.String): java.lang.String, \
+         public-static classMethod(java.lang.String) : java.lang.String
+behavior : invokevirtual doReverse() | result=Hola!
+*/
+methods.parameters.OneParametersTest {
+  hello( who : String ) {
+  }
+  reverse( aString  : String ) : String {
+    sb = StringBuilder( aString )
+    sb.reverse()
+    sb.toString()
+  }
+
+  reverseTwo( aString : String ) : String {
+    StringBuilder( aString ).reverse().toString()
+  }
+
+  a = "" // methods should still be able to have a parameter named a
+  __ classMethod( a : String ) : String {
+    a = ""
+    a
+  }
+
+  __ otherClassMethod( a : String ) {
+
+  }
+  doReverse(): String {
+    //reverse( "!aloH" )
+    reverseTwo("!aloH")
+  }
+}

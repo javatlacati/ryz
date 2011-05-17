@@ -1,0 +1,21 @@
+/*
+className: blocks.IfTrue
+classFile: blocks/IfTrue.class
+otherClasses: blocks/IfTrue$1.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:
+behavior : invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, it is true%n
+*/
+blocks.IfTrue {
+    import(ryz.lang.Bool) // TODO: shouldn't need to import ryz.lang.*
+    main() {
+        r = (){
+            out.println("Yeap!, it is true")
+        }
+
+        value = true 
+        value.ifTrue( r )
+    }
+}

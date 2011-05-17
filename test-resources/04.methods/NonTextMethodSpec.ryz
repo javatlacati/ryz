@@ -1,0 +1,87 @@
+/*
+className: methods.NonTextMethodSpec
+classFile: methods/NonTextMethodSpec.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:
+methods: public-instance $plus$plus(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $minus(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $star(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $slash(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $percent(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $lt(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $gt(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $eq(methods.NonTextMethodSpec) : methods.NonTextMethodSpec,\
+public-instance $em(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $amp(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $up(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $bar(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $colon(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $bar$bar(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance $plus$plus(methods.NonTextMethodSpec) : methods.NonTextMethodSpec
+*/
+methods.NonTextMethodSpec {
+
+    +(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+    -(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+    *(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+    /(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    %(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    <(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    >(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    =(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    !(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    &(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    ^(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    |(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    ?(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    :(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    ++(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+    ||(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+
+}
