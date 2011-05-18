@@ -1,8 +1,7 @@
-#summary About Ryz
+summary About Ryz
 
 = Introduction =
 
-{{{
 ryz.programming.Language {
   staticallyType = true
   paradigm = "Object Oriented"
@@ -10,7 +9,6 @@ ryz.programming.Language {
       compilesTo = "Java bytecode"
   }
 }
-}}}
 
 = Details =
 
@@ -24,17 +22,13 @@ run configuration "ryz.compiler"
 
 ===Project structure===
 
-{{{
 /src
 /test
 /test-resources
-}}}
 
 src: Contains Java source files to compile Ryz source code.
-
-test: Contains Java source file to test the RyzC 
-
-test-resources: Contains samples of the language.
+tes: Contains Java source file to test the RyzC 
+test-resources: Contains sample of the language.
 
 
 If test source file name ends in "Spec.ryz" it will be loaded by the
@@ -47,18 +41,14 @@ defined in the file header.
 ===3rd party libraries===
 
 Testgn
-
 This project uses TesNG http://testng.org testing framework
 redistributed under Apache 2.0 license.
-
 You may find a copy of the license in lib/APACHE-LICENSE.txt
 
 
-Javassist
-
+javassist
 This project uses Javassit http://www.jboss.org/javassist bytecode manipulation library
 redistributed under Mozilla Public License v1.1 
-
 You may find a copyt fo the license in lib/MZL-License.html
 
 
