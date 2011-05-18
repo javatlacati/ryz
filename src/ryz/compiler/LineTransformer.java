@@ -323,15 +323,15 @@ class ClosingKeyTransformer extends LineTransformer {
 
 class MethodTransformer extends LineTransformer {
 
-
+    //TODO: use a single pattern
     // hola():String{
-    private final Pattern methodPattern      = regexp("[+#~-]??\\s*([\\$?\\w]+)\\s*\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
+    private final Pattern methodPattern      = regexp("[+#~-]??\\s*([\\$\\w]+)\\s*\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
     // __ hola() : String { 
-    private final Pattern classMethodPattern = regexp("[+#~-]??\\s*_{2}\\s*(\\w+)\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
+    private final Pattern classMethodPattern = regexp("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
     // hola() {
-    private final Pattern voidMethodPattern  = regexp("[+#~-]??\\s*(\\w+)\\((.*)\\)\\s*\\{");
+    private final Pattern voidMethodPattern  = regexp("[+#~-]??\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
     // __ hola() {
-    private final Pattern voidClassMethodPattern = regexp("[+#~-]??\\s*_{2}\\s*(\\w+)\\((.*)\\)\\s*\\{");
+    private final Pattern voidClassMethodPattern = regexp("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
 
     MethodTransformer(RyzClassState state) {
         super(state);

@@ -179,6 +179,7 @@ public class RyzC {
         sb.append(line.substring(m.end(1) - m.start(0)));
         return sb.toString();
     }
+    //TODO: refactor this method with: @substituteNonTextMethodsDefinitions
     private List<String> substituteNonTextMethodsInvocations(List<String> input) {
         List<String> result = new ArrayList<String>();
         // The pattern matches for instance .+ (
@@ -201,32 +202,24 @@ public class RyzC {
         return result;
     }
 
+    //TODO: refactor this method with: @substituteNonTextMethodsInvocations
     private List<String> substituteNonTextMethodsDefinitions(List<String> input) {
         List<String> result = new ArrayList<String>();
-        Pattern pattern = Pattern.compile("[+#~-]??\\s*(__)?\\s*([+\\-*/%<>=!&^|?:]+)\\s*\\(");
-
-
+        Pattern pattern = Pattern.compile("[+#~-]??\\s*_{0,2}\\s*([+\\-*/%<>=!&^|?:\\w]+)\\s*\\(");
 
         for (String line : input) {
             if(line.startsWith("//")){
                 continue;
             }
             Matcher m = pattern.matcher(line);
+            StringBuffer sbf = new StringBuffer();
             if( m.lookingAt() ) {
-                String methodName = m.group(0);
-
-                methodName = methodName.substring(0,methodName.length()-1).trim();
-
-
-                StringBuilder sb = new StringBuilder();
-                for( char c : methodName.toCharArray() ){
-                    sb.append(operatorMap.get(c));
-                }
-                sb.append(line.substring(methodName.length()));
-                result.add( sb.toString() );
-            }else {
-               result.add( line );
-           }
+                String replacement = getReplacement(m);
+                logger.finest("line = " + line + ", replacement = " + replacement);
+                m.appendReplacement(sbf, replacement);
+            }
+            m.appendTail( sbf );
+            result.add( sbf.toString());
         }
         return result;
     }

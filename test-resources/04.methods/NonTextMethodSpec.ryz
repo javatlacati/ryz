@@ -19,7 +19,11 @@ public-instance $up(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
 public-instance $bar(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
 public-instance $colon(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
 public-instance $bar$bar(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
-public-instance $plus$plus(methods.NonTextMethodSpec) : methods.NonTextMethodSpec
+public-instance $plus$plus(methods.NonTextMethodSpec) : methods.NonTextMethodSpec,\
+public-static one$em(methods.NonTextMethodSpec) : void, \
+public-static two$em(methods.NonTextMethodSpec) : methods.NonTextMethodSpec, \
+public-instance three$em(methods.NonTextMethodSpec) : void, \
+public-instance four$em(methods.NonTextMethodSpec) : methods.NonTextMethodSpec
 */
 methods.NonTextMethodSpec {
 
@@ -84,4 +88,15 @@ methods.NonTextMethodSpec {
         NonTextMethodSpec()
     }
 
+    __ one!(other : NonTextMethodSpec) {
+    }
+    __ two!(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
+    three!(other : NonTextMethodSpec) {
+    }
+
+    four!(other : NonTextMethodSpec) : NonTextMethodSpec  {
+        NonTextMethodSpec()
+    }
 }
