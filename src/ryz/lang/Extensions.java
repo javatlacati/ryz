@@ -35,6 +35,10 @@ package ryz.lang;
  * Time: 12:11 PM
  */
 public final class Extensions {
+	
+	public static Boolean $eq$eq( String a, String b ) {
+		return a.equals( b );
+	}
 
     public static void isNull$qm( Object value, Block b ) {
         Bool.valueOf( value == null ).ifTrue( b );
