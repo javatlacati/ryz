@@ -4,3 +4,4 @@ test-output/
 out/
 .idea\workspace.xml
 .DS_Store
+.git/
