@@ -2,4 +2,5 @@ syntax:glob
 
 test-output/
 out/
+.git/
 .DS_Store
