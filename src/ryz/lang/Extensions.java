@@ -36,9 +36,9 @@ package ryz.lang;
  */
 public final class Extensions {
 	
-	public static Boolean $eq$eq( String a, String b ) {
-		return a.equals( b );
-	}
+    public static Boolean $eq$eq( String a, String b ) {
+        return a.equals( b );
+    }
 
     public static void isNull$qm( Object value, Block b ) {
         Bool.valueOf( value == null ).ifTrue( b );
