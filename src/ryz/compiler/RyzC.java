@@ -192,7 +192,7 @@ public class RyzC {
             StringBuffer sbf = new StringBuffer();
             while( m.find() ) {
                 String replacement = getReplacement(m);
-                logger.finest("line = "+line+", replacement = " + replacement);
+                logger.finest("line = " + line + ", replacement = " + replacement);
                 m.appendReplacement(sbf, replacement);
             }
             m.appendTail( sbf );
@@ -383,12 +383,8 @@ public class RyzC {
      */
     private boolean isDifferentProblem(RyzClass currentClass, Diagnostic<? extends JavaFileObject> diagnostic) {
 
-        boolean newProblem = currentClass.isNewProblem(diagnostic.getCode(),
+        return currentClass.isNewProblem(diagnostic.getCode(),
                 diagnostic.getStartPosition(), diagnostic.getPosition());
-        if( newProblem == false ) {
-            System.out.println("diagnostic = " + diagnostic);
-        }
-        return newProblem;
     }
 
   /**
