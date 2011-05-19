@@ -54,6 +54,7 @@ class RyzClass {
     private final Map<String, List<String>> variables = new HashMap<String,List<String>>();
     private final String sourceFile;
     private final List<CompilationError> errors = new ArrayList<CompilationError>();
+    private List<String> constructors;
 
     public RyzClass(String sourceFile, List<String> sourceLines) {
 
@@ -69,6 +70,7 @@ class RyzClass {
         }
         this.sourceLines = sourceLines;
         this.methods = new ArrayList<String>();
+        this.constructors = new ArrayList<String>();
         state(new InitialState(this));
     }
 
@@ -157,6 +159,12 @@ class RyzClass {
         this.methods.add(methodName + ":" + methodType );// TODO: add args
         state().nextState();
     }
+    public void addConstructor(String constructorName) {
+        this.constructors.add( constructorName );
+        state().nextState();
+        // TODO: change it for insideConstructor()
+    }
+
 
     public void state(RyzClassState classState) {
         this.state = classState;
@@ -220,10 +228,10 @@ class RyzClass {
     RyzClass reportExceptions() { 
        for( int i = 0 ; i < generatedSource.size() ; i++ ) {
            String s = generatedSource.get(i);
-           if( s.startsWith("    /*method*/")){
+           if( s.startsWith("    /*method*/") || s.startsWith("    /*constructor*/")){
                generatedSource.set( i ,
-                    s.substring( 0, s.length() - LineTransformer.lineSeparator.length() - 1 ) 
-                     + " throws Exception { " + LineTransformer.lineSeparator 
+                    s.substring( 0, s.length() - LineTransformer.lineSeparator.length() - 1 )
+                     + " throws Exception { " + LineTransformer.lineSeparator
                );
            }
        }
@@ -257,7 +265,8 @@ class RyzClass {
         return !errors.contains(CompilationError.new$(code, startPosition, position));
     }
 
-   /**
+
+    /**
       * Bean to store a previous compilation error.
       */
     private static class CompilationError {

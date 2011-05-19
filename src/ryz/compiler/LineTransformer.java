@@ -124,6 +124,43 @@ abstract class LineTransformer {
             return defaultScope;
 
     }
+
+    protected final String transformParameters(List<String> generatedSource, String matchedParameters) {
+        logger.finest("matchedParameters= "+matchedParameters);
+        if( matchedParameters.equals("")) {
+            return "";
+        }
+        currentClass().insideParameters();
+        String parameters;// Transform the parameters as if they were variables
+        // start --
+        int linesSoFar = generatedSource.size();
+        LineTransformer lineTransformer =
+                new AttributeTransformer(this.currentClass().state(), false);
+
+        // do transform the parameter
+        for( String param : matchedParameters.trim().split("\\s*,\\s*")) {
+            lineTransformer.transform(param, generatedSource);
+        }
+        // remove ";" and add "," instead
+        StringBuilder builder = new StringBuilder();
+        for( String s : generatedSource.subList(linesSoFar,
+                            generatedSource.size())) {
+            builder.append(s.substring(0,s.length()-(lineSeparator.length() + 2 )));
+            builder.append(",");
+        }
+       // remove last ","
+        builder.deleteCharAt(builder.length()-1);
+        parameters = builder.toString();
+
+        // remove the generated  sources
+        int removeN = generatedSource.size() - linesSoFar;
+        for( int i = 0 ; i < removeN ; i++ ) {
+            generatedSource.remove(generatedSource.size()-1);
+        }
+        currentClass().state().previousState();
+        // -- finish
+        return parameters;
+    }
 }
 class ImportTransformer extends LineTransformer {
     private final Pattern importPattern = Pattern.compile("import\\s*\\((.+)\\s*\\)");
@@ -321,6 +358,41 @@ class ClosingKeyTransformer extends LineTransformer {
      }
 }
 
+class ConstructorTransformer extends LineTransformer {
+
+    //TODO: use a single pattern
+    // hola() {
+    private final Pattern voidMethodPattern  = regexp("[+#~-]??\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
+    ConstructorTransformer(RyzClassState state) {
+        super(state);
+    }
+
+
+    @Override
+    public void transform(String line, List<String> generatedSource) {
+        Matcher matcher;
+
+        String accessModifier = "public";
+
+        String constructorName = null;
+        // define the values
+        if( ( matcher = voidMethodPattern.matcher(line)).matches() ){
+            accessModifier = getScope(line, true, "public");
+            constructorName = scapeName(matcher.group(1));
+        }
+        // build the source
+        if( constructorName != null && Character.isUpperCase(constructorName.charAt(0))) {
+            logger.finest(String.format("scope %s for line %s %n", accessModifier, line));
+            currentClass().addConstructor(constructorName);
+            String parameters = transformParameters(generatedSource, matcher.group(2));
+            generatedSource.add( String.format("    /*constructor*/%s %s(%s) {%n",
+                accessModifier,
+                constructorName,
+                parameters));
+        }
+    }
+}
+
 class MethodTransformer extends LineTransformer {
 
     //TODO: use a single pattern
@@ -380,7 +452,7 @@ class MethodTransformer extends LineTransformer {
         }
 
         // build the source
-        if( methodName != null ) {
+        if( methodName != null && !Character.isUpperCase(methodName.charAt(0))) {
             logger.finest(String.format("scope %s for line %s %n", accessModifier, line));
             currentClass().addMethod(methodName, methodType);
             String parameters = transformParameters(generatedSource, matcher.group(2));
@@ -403,42 +475,6 @@ class MethodTransformer extends LineTransformer {
         currentClass().addMethod("main","void");
     }
 
-    private final String transformParameters(List<String> generatedSource, String matchedParameters) {
-        logger.finest("matchedParameters= "+matchedParameters);
-        if( matchedParameters.equals("")) {
-            return "";
-        }
-        currentClass().insideParameters();
-        String parameters;// Transform the parameters as if they were variables
-        // start --
-        int linesSoFar = generatedSource.size();
-        LineTransformer lineTransformer =
-                new AttributeTransformer(this.currentClass().state(), false);
-
-        // do transform the parameter
-        for( String param : matchedParameters.trim().split("\\s*,\\s*")) {
-            lineTransformer.transform(param, generatedSource);
-        }
-        // remove ";" and add "," instead
-        StringBuilder builder = new StringBuilder();
-        for( String s : generatedSource.subList(linesSoFar,
-                            generatedSource.size())) {
-            builder.append(s.substring(0,s.length()-(lineSeparator.length() + 2 ))); 
-            builder.append(",");
-        }
-       // remove last ","
-        builder.deleteCharAt(builder.length()-1);
-        parameters = builder.toString();
-
-        // remove the generated  sources
-        int removeN = generatedSource.size() - linesSoFar;
-        for( int i = 0 ; i < removeN ; i++ ) {
-            generatedSource.remove(generatedSource.size()-1);
-        }
-        currentClass().state().previousState();
-        // -- finish
-        return parameters;
-    }
 }
 // Handles, temporarily the "return" of the method. Eventually the return
 // would change to avoid the "return" keyword which will be used only

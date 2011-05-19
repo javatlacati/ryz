@@ -47,7 +47,6 @@ public class InsideBlockState extends InsideMethodState {
                 new AttributeTransformer(this, false),
                 new CommentTransformer(this),
                 new ClosingKeyTransformer(this),
-                new MethodTransformer(this),
                 new ReturnTransformer(this),
                 new StatementTransformer(this),
                 new SimpleAssignmentTransformer(this),

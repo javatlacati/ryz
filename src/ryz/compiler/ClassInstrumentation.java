@@ -57,6 +57,7 @@ class ClassInstrumentation {
             CtClass cc = pool.get(currentClass.packageName()+"."+currentClass.className());
 
             logger.finest( "CtClass: " + cc );
+            //TODO: possible bug, this also removed from my Constructors
             for( CtMethod method : cc.getDeclaredMethods() ) { 
                 logger.finest("method: "+ method );
                 logger.finest("method info : " +  method.getMethodInfo() );
