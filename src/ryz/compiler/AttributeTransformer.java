@@ -37,7 +37,6 @@ import java.util.regex.Pattern;
 
 // Some utility functions
 import static ryz.compiler.LineTransformer.checkObjectInitialization;
-import static ryz.compiler.LineTransformer.inferType;
 import static ryz.compiler.LineTransformer.scapeName;
 
 /**
@@ -114,6 +113,7 @@ class AttributeTransformer extends LineTransformer {
 
         Variable variable = null;
         for (Match matcher : matchers) {
+            matcher.setTransformer(this);
             variable = matcher.matches(line, variable);
         }
 
@@ -160,7 +160,7 @@ class AttributeTransformer extends LineTransformer {
 abstract class Match {
 
     private final Pattern pattern;
-
+    private LineTransformer transformer;
     Match(Pattern pattern) {
         this.pattern = pattern;
     }
@@ -195,6 +195,13 @@ abstract class Match {
     }
     protected abstract Variable variableFrom(Matcher matcher);
 
+    public LineTransformer getTransformer() {
+        return transformer;
+    }
+
+    public void setTransformer(LineTransformer transformer) {
+        this.transformer = transformer;
+    }
 }
 
 /**
@@ -225,7 +232,7 @@ class InitMatcher extends Match {
     @Override
     protected Variable variableFrom(Matcher matcher) {
         return new Variable(scapeName(matcher.group(2)),
-                scapeName(inferType(matcher.group(3))),
+                scapeName(getTransformer().inferType(matcher.group(3))),
                 staticOrInstance(matcher),
                 " = " + scapeName(checkObjectInitialization(matcher.group(3))) + ";");
     }

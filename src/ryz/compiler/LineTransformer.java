@@ -93,10 +93,21 @@ abstract class LineTransformer {
         }
         return initialValue;
     }
-    static String inferType(String initialValue) {
+    String inferType(String initialValue) {
         Matcher m = Pattern.compile("(.*)\\(.*\\)").matcher(initialValue);
         if( Character.isUpperCase(initialValue.charAt(0)) && m.matches()){
             return m.group(1);
+        }
+        // Handles if the method belongs to this class and
+        // has already been defined ( no forward references yet )
+        // TODO: add more scenarios
+        if( initialValue.contains("(")) {
+            for(String method : currentClass().methods()) {
+                String [] nameType = method.split(":");
+                if( nameType[0].equals(initialValue.substring(0,initialValue.indexOf("(")))) {
+                    return nameType[1];
+                }
+            }
         }
         return initialValue;
         
