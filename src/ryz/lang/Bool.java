@@ -28,6 +28,8 @@
 
 package ryz.lang;
 
+import ryz.lang.block.Block0;
+
 //TODO: delete this java source file when a mechanism to "pre-compile" the Ryz
 // version is found
 public class Bool { 
@@ -37,14 +39,14 @@ public class Bool {
 	public static final Bool valueOf( boolean value ) {
 	  return value ? true$ : false$;
 	}
-    public Bool ifTrue( Block b ) { 
+    public Bool ifTrue( Block0<Void> b ) {
         return this;
     }
     private static class True extends Bool { 
     	private True(){}
     	@Override
-    	public Bool ifTrue( Block b ) {
-    	    b.run();
+    	public Bool ifTrue( Block0<Void> b ) {
+    	     b.run();
     	    return this;
     	}
     }

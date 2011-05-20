@@ -50,7 +50,7 @@ class AttributeTransformer extends LineTransformer {
     private static final String multiLineInitialValue = " =  %s"+lineSeparatorRepresentation+"\"";
     private static final String regexInitialValue = " = java.util.regex.Pattern.compile(\"%s\");%n";
     private static final String dateInitialValue = " = ryz.lang.DateLiteral.valueOf(\"%s 00:00:00\");";
-    private static final String blockInitialValue = " = /* block */ new ryz.lang.Block(){%n    public void run(){%n";
+    private static final String blockInitialValue = " = /* block */ new ryz.lang.block.Block0<Void>(){%n    public Void run(){%n";
 
 
     // [+#~-] hola ...
@@ -87,7 +87,7 @@ class AttributeTransformer extends LineTransformer {
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/"),       "java.util.regex.Pattern", regexInitialValue),
         // hola = {
         // }
-        Match.literal(blockPattern, "ryz.lang.Block", blockInitialValue),
+        Match.literal(blockPattern, "ryz.lang.block.Block0<Void>", blockInitialValue),
         // hola = null
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(null)"),             "java.lang.Object",       literalInitialValue)
 

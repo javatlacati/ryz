@@ -28,6 +28,9 @@
 
 package ryz.lang;
 
+
+import ryz.lang.block.Block0;
+
 /**
  * Created by IntelliJ IDEA.
  * User: oscarryz
@@ -36,10 +39,10 @@ package ryz.lang;
  */
 public final class Extensions {
 
-    public static void isNull$qm( Object value, Block b ) {
+    public static void isNull$qm( Object value, Block0<Void> b ) {
         Bool.valueOf( value == null ).ifTrue( b );
     }
-    public static Bool ifTrue( Boolean condition , Block b ) {
+    public static Bool ifTrue( Boolean condition , Block0<Void> b ) {
         return Bool.valueOf(condition).ifTrue(b);
     }
 

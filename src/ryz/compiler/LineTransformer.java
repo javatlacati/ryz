@@ -354,6 +354,7 @@ class ClosingKeyTransformer extends LineTransformer {
             String indentation = "";
             if( currentClass().state() instanceof InsideBlockState ) { 
                  indentation = "/*ib*/";
+                generatedSource.add("    return null;"+lineSeparator);
                  this.currentClass().closeKey();
                  generatedSource.add(indentation +line + ";"+lineSeparator);
             } else if( currentClass().state() instanceof InsideMethodState ) { 
@@ -517,7 +518,7 @@ class InlineBlockTransformer extends LineTransformer {
         if( m.matches() ) {
             logger.finest("line matched " + line );
             currentClass().insideBlock();
-            generatedSource.add( String.format("    /*invocationwithblock*/ %s(new ryz.lang.Block(){%n    public void run(){%n",m.group(1)));
+            generatedSource.add( String.format("    /*invocationwithblock*/ %s(new ryz.lang.block.Block0<Void>(){%n    public Void run(){%n",m.group(1)));
             
                         
         }
@@ -554,9 +555,10 @@ class StatementTransformer extends LineTransformer {
         if( methodInvocationName == null ) {
             return false;
         }
-        String possibleBlock = methodInvocationName + ":ryz.lang.Block";
+        String possibleBlock = methodInvocationName + ":ryz.lang.block.Block";
         try {
-                return currentClass().variables().get("instance").contains( possibleBlock ) || currentClass().variables().get(currentMethod()).contains(possibleBlock);
+                return containsDeclaration( currentClass().variables().get("instance"), possibleBlock)
+                        || containsDeclaration(currentClass().variables().get(currentMethod()), possibleBlock);
         }  catch( NullPointerException npe ) {
             // I'm really sorry for this,
             // but I'll fix it, I promise
@@ -571,6 +573,24 @@ class StatementTransformer extends LineTransformer {
 
     }
 
+    /** Checks if the possible block has already been declared in the list.
+     * Since blocks types will start with ryz.lang.block.Block"N" where
+     * N is the number of parameters received, this method checks
+     * startsWith instead of contains.
+     * @param list The list where to find the block name. This list should
+     * be taked from either the current class atttributes or methods.
+     * @param possibleBlock - The name to search for.
+     * @return true if eny of the elements of the list start with the name of
+     * the possible list.
+     */
+    private boolean containsDeclaration( List<String> list, String possibleBlock) {
+        for (String s : list) {
+            if( s.startsWith(possibleBlock)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 class SimpleAssignmentTransformer extends LineTransformer {
 
