@@ -1,0 +1,19 @@
+/*
+className: extension.methods.TwoArgMethod
+classFile: extension/methods/TwoArgMethod.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:
+behavior : invokevirtual test() | result=8
+
+*/
+extension.methods.TwoArgMethod {
+    test(): Int {
+       2 .x ( 2, 2)
+    }
+    x (a:Int, b:Int, c:Int) : Int {
+        a .* ( b ) .* ( c )
+    }
+}
