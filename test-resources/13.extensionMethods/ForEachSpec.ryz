@@ -1,0 +1,32 @@
+/*
+className: extension.methods.ForEachSpec
+classFile: extension/methods/ForEachSpec.class
+otherClasses: extension/methods/ForEachSpec$1.class,\
+              extension/methods/ForEachSpec$2.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testForEachSpec: void
+behavior : invokevirtual testForEachSpec() | stdout=Oscar%nReyes%nde la Cruz%n
+
+*/
+extension.methods.ForEachSpec {
+    import( java.util.* )
+    testForEachSpec() {
+        // add Ryz code here...
+        list : List = Arrays.asList("Oscar", "Reyes", "de la Cruz")
+        list.each( ( name : String ) {
+            out.println( name )
+        })
+    }
+    /*
+    TODO: Work on scopes for variables
+    a : Integer = 0
+    testForeachNumber() {
+        numbers : List = Arrays.asList(1,2,3,4,5)
+        numbers.each( ( n : Integer )  {
+           a = a.+(n)
+        })
+    }
+    */
+}

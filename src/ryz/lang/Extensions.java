@@ -33,6 +33,8 @@ import ryz.lang.block.Block0;
 import ryz.lang.block.Block1;
 import ryz.lang.block.Block2;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: oscarryz
@@ -42,10 +44,15 @@ import ryz.lang.block.Block2;
 public final class Extensions {
 
     public static void isNull$qm( Object value, Block0<Void> b ) {
-        Bool.valueOf( value == null ).ifTrue( b );
+        Bool.valueOf( value == null ).ifTrue(b);
     }
     public static Bool ifTrue( Boolean condition , Block0<Void> b ) {
         return Bool.valueOf(condition).ifTrue(b);
+    }
+    public static <T> void each(List<T> list,Block1<Void,T> b ) {
+        for( T e : list ) {
+            b.run( e );
+        }
     }
 
     public static int $plus( int a, int b ) {

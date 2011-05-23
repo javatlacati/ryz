@@ -11,7 +11,7 @@ hello.HelloRyz{
   main( args: String* ) {
 
     // Sort descending
-    args.sort!( (a:String, b.String ) {
+    args.sort!( (a:String, b.String ):Int {
       b .<=> a
     })
 

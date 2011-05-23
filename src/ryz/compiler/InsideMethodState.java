@@ -76,6 +76,16 @@ public class InsideMethodState extends RyzClassState {
      */
     @Override
     public boolean addVariable(String accessModifier, String variableName, String variableType) {
+        //TODO: work on scope for variables when using blocks.
+        // For instance, the followings fails:
+        /*
+          a : Integer
+          test() {
+             some( (){
+                a  = a.+(1)
+             })
+          }
+         */
         String variable = variableName + ":"+ variableType;
         //TODO: consider scenarios where the variable was added as attribute but a local var is needed and when the variable was added as a parameter
         String method = ryzClass().methods().get( ryzClass().methods().size()-1);
@@ -86,6 +96,7 @@ public class InsideMethodState extends RyzClassState {
         logger.finest("ryzClass().variables().get(method) = " + ryzClass().variables().get(method));
         logger.finest("ryzClass().variables().get(\"instance\") = " +ryzClass().variables().get("instance"));
         logger.finest("ryzClass().variables().get(method).contains(variable) = " + ryzClass().variables().get(method).contains(variableName));
+        logger.finest("ryzClass().variables().get(\"instance\").contains(variable) = " + ryzClass().variables().get("instance").contains(variable));
         return !ryzClass().variables().get(method).contains(variable)
                 && !ryzClass().variables().get("instance").contains(variable)
                 && ryzClass().variables().get(method).add(variable);
