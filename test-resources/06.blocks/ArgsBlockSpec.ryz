@@ -1,7 +1,7 @@
 /*
 className: blocks.ArgsBlockSpec
 classFile: blocks/ArgsBlockSpec.class
-otherClasses: blocks/ArgsBlockSpec$1.class
+otherClasses: blocks/ArgsBlockSpec$1.class,blocks/ArgsBlockSpec$2.class
 extends: java.lang.Object
 implements: 
 attributes:  
