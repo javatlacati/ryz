@@ -1,0 +1,14 @@
+/*
+description:  Floating code in a class definition should be executed
+when the class is instantiated. 
+className: attributes.instance.Vars
+attributes: private a:java.lang.Date
+classFile: attributes/local/LocalVars.class
+*/
+attributes.instance.Vars {
+  import( java.util.Date ) 
+
+  a = Date()
+  a = Date()
+
+}

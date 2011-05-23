@@ -1,0 +1,20 @@
+DONE - To remove exception in the byte code use something like javassist see: so/4337281
+- Support multiple public class in the same source
+- Create attribute and don't duplicate it when defined in method :-S
+STARTED - Create Bool class and simple blocks of code.
+DONE - Args, varargs
+ named args with default values
+- get/set properties like generation
+
+DONE needs more work - Indicate what lines haven't been processed
+DONE needs more work - Compile using a classpath  ( to load existing classes )
+- Work on blocks.
+    - Block literal
+    - Block invocation
+    - Block identification
+
+STARTED - Extension methods
+    - For core libraries ( if, for, while etc )
+- Infer type from expresion ie:
+   result = some.method() // method type = int "result" should be declared as "int"
+- Casts // java int i = ( int ) 0L -> i : Int = Int( 0L )

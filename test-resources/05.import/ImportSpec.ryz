@@ -1,0 +1,17 @@
+/*
+className: import$.class$.First
+attributes: private date: java.util.Date
+methods: public endDate:java.util.Date
+classFile: import$/class$/First.class
+*/
+import.class.First {
+
+    import ( java.util.Date )
+
+    date : Date = Date()
+
+    endDate() : Date {
+     Date()
+    }
+
+}

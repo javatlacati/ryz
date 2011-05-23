@@ -1,0 +1,21 @@
+/*
+className: attributes.InferFromInvocation
+classFile: attributes/InferFromInvocation.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes: private-instance name : java.lang.String
+methods:  public-instance name: java.lang.String
+behavior : 
+*/
+attributes.InferFromInvocation {
+    name() : String {
+       a = "name"
+       a
+    }
+    other() {
+        b = name()
+    }
+    name = name()
+
+}

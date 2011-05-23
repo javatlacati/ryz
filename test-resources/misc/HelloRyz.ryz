@@ -1,0 +1,24 @@
+/*
+className: hello.HelloRyz
+classFile: hello/HelloRyz.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods: 
+behavior :
+*/
+hello.HelloRyz{
+  main( args: String* ) {
+
+    // Sort descending
+    args.sort!( (a:String, b.String ) {
+      b .<=> a
+    })
+
+    // iterate the array and greet
+    // the value in arg
+    args.each((value:String){
+      out.print "Hello %s".% value 
+    })
+  }
+}

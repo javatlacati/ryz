@@ -1,0 +1,125 @@
+/*
+className: attributes.inference.FromLiteral
+classFile: attributes/inference/FromLiteral.class
+extends: java.lang.Object
+implements:
+attributes: public-instance i : int ,\
+            protected-static j : int ,\
+            default-instance k : int ,\
+            private-static l : int ,\
+            private-static m: int, \
+            public-static n : java.lang.String,\
+            protected-instance o : java.lang.String,\
+            default-static p : java.lang.String, \
+            private-instance q : java.lang.String,\
+            private-static r : java.lang.String,\
+            public-instance s: java.lang.Boolean,\
+            protected-static t : java.lang.Boolean,\
+            default-instance u : java.lang.Boolean,\
+            private-static v : java.lang.Boolean, \
+            private-instance w : java.lang.Boolean, \
+            private-instance x : char,\
+            private-static y : char,\
+            public-instance z : char, \
+            private-instance guadalupe : java.util.Date,\
+            private-instance reyes: java.util.Date, \
+            private-instance a : java.util.regex.Pattern,\
+            private-static b : java.util.regex.Pattern, \
+            private-instance c : java.lang.Object,\
+            private-instance d : java.lang.String
+
+methods:
+behavior : invokevirtual ml()|stdout= hola%n,\
+           invokevirtual printMultiline()| stdout=    This%n    is a%n    multiline%n    string in "Ryz",\
+           invokevirtual getMultiline() | result= Other%n multiline%n string, \
+           invokevirtual getMultiline2() | result=Yet%nOne%nMore
+*/
+attributes.inference.FromLiteral{
+    ml() {
+        ml = " hola
+        "
+        out.print(ml)
+    }
+
+  // integers
+  +    i = 0
+  # __ j = 1
+  ~    k = 2
+  - __ l = 3
+    __ m = 4
+
+  // TODO, test 0xFF, 010, and other possible formats
+  // TODO: add floating point literal
+
+  // strings
+  + __ n = "public"
+  #    o = "protected"
+  ~ __ p = "default"
+  -    q = "secret"
+    __ r = "private 'by' default"
+
+  // boolean
+  +s= false
+  #__ t= true
+  ~u=false
+  -__ v = true
+  w = false
+
+  // characters
+     x = 'x'
+  __ y = 'y'
+   + z = 'ñ'
+
+   // date
+   //TODO: deeply review this literal, I think a number of bugs may originate here.
+   guadalupe  = 2010-12-12
+   reyes      = 2011-01-06
+
+   //TODO add time 2010-12-31_23:59:59 ( the second before new year )
+
+
+   // regex
+   a = /^ryz.*$/
+   __ b = /^\d$/
+
+   // null  literal
+   c = null
+   d : String = null
+
+   //TODO interval literal: 1ms 1s 1m 1h 1d 1w 1month 1y
+   //
+
+   //TODO add money literal  Money amount = '$1.00'
+
+
+  // Multli line string use the spaces between the first " and the text
+  // as identation for the string.
+  // The following uses 4 spaces indentation
+  multiline = "    This
+    is a
+    multiline
+    string in "Ryz"
+  "
+  // Can we print it?
+  printMultiline() {
+    out.print( multiline )
+  }
+
+  // Can we return it?
+  getMultiline():String {
+     other = " Other
+     multiline
+     string
+     "
+     other
+  }
+  getMultiline2() : String {
+    oneMore = "Yet
+    One
+    More
+    "
+    oneMore
+  }
+
+
+}

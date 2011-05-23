@@ -1,0 +1,31 @@
+/*
+className: methods.parameters.TwoParametersSpec
+classFile: methods/parameters/TwoParametersSpec.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods: 
+behavior : invokestatic main([Ljava.lang.String;) | stdout=Hello Ryz%nHola Ryz%n,\
+           invokevirtual concatenate() | result=ab
+*/
+methods.parameters.TwoParametersSpec{
+  main(){
+    self.giveMessage("Hello %s%n", "Ryz")
+    self.giveMessage("Hola %s%n", "Ryz")
+  }
+  giveMessage( message : String , to: String ) {
+    out.printf(message, to )
+  }
+  __ a : String
+    b : String
+  concatenate( a : String , b : String ) : String {
+    sb = StringBuilder()
+    sb.append( a )
+    sb.append( b )
+    sb.toString()
+  }
+  concatenate():String{
+    self.concatenate("a","b")
+  }
+
+}

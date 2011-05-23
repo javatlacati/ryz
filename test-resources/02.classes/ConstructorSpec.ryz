@@ -1,0 +1,24 @@
+/*
+className: classes.ClassConstructor
+classFile: classes/ClassConstructor.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:
+behavior : invokestatic main([Ljava.lang.String;) | stdout=Construido lo eh%n,\
+
+*/
+classes.ClassConstructor {
+    __ main( args : String* ) {
+        c = ClassConstructor("Construido lo eh")
+    }
+    ClassConstructor( s : String ) {
+        out.println( s )
+    }
+    import(java.io.File)
+    ClassConstructor( a : Boolean ) {
+        file = File("sample")
+        file.createNewFile()
+    }
+}
