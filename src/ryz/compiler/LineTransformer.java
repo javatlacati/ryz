@@ -545,7 +545,7 @@ class InlineBlockTransformer extends LineTransformer {
     // TODO: Handle primitive int he "run" signature when block's parametrized type is Integer
     // eg. new Block0<Void,Integer>(){ public Void run( int i ) { return null; }};
     //something.toString(somethingElse)
-    Pattern statementPattern = Pattern.compile("((\\w+)\\s*(\\.\\s*[\\$\\w]+)*)\\s*\\(\\s*(\\(\\s*(.*)\\)|\\s*)\\s*\\{");
+    private static final Pattern statementPattern = Pattern.compile("((\\w+)\\s*(\\.\\s*[\\$\\w]+)*)\\s*\\(\\s*(\\(\\s*(.*)\\)|\\s*)\\s*\\{");
     InlineBlockTransformer(RyzClassState state) {
         super(state);
     }
@@ -635,7 +635,7 @@ class ParameterInfo  {
 }
 class StatementTransformer extends LineTransformer {
 
-    Pattern statementPattern = Pattern.compile("(\\w+)\\s*(\\.\\s*[\\$\\w]+)*\\s*\\(.*\\)");//something.toString(somethingElse)
+    private static final Pattern statementPattern = Pattern.compile("(\\w+)\\s*(\\.\\s*[\\$\\w]+)*\\s*\\(.*\\)");//something.toString(somethingElse)
 
 
     StatementTransformer(RyzClassState state) {

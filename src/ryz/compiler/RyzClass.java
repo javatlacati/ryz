@@ -54,7 +54,7 @@ class RyzClass {
     private final Map<String, List<String>> variables = new HashMap<String,List<String>>();
     private final String sourceFile;
     private final List<CompilationError> errors = new ArrayList<CompilationError>();
-    private List<String> constructors;
+    private final List<String> constructors;
 
     public RyzClass(String sourceFile, List<String> sourceLines) {
 
