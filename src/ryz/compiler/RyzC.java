@@ -293,8 +293,7 @@ public class RyzC {
                             compilationUnits)
                 .call();
         if(!succesfullCompilation  || logger.isLoggable( Level.FINEST ) ) { 
-            logger.fine( numberedContent( generatedSourceCode ) );
-            logger.info( collector.getDiagnostics().toString());
+
         }
 
        fileManager.close();
@@ -311,7 +310,8 @@ public class RyzC {
                     createClassDefinition(resolveSymbol( currentClass,  diagnostic ));
                     return;
                 } else {
-                    System.err.println( diagnostic.getCode() );
+                    logger.info( collector.getDiagnostics().toString());
+                    logger.info( numberedContent( generatedSourceCode ) );
                 }
             }
         }

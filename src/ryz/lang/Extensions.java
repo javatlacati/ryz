@@ -45,6 +45,11 @@ public final class Extensions {
     public static Bool ifTrue( Boolean condition , Block0<Void> b ) {
         return Bool.valueOf(condition).ifTrue(b);
     }
+    public static void whileTrue( Block0<Boolean> condition , Block0<Void> block ) {
+        while( condition.run() ) {
+            block.run();
+        }
+    }
 
     public static int $plus( int a, int b ) {
         return a + b;

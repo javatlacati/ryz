@@ -519,8 +519,6 @@ class InlineBlockTransformer extends LineTransformer {
             logger.finest("line matched " + line );
             currentClass().insideBlock();
             generatedSource.add( String.format("    /*invocationwithblock*/ %s(new ryz.lang.block.Block0<Void>(){%n    public Void run(){%n",m.group(1)));
-            
-                        
         }
     }
 }

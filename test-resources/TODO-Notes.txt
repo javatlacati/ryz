@@ -19,4 +19,5 @@ STARTED - Extension methods
    result = some.method() // method type = int "result" should be declared as "int"
 - Casts // java int i = ( int ) 0L -> i : Int = Int( 0L )
 - Expression type identification: a.b(c).d(e.f(g)) is of type returned by "d"
+Inner clases
 
