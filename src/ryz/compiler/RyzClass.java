@@ -243,6 +243,7 @@ class RyzClass {
    * @param fixedSourceCode - The new source code
    * @param errorCode  - Indicates what the error was
    * @param startPosition - error start position
+   * @param position - Column of the line where the error appeared.
    */
     public void markError(String fixedSourceCode, String errorCode, int startPosition, int position) {
         errors.add( CompilationError.new$(errorCode, startPosition, position));
@@ -257,7 +258,7 @@ class RyzClass {
      *
    * @param code - The data of the error code.
    * @param startPosition - where the error first happened.
-   * @param position
+   * @param position - column where the error appeared
    * @return true if this exception was already reported.
      * @see #markError(String, String, int, int)
      */

@@ -384,7 +384,7 @@ class ClosingKeyTransformer extends LineTransformer {
      public void transform(String line, List<String> generatedSource) {
         if( line.startsWith("}")) { // or ends with }
             logger.finest("currentClass().state() = " +  currentClass().state() ); 
-            String indentation = "";
+            String indentation;
             if( currentClass().state() instanceof InsideBlockState ) { 
                  indentation = "/*ib*/";
                 generatedSource.add("    return null;"+lineSeparator);

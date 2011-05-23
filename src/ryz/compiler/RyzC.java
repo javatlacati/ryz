@@ -159,6 +159,8 @@ public class RyzC {
      * This method pre-process the input source file. 
      * This helps to things like putting the single line comment in a separate line
      * TODO: keep the original line numbre.
+     * @param input - The original source code as lines
+     * @return The same original source with small changes to parse it properly.
      */
     private List<String> cleanLines(List<String> input) {
         List<String> result = trimLines(input);
@@ -335,7 +337,6 @@ public class RyzC {
 
         //TODO: move this to the RyzClass
         // from here
-        String importString = "";
         String packageString = "";
         List<String> outputLines = currentClass.outputLines();
         List<String> toRemove = new ArrayList<String>();
@@ -345,9 +346,6 @@ public class RyzC {
                 packageString = s;
                 packageWritten = true;
 
-            }
-            if( s.startsWith("import")){
-                importString = s;
             }
             if(s.startsWith("import")){
                 toRemove.add( s ) ;
@@ -390,11 +388,11 @@ public class RyzC {
      */
     private RyzClass resolveSymbol(RyzClass currentClass, Diagnostic<? extends JavaFileObject> diagnostic) {
         // Take the source code from the diagnostic
-        StringBuilder sb = null;
+        StringBuilder sb;
         try {
             sb = new StringBuilder(diagnostic.getSource().getCharContent(true));
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            sb = new StringBuilder();
         }
         // take information of the error.
         int startPosition = (int) diagnostic.getStartPosition();
@@ -432,8 +430,10 @@ public class RyzC {
 
     /**
      * Adds line number to the passed string.
+     * @param content - The source code as string.
+     * @return The same source with numbers.
      */
-    private final String numberedContent( final String content ) { 
+    private String numberedContent( final String content ) {
         int i = 1;
         StringBuilder numberedContent = new StringBuilder();
         for( String line : content.split("\n")) {

@@ -41,6 +41,7 @@ import java.util.List;
  * Date: 5/4/11
  * Time: 12:11 PM
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public final class Extensions {
 
     public static void isNull$qm( Object value, Block0<Void> b ) {
@@ -113,7 +114,7 @@ public final class Extensions {
     //These "call" methods will be removed when
     // block "signature" is supported, they are not
     // really a language extension, just for testing purposes
-    public static void call( Block1<Void,String> b ) {
+    public static <T> void call( Block1<Void,String> b ) {
         b.run("I'm getting closer");
     }
     public static void call( Block2<Void,String,String> b ) {

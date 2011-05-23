@@ -36,7 +36,7 @@ public class Bool {
 	private final static Bool true$ = new True();
 	private final static Bool false$ = new False();
 	
-	public static final Bool valueOf( boolean value ) {
+	public static Bool valueOf( boolean value ) {
 	  return value ? true$ : false$;
 	}
     public Bool ifTrue( Block0<Void> b ) {

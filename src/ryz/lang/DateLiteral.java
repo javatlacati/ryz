@@ -33,9 +33,10 @@ package ryz.lang;
  * Date: 2/27/11
  * Time: 2:41 AM
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class DateLiteral {
     private final static java.text.DateFormat dateFormat =new java.text.SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-    public final static java.util.Date valueOf(String aDate){
+    public static java.util.Date valueOf(String aDate){
         try {
             return dateFormat.parse(aDate);
         } catch( java.text.ParseException pe ) {

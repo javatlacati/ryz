@@ -8,10 +8,12 @@ DONE - Args, varargs
 
 DONE needs more work - Indicate what lines haven't been processed
 DONE needs more work - Compile using a classpath  ( to load existing classes )
-- Work on blocks.
-    - Block literal
-    - Block invocation
-    - Block identification
+STARTED - Work on blocks.
+- Block literal
+STARTED - Block invocation
+STARTED - Block identification
+STARTED - Block parameters: TODO: fails when type is primitive,  fails on assignment identification
+- Block return type
 
 STARTED - Extension methods
     - For core libraries ( if, for, while etc )
