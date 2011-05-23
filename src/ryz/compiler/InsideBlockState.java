@@ -50,7 +50,8 @@ public class InsideBlockState extends InsideMethodState {
                 new ReturnTransformer(this),
                 new StatementTransformer(this),
                 new SimpleAssignmentTransformer(this),
-                new SingleValueLineTransformer(this)
+                new SingleValueLineTransformer(this),
+                new InlineBlockTransformer(this)
         ));
 
         this.previousState = state;

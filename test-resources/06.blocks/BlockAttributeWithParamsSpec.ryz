@@ -1,0 +1,37 @@
+/*
+className: blocks.BlockWithParam
+classFile: blocks/BlockWithParam.class
+otherClasses: blocks/BlockWithParam$1.class,\
+              blocks/BlockWithParam$2.class,\
+              blocks/BlockWithParam$3.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testBlockWithParam: void
+behavior : invokevirtual testBlockWithParam() | stdout=Ok\\, now what?%n,\
+ invokevirtual testBlockWithTwoParams() | stdout=Ok\\, now what?%nNow this%n
+*/
+blocks.BlockWithParam {
+
+    testBlockWithParam() {
+       b = (s:String) {
+          out.println(s)
+       }
+       b("Ok, now what?")
+    }
+    testBlockWithTwoParams() {
+       b = (s:String, t: String ) {
+          out.println(s)
+          out.println(t)
+       }
+       b("Ok, now what?", "Now this")
+    }
+    import( java.util.* )
+    __ main( args : String* ) {
+        b = ( ss: String* ) {
+           out.println( Arrays.toString( ss )  )
+        }
+        b( args )
+    }
+
+}

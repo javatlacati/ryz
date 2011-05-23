@@ -12,7 +12,10 @@ STARTED - Work on blocks.
 - Block literal
 STARTED - Block invocation
 STARTED - Block identification
-STARTED - Block parameters: TODO: fails when type is primitive,  fails on assignment identification
+STARTED - Block parameters:
+    TODO: fails when type is primitive,
+    fails on assignment identification,
+    fails to identify block declaration elsewhere than 1st param
 - Block return type
 
 STARTED - Extension methods

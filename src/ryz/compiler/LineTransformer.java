@@ -552,9 +552,9 @@ class InlineBlockTransformer extends LineTransformer {
     public void transform(String line, List<String> generatedSource) {
         Matcher m = statementPattern.matcher(line);
         if( m.matches() ) {
-            for( int i = 0 ; i < m.groupCount(); i++ ) {
-                logger.finest("m.group("+i+") = " + m.group(i));
-            }
+//            for( int i = 0 ; i < m.groupCount(); i++ ) {
+//                logger.finest("m.group("+i+") = " + m.group(i));
+//            }
             String parameters = transformParameters(m.group(4));
             List<ParameterInfo> parameterInfo = ParameterInfo.parse(parameters);
             logger.finest("parameters "  + parameters);
@@ -570,72 +570,9 @@ class InlineBlockTransformer extends LineTransformer {
     }
 }
 
-/**
- * This class is "currently" used for @InlineBlockTransformer to get type information
- * of the parameters passed to the block.
- */
-class ParameterInfo  {
-    private final String type;
-    private final String name;
-    private final static Map<String,String> wrappersMap = new HashMap<String,String>(){{
-        put("int", "Integer");
-        put("boolean", "Boolean");
-    }};
-
-    private ParameterInfo(String name, String type) {
-        this.name = name;
-        this.type = type;
-    }
-
-    public static List<ParameterInfo> parse(String parametersString) {
-        //pattern is: /*attribute*/  int i ,    /*attribute*/  String s
-        if( parametersString == null || parametersString.trim().equals("")){
-            return new ArrayList<ParameterInfo>();
-        }
-        String[] ptrs = parametersString.split(",");
-        List<ParameterInfo> parameterInfo = new ArrayList<ParameterInfo>();
-        for(String p : ptrs ) {
-            String [] nt  = p.split("\\s+");
-
-            String type;
-            String name;
-            // Identify "varArgs"
-            if( "...".equals( nt[3] ) && nt.length == 5) {
-                type = nt[2] + "[]";
-                name = nt[4];
-            } else {
-                type = nt[2];
-                name = nt[3];
-            }
-            parameterInfo.add( new ParameterInfo( name, type ));
-        }
-        return parameterInfo;
-    }
-
-    public static String getTypes(List<ParameterInfo> parameterInfo ) {
-        if( parameterInfo.isEmpty() ) {
-            return "";
-        }
-        StringBuilder builder = new StringBuilder(",");
-        for( ParameterInfo info : parameterInfo ) {
-            builder.append( info.getType() );
-            builder.append( ",");
-        }
-        if( builder.length() > 0 ) {
-            builder.deleteCharAt( builder.length()-1);
-        }
-        return builder.toString();
-    }
-    private String getType() {
-        if( wrappersMap.containsKey( this.type ) ) {
-            return wrappersMap.get( this.type );
-        }
-        return this.type;
-    }
-}
 class StatementTransformer extends LineTransformer {
 
-    private static final Pattern statementPattern = Pattern.compile("(\\w+)\\s*(\\.\\s*[\\$\\w]+)*\\s*\\(.*\\)");//something.toString(somethingElse)
+    private static final Pattern statementPattern = Pattern.compile("(\\w+)\\s*(\\.\\s*[\\$\\w]+)*\\s*(\\(.*\\))");//something.toString(somethingElse)
 
 
     StatementTransformer(RyzClassState state) {
@@ -649,9 +586,15 @@ class StatementTransformer extends LineTransformer {
             logger.finest(currentClass().className() +" variables: "+ currentClass().variables().toString());
 
             String expression = checkObjectInitialization(line);
+            for( int i = 0 ; i < m.groupCount(); i++ ) {
+                logger.warning("m.group("+i+") = " + m.group(i));
+            }
+
             String invokedMethod = m.group(1);
             if( isBlockInvocation( invokedMethod )) {
-                expression = invokedMethod+".run();";
+                String args = m.group(3);
+                args = args == null ? "" : args;
+                expression = invokedMethod+".run"+ args +"";
             }
             generatedSource.add(String.format("    /*invocation*/%s;%n",
                     expression));

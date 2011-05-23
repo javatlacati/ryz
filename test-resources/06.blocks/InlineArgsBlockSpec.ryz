@@ -1,9 +1,9 @@
 /*
-className: blocks.ArgsBlockSpec
-classFile: blocks/ArgsBlockSpec.class
-otherClasses: blocks/ArgsBlockSpec$1.class,\
-              blocks/ArgsBlockSpec$2.class,\
-              blocks/ArgsBlockSpec$3.class
+className: blocks.InlineArgsBlockSpec
+classFile: blocks/InlineArgsBlockSpec.class
+otherClasses: blocks/InlineArgsBlockSpec$1.class,\
+              blocks/InlineArgsBlockSpec$2.class,\
+              blocks/InlineArgsBlockSpec$3.class
 extends: java.lang.Object
 implements: 
 attributes:  
@@ -11,7 +11,7 @@ methods:
 behavior : invokevirtual oneArgTest() | stdout=I'm getting closer%n
 behavior : invokevirtual twoArgTest() | stdout=I'm getting closer%nAnd closer%n
 */
-blocks.ArgsBlockSpec {
+blocks.InlineArgsBlockSpec {
     oneArgTest() {
        call((s:String) {
            out.println(s)
@@ -27,5 +27,4 @@ blocks.ArgsBlockSpec {
        callVarArgs((t: String* ) {
        })
     }
-
 }

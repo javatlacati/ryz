@@ -80,6 +80,15 @@ public final class Extensions {
     public static boolean $lt( int a, int b ) {
         return a < b;
     }
+    public static boolean $lt( String a, String b ) {
+        return a.compareTo(b) < 0;
+    }
+    public static boolean $gt$eq( String a, String b ) {
+        return a.compareTo(b) >= 0;
+    }
+    public static <T1,T2> void max(T1 t1, T2 t2, Block2<Void,T1,T2> b) {
+        b.run(t1, t2);
+    }
 
     public static boolean $gt( int a, int b ) {
         return a > b;

@@ -50,12 +50,12 @@ class AttributeTransformer extends LineTransformer {
     private static final String multiLineInitialValue = " =  %s"+lineSeparatorRepresentation+"\"";
     private static final String regexInitialValue = " = java.util.regex.Pattern.compile(\"%s\");%n";
     private static final String dateInitialValue = " = ryz.lang.DateLiteral.valueOf(\"%s 00:00:00\");";
-    private static final String blockInitialValue = " = /* block */ new ryz.lang.block.Block0<Void>(){%n    public Void run(){%n";
+    private static final String blockInitialValue = " = /* block */ new ryz.lang.block.Block%s<Void %s>(){%n    public Void run(%s){%n";
 
 
     // [+#~-] hola ...
 
-    private final static Pattern blockPattern = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\(\\))?\\s*\\{");
+    private final static Pattern blockPattern = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\((.*)\\))?\\s*\\{");
     //private final static Pattern blockPattern = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=(\\s*)?\\{");
     private static final Pattern multilineString = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*[^\"])");
 
@@ -87,7 +87,7 @@ class AttributeTransformer extends LineTransformer {
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/"),       "java.util.regex.Pattern", regexInitialValue),
         // hola = {
         // }
-        Match.literal(blockPattern, "ryz.lang.block.Block0<Void>", blockInitialValue),
+        Match.block(blockPattern, "ryz.lang.block.Block%s<Void %s>", blockInitialValue),
         // hola = null
         Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(null)"),             "java.lang.Object",       literalInitialValue)
 
@@ -160,7 +160,7 @@ class AttributeTransformer extends LineTransformer {
 abstract class Match {
 
     private final Pattern pattern;
-    private LineTransformer transformer;
+    LineTransformer transformer;
     Match(Pattern pattern) {
         this.pattern = pattern;
     }
@@ -193,6 +193,10 @@ abstract class Match {
     static Match literal(Pattern pattern, String literalType, String format) {
         return new LiteralMatcher(pattern, literalType, format);
     }
+    static Match block(Pattern pattern, String literalType, String format) {
+        return new BlockLiteralMatcher(pattern, literalType, format);
+    }
+
     protected abstract Variable variableFrom(Matcher matcher);
 
     public LineTransformer getTransformer() {
@@ -255,12 +259,12 @@ class DeclarationMatcher extends InitMatcher {
 }
 
 /**
- * Matches literals
+ * Matches literals   name = 1 or name = "Hola"
  */
 class LiteralMatcher extends Match {
 
-    private final String literalType;
-    private final String format;
+    final String literalType;
+    final String format;
 
     public LiteralMatcher(Pattern pattern, String literalType, String format) {
         super(pattern);
@@ -277,6 +281,29 @@ class LiteralMatcher extends Match {
                 String.format(format,
                         group3.replaceAll("\\\\", "\\\\\\\\")));// only for regex
     }
+}
+class BlockLiteralMatcher extends LiteralMatcher {
+    public BlockLiteralMatcher(Pattern pattern, String literalType, String format) {
+        super(pattern, literalType, format);
+    }
+    @Override
+    protected Variable variableFrom(Matcher matcher) {
+        String group3 = matcher.group(3) == null ? "" : matcher.group(3);
+        String parameters = transformer.transformParameters(group3);
+        List<ParameterInfo> parameterInfo = ParameterInfo.parse(parameters);
+        String types = ParameterInfo.getTypes(parameterInfo);
+        int size = parameterInfo.size();
+        return new Variable(scapeName(matcher.group(2)),
+                String.format(literalType, size, types),
+                staticOrInstance(matcher),
+                String.format(format,
+                        size,
+                        types,
+                         parameters));
+                        //group3.replaceAll("\\\\", "\\\\\\\\")));// only for regex
+    }
+
+
 }
 
 
