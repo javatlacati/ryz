@@ -594,7 +594,18 @@ class ParameterInfo  {
         List<ParameterInfo> parameterInfo = new ArrayList<ParameterInfo>();
         for(String p : ptrs ) {
             String [] nt  = p.split("\\s+");
-            parameterInfo.add( new ParameterInfo(nt[3], nt[2] ));
+
+            String type;
+            String name;
+            // Identify "varArgs"
+            if( "...".equals( nt[3] ) && nt.length == 5) {
+                type = nt[2] + "[]";
+                name = nt[4];
+            } else {
+                type = nt[2];
+                name = nt[3];
+            }
+            parameterInfo.add( new ParameterInfo( name, type ));
         }
         return parameterInfo;
     }

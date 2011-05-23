@@ -1,7 +1,9 @@
 /*
 className: blocks.ArgsBlockSpec
 classFile: blocks/ArgsBlockSpec.class
-otherClasses: blocks/ArgsBlockSpec$1.class,blocks/ArgsBlockSpec$2.class
+otherClasses: blocks/ArgsBlockSpec$1.class,\
+              blocks/ArgsBlockSpec$2.class,\
+              blocks/ArgsBlockSpec$3.class
 extends: java.lang.Object
 implements: 
 attributes:  
@@ -19,6 +21,10 @@ blocks.ArgsBlockSpec {
        call((s:String, t: String ) {
            out.println(s)
            out.println(t)
+       })
+    }
+    varArgsTest() {
+       callVarArgs((t: String* ) {
        })
     }
 

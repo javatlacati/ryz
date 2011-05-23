@@ -47,12 +47,6 @@ public final class Extensions {
     public static Bool ifTrue( Boolean condition , Block0<Void> b ) {
         return Bool.valueOf(condition).ifTrue(b);
     }
-    public static void call( Block1<Void,String> b ) {
-        b.run("I'm getting closer");
-    }
-    public static void call( Block2<Void,String,String> b ) {
-        b.run("I'm getting closer", "And closer");
-    }
 
     public static int $plus( int a, int b ) {
         return a + b;
@@ -109,4 +103,16 @@ public final class Extensions {
     }
     */
 
+    //These "call" methods will be removed when
+    // block "signature" is supported, they are not
+    // really a language extension, just for testing purposes
+    public static void call( Block1<Void,String> b ) {
+        b.run("I'm getting closer");
+    }
+    public static void call( Block2<Void,String,String> b ) {
+        b.run("I'm getting closer", "And closer");
+    }
+    public static void callVarArgs( Block1<Void,String[]> b) {
+         b.run(new String[]{"1","2","3"});
+    }
 }
