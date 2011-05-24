@@ -144,8 +144,10 @@ class AttributeTransformer extends LineTransformer {
             // new lines
             Matcher matcher = multilineString.matcher(line);
             matcher.matches();
-            int indentation = matcher.group(3).lastIndexOf(' ');
-            currentClass().insideMultilineString(indentation);
+            int indentation = 0;
+            String multilineBegin = matcher.group( 3 );
+            while( Character.isWhitespace( multilineBegin.charAt( ++indentation )));
+            currentClass().insideMultilineString(--indentation);
         }
         
 
