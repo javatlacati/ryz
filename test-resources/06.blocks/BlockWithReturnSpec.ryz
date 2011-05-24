@@ -1,0 +1,13 @@
+/*
+className: blocks.BlockWithReturn
+classFile: blocks/BlockWithReturn.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:
+methods:
+behavior:
+*/
+blocks.BlockWithReturn {
+}
+
