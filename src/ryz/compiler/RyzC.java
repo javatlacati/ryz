@@ -277,8 +277,9 @@ public class RyzC {
         //TODO: parameterize options
         Iterable<String> options = logger.isLoggable(Level.FINEST) ? Arrays.asList("-verbose") : null ;
         //TODO: parameterize CLASSPATH
-        List<File> classPath = Arrays.asList(new File("./lib/"), new File("./out/build/"));
 
+        List<File> classPath = Arrays.asList(new File("./lib/"), new File("./out/build/"),
+                new File(getClass().getProtectionDomain().getCodeSource().getLocation().getFile()));
         fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(output));
         fileManager.setLocation(StandardLocation.CLASS_PATH, classPath);
 
@@ -295,7 +296,7 @@ public class RyzC {
                             compilationUnits)
                 .call();
         if( logger.isLoggable( Level.FINEST ) ) {
-            logger.info( numberedContent( generatedSourceCode ) );
+            logger.info( numberedContent(generatedSourceCode) );
         }
 
        fileManager.close();
@@ -313,7 +314,7 @@ public class RyzC {
                     return;
                 } else {
                     logger.info( collector.getDiagnostics().toString());
-                    logger.info( numberedContent( generatedSourceCode ) );
+                    logger.info(numberedContent(generatedSourceCode));
                 }
             }
         }

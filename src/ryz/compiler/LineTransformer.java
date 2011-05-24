@@ -586,9 +586,6 @@ class StatementTransformer extends LineTransformer {
             logger.finest(currentClass().className() +" variables: "+ currentClass().variables().toString());
 
             String expression = checkObjectInitialization(line);
-            for( int i = 0 ; i < m.groupCount(); i++ ) {
-                logger.warning("m.group("+i+") = " + m.group(i));
-            }
 
             String invokedMethod = m.group(1);
             if( isBlockInvocation( invokedMethod )) {

@@ -7,6 +7,7 @@
   <property name="test" location="test"/>
   <property name="build" location="out/build"/>
   <property name="build-test" location="out/build-test"/>
+  <property name="test-output" location="test-output/"/>
   <property name="dist"  location="dist"/>
 
 
@@ -46,13 +47,15 @@
         </testng>
   </target>
 
-  <target name="dist" depends="compile"
-        description="generate the distribution" >
-    <!-- Create the distribution directory -->
-    <mkdir dir="${dist}/lib"/>
-
-    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/ryzc-${DSTAMP}.jar" basedir="${build}"/>
+  <target name="dist" depends="test">
+    <jar destfile="${dist}/ryzc-${DSTAMP}.jar">
+    <fileset dir="${build}"/>
+    <zipfileset includes="**/*.class" src="lib/javassist.jar"/>
+    <manifest>
+      <attribute name="Main-Class"
+            value="ryz.compiler.RyzC"/>
+    </manifest>
+  </jar>
   </target>
 
 
@@ -61,6 +64,7 @@
     <!-- Delete the ${build} and ${dist} directory trees -->
     <delete dir="${build}"/>
     <delete dir="${build-test}"/>
+    <delete dir="${test-output}"/>
     <delete dir="${dist}"/>
   </target>
 </project>
