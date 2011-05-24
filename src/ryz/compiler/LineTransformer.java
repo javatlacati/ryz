@@ -31,9 +31,8 @@ package ryz.compiler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -69,10 +68,6 @@ abstract class LineTransformer {
 
     RyzClass currentClass() {
         return currentClass;
-    }
-
-    static Pattern regexp(String re) {
-        return Pattern.compile(re);
     }
 
 
@@ -119,7 +114,7 @@ abstract class LineTransformer {
     String getScope(String line, boolean includeScope,
                     String defaultScope){
         final Pattern pattern = Pattern.compile("([+#~-])\\s*.+");
-        if( includeScope == false ) {
+        if(!includeScope) {
             return "";
         }
         Matcher matcher = pattern.matcher(line);
@@ -407,7 +402,7 @@ class ConstructorTransformer extends LineTransformer {
 
     //TODO: use a single pattern
     // hola() {
-    private final Pattern voidMethodPattern  = regexp("[+#~-]??\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
+    private final Pattern voidMethodPattern  = Pattern.compile("[+#~-]??\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
     ConstructorTransformer(RyzClassState state) {
         super(state);
     }
@@ -442,13 +437,13 @@ class MethodTransformer extends LineTransformer {
 
     //TODO: use a single pattern
     // hola( *parameter_list_goes_here* ):String{
-    private final Pattern methodPattern      = regexp("[+#~-]??\\s*([\\$\\w]+)\\s*\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
-    // __ hola() : String { 
-    private final Pattern classMethodPattern = regexp("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
+    private final Pattern methodPattern      = Pattern.compile("[+#~-]??\\s*([\\$\\w]+)\\s*\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
+    // __ hola() : String {
+    private final Pattern classMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
     // hola() {
-    private final Pattern voidMethodPattern  = regexp("[+#~-]??\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
+    private final Pattern voidMethodPattern  = Pattern.compile("[+#~-]??\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
     // __ hola() {
-    private final Pattern voidClassMethodPattern = regexp("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
+    private final Pattern voidClassMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
 
     MethodTransformer(RyzClassState state) {
         super(state);
@@ -545,26 +540,44 @@ class InlineBlockTransformer extends LineTransformer {
     // TODO: Handle primitive int he "run" signature when block's parametrized type is Integer
     // eg. new Block0<Void,Integer>(){ public Void run( int i ) { return null; }};
     //something.toString(somethingElse)
-    private static final Pattern statementPattern = Pattern.compile("((\\w+)\\s*(\\.\\s*[\\$\\w]+)*)\\s*\\(\\s*(\\(\\s*(.*)\\)|\\s*)\\s*\\{");
+    private static final Pattern statementPattern = Pattern.compile(
+            "((\\w+)\\s*(\\.\\s*[\\$\\w]+)*)\\s*\\(\\s*" +
+                   //(\((.*)\)|\((.*)\)\s*:\s*((\w+)))
+                    "(\\((.*)\\)|\\((.*)\\)\\s*:\\s*((\\w+))|\\s*)\\s*\\{");
+
     InlineBlockTransformer(RyzClassState state) {
         super(state);
     }
     public void transform(String line, List<String> generatedSource) {
         Matcher m = statementPattern.matcher(line);
         if( m.matches() ) {
-//            for( int i = 0 ; i < m.groupCount(); i++ ) {
-//                logger.finest("m.group("+i+") = " + m.group(i));
-//            }
-            String parameters = transformParameters(m.group(4));
+            logger.finest(m.pattern().toString());
+            if( logger.isLoggable(Level.FINEST)) {
+                for (int i = 0; i < m.groupCount(); i++) {
+                    logger.finest("m.group(" + i + ") = " + m.group(i));
+                }
+            }
+            String returnType = "Void";
+            int indexParams = 5;
+            if( m.group(4).trim().equals("")) {
+                indexParams = 4;
+            }
+            if (m.group(7) != null) {
+                returnType = m.group(7);
+                indexParams = 6;
+            }
+            String parameters = transformParameters(m.group(indexParams));
             List<ParameterInfo> parameterInfo = ParameterInfo.parse(parameters);
-            logger.finest("parameters "  + parameters);
-            logger.finest("line matched " + line );
+            logger.fine("parameters " + parameters);
+            logger.fine("line matched " + line);
             currentClass().insideBlock();
-            generatedSource.add( String.format(
-                    "    /*invocationwithblock*/ %s(new ryz.lang.block.Block%s<Void %s>(){%n    public Void run(%s){%n",
+            generatedSource.add(String.format(
+                    "    /*invocationwithblock*/ %s(new ryz.lang.block.Block%s<%s %s>(){%n    public %s run(%s){%n",
                     m.group(1),
                     parameterInfo.size(),
+                    returnType,
                     ParameterInfo.getTypes(parameterInfo),
+                    returnType,
                     parameters));
         }
     }

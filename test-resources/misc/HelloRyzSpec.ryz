@@ -1,6 +1,7 @@
 /*
 className: hello.HelloRyz
 classFile: hello/HelloRyz.class
+otherClasses: hello/HelloRyz$1.class,hello/HelloRyz$2.class
 extends: java.lang.Object
 implements: 
 attributes:  
@@ -8,17 +9,18 @@ methods:
 behavior :
 */
 hello.HelloRyz{
-  main( args: String* ) {
+  __ main( args: String* ) {
 
     // Sort descending
-    args.sort!( (a:String, b.String ):Int {
-      b .<=> a
+    args.sort!( (a:String, b:String ) :Integer {
+      b .<=> (  a )
     })
 
     // iterate the array and greet
     // the value in arg
     args.each((value:String){
-      out.print "Hello %s".% value 
+      //out.print "Hello %s".% value
+      out.printf(" Hello %s%n", value )
     })
   }
 }

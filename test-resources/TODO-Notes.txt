@@ -23,3 +23,14 @@ STARTED - Extension methods
 - Infer type from expresion ie:
    result = some.method() // method type = int "result" should be declared as "int"
 - Casts // java int i = ( int ) 0L -> i : Int = Int( 0L )
+- Exception handling is broken when using "main(){}"
+- Add literal as expression "11".toString() or true.isTrue?((){})
+- Multiline string to honor the identation
+- Multilie string to support:
+  // There are three spaces after the "
+  a = "
+  This
+    will
+      be
+  "
+  Should yield: "   This%n     will%n       be"

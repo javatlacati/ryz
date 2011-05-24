@@ -33,6 +33,8 @@ import ryz.lang.block.Block0;
 import ryz.lang.block.Block1;
 import ryz.lang.block.Block2;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -50,13 +52,37 @@ public final class Extensions {
     public static Bool ifTrue( Boolean condition , Block0<Void> b ) {
         return Bool.valueOf(condition).ifTrue(b);
     }
+    public static void whileTrue(Block0<Boolean> condition, Block0<Void> b  ) {
+        //while( condition.run() ) {
+        //    b.run();
+        //}
+    }
+
     public static <T> void each(List<T> list,Block1<Void,T> b ) {
         for( T e : list ) {
             b.run( e );
         }
     }
+    public static <T> void each( T[] array, Block1<Void,T> b ){
+        each( Arrays.asList(array), b);
+    }
     public static void print( String s ) { 
         System.out.println( s );
+    }
+
+    public static <T> void sort$em( Comparable[] array,
+                                 final Block2<Integer,T,T> blockComparator ) {
+        Comparator<T> c = new Comparator<T>() {
+            @Override
+            public int compare(T o1, T o2) {
+                blockComparator.run(o1,o2);  //To change body of implemented methods use File | Settings | File Templates.
+                return 1;
+            }
+        };
+        Arrays.sort(array, (Comparator<? super Comparable>) c);
+    }
+    public static <T> int $lt$eq$gt( Comparable<T> a, T b ) {
+        return a.compareTo(b);
     }
 
     public static int $plus( int a, int b ) {

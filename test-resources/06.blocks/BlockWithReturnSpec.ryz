@@ -1,7 +1,7 @@
 /*
 className: blocks.BlockWithReturn
 classFile: blocks/BlockWithReturn.class
-otherClasses: 
+otherClasses: blocks/BlockWithReturn$1.class, blocks/BlockWithReturn$2.class
 extends: java.lang.Object
 implements: 
 attributes:
@@ -9,5 +9,15 @@ methods:
 behavior:
 */
 blocks.BlockWithReturn {
+    testBlockWithReturn(){
+        cond = () : Boolean {
+             f = false
+             //f
+        }
+        action = {
+            out.println("Ni queria")
+        }
+        whileTrue( cond , action )
+    }
 }
 

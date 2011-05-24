@@ -31,6 +31,7 @@ package ryz.compiler;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,46 +51,47 @@ class AttributeTransformer extends LineTransformer {
     private static final String multiLineInitialValue = " =  %s"+lineSeparatorRepresentation+"\"";
     private static final String regexInitialValue = " = java.util.regex.Pattern.compile(\"%s\");%n";
     private static final String dateInitialValue = " = ryz.lang.DateLiteral.valueOf(\"%s 00:00:00\");";
-    private static final String blockInitialValue = " = /* block */ new ryz.lang.block.Block%s<Void %s>(){%n    public Void run(%s){%n";
+    private static final String blockInitialValue = " = /* block */ new ryz.lang.block.Block%s<%s %s>(){%n    public %s run(%s){%n";
 
 
     // [+#~-] hola ...
 
-    private final static Pattern blockPattern = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\((.*)\\))?\\s*\\{");
+    //\((.*)\)\s*:\s*(\w+)
+    private final static Pattern blockPattern = Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\((.*)\\)|\\((.*)\\)\\s*:\\s*((\\w+)))?\\s*\\{");
     //private final static Pattern blockPattern = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=(\\s*)?\\{");
-    private static final Pattern multilineString = regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*[^\"])");
+    private static final Pattern multilineString = Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*[^\"])");
 
 
     private static final List<Match> matchers = Arrays.asList(
-         // hola : String* // varargs
-         Match.declaration(regexp("(__)?(\\w+)\\s*:\\s*((\\w+)\\*)")),
-        // + __ hola : String
-        Match.declaration(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)")),
-        // + __ hola = String()
-        Match.initialization(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
-        // + __ hola : String = a
-        Match.typeAndInit(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)")),
-        // + __ hola : String = a() // not used yet
-        Match.typeAndInit(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
-        // + __ hola = 1
-        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\d+)"),             "int",       literalInitialValue),
-        // + __ hola = "uno
-        Match.literal(multilineString, "String",   multiLineInitialValue),
-        // + __ hola = "uno"
-        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*\")"),           "String",   literalInitialValue),
-        // + __ hola = true
-        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(true|false)"),       "Boolean",  boolInitialValue),
-        // + __ hola = 'c'
-        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*('.')"),              "char",     literalInitialValue),
-        // + __ hola = 2011-01-06
-        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\d{4}-\\d{2}-\\d{2})"), "java.util.Date", dateInitialValue),
-        // + __ hola = /^(\d*)$/
-        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/"),       "java.util.regex.Pattern", regexInitialValue),
-        // hola = {
-        // }
-        Match.block(blockPattern, "ryz.lang.block.Block%s<Void %s>", blockInitialValue),
-        // hola = null
-        Match.literal(regexp("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(null)"),             "java.lang.Object",       literalInitialValue)
+            // hola : String* // varargs
+            Match.declaration(Pattern.compile("(__)?(\\w+)\\s*:\\s*((\\w+)\\*)")),
+            // + __ hola : String
+            Match.declaration(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)")),
+            // + __ hola = String()
+            Match.initialization(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
+            // + __ hola : String = a
+            Match.typeAndInit(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)")),
+            // + __ hola : String = a() // not used yet
+            Match.typeAndInit(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
+            // + __ hola = 1
+            Match.literal(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\d+)"), "int", literalInitialValue),
+            // + __ hola = "uno
+            Match.literal(multilineString, "String", multiLineInitialValue),
+            // + __ hola = "uno"
+            Match.literal(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\".*\")"), "String", literalInitialValue),
+            // + __ hola = true
+            Match.literal(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(true|false)"), "Boolean", boolInitialValue),
+            // + __ hola = 'c'
+            Match.literal(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*('.')"), "char", literalInitialValue),
+            // + __ hola = 2011-01-06
+            Match.literal(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\d{4}-\\d{2}-\\d{2})"), "java.util.Date", dateInitialValue),
+            // + __ hola = /^(\d*)$/
+            Match.literal(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*\\/\\^(.*)\\$\\/"), "java.util.regex.Pattern", regexInitialValue),
+            // hola = {
+            // }
+            Match.block(blockPattern, "ryz.lang.block.Block%s<%s %s>", blockInitialValue),
+            // hola = null
+            Match.literal(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(null)"), "java.lang.Object", literalInitialValue)
 
     );
 
@@ -285,24 +287,41 @@ class LiteralMatcher extends Match {
     }
 }
 class BlockLiteralMatcher extends LiteralMatcher {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
+
     public BlockLiteralMatcher(Pattern pattern, String literalType, String format) {
         super(pattern, literalType, format);
     }
     @Override
     protected Variable variableFrom(Matcher matcher) {
-        String group3 = matcher.group(3) == null ? "" : matcher.group(3);
-        String parameters = transformer.transformParameters(group3);
+        logger.finest(matcher.pattern().toString());
+        for (int i = 0; i < matcher.groupCount(); i++) {
+            logger.finest("m.group(" + i + ") = " + matcher.group(i));
+        }
+        String params = "";
+        String returnType = "Void";
+        if (matcher.group(3) != null ) {
+            int paramsIndex = 4;
+            if( matcher.group(6) != null ) {
+                returnType = matcher.group(6);
+                paramsIndex = 5;
+            }
+            params = matcher.group(paramsIndex);
+        }
+        String parameters = transformer.transformParameters(params);
         List<ParameterInfo> parameterInfo = ParameterInfo.parse(parameters);
         String types = ParameterInfo.getTypes(parameterInfo);
         int size = parameterInfo.size();
         return new Variable(scapeName(matcher.group(2)),
-                String.format(literalType, size, types),
+                String.format(literalType, size, returnType, types),
                 staticOrInstance(matcher),
                 String.format(format,
                         size,
+                        returnType,
                         types,
-                         parameters));
-                        //group3.replaceAll("\\\\", "\\\\\\\\")));// only for regex
+                        returnType,
+                        parameters));
+        //parametersAndReturnType.replaceAll("\\\\", "\\\\\\\\")));// only for regex
     }
 
 

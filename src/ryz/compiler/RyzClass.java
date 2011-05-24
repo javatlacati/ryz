@@ -128,8 +128,10 @@ class RyzClass {
             for( LineTransformer t : transformers() ) {
                 t.transform( line, generatedSource );
             }
-            if( lsf == generatedSource.size() && !(line.trim().equals(""))  ) { 
-              logger.info("Not processed ["+lineno+"]:"+  line );
+            if( lsf == generatedSource.size()
+                    && !line.trim().equals("")
+                    && !line.trim().equals("\"") ) {
+              logger.info("Not processed ["+lineno+"]: "+  line );
             }
         }
         
