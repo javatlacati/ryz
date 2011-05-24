@@ -55,6 +55,9 @@ public final class Extensions {
             b.run( e );
         }
     }
+    public static void print( String s ) { 
+        System.out.println( s );
+    }
 
     public static int $plus( int a, int b ) {
         return a + b;
