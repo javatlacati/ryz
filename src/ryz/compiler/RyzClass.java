@@ -131,7 +131,7 @@ class RyzClass {
             if( lsf == generatedSource.size()
                     && !line.trim().equals("")
                     && !line.trim().equals("\"") ) {
-              logger.info("Not processed ["+lineno+"]: "+  line );
+              logger.info("Not processed [" + lineno + "]: " + line);
             }
         }
         
@@ -197,7 +197,6 @@ class RyzClass {
     }
 
     public void markLastLineAsReturn() {
-
         String lastMethod = methods().get(methods().size() - 1);
         String type = lastMethod.split(":")[1];
         if( !type.equals("void") ){

@@ -68,6 +68,8 @@ import static java.lang.System.err;
 public class RyzC {
 
     private static final Logger logger = Logger.getLogger(RyzC.class.getName());
+    private static Logger sourceLogger = Logger.getLogger("ryz.compiler.RyzC.viewJavaSource");
+
     private static final Map<Character,String> operatorMap = new HashMap<Character,String>(){{
       put('+',"$plus");
       put('-',"$minus");
@@ -294,11 +296,14 @@ public class RyzC {
                         null,
                             compilationUnits)
                 .call();
+        if( sourceLogger.isLoggable( Level.FINEST ) ) {
+            sourceLogger.finest(generatedSourceCode);
+        }
         if( (!succesfullCompilation
                 && logger.isLoggable(Level.FINE))
                 || logger.isLoggable( Level.FINEST ) ) {
             logger.fine( collector.getDiagnostics().toString());
-            logger.fine( numberedContent(generatedSourceCode) );
+            sourceLogger.fine( numberedContent(generatedSourceCode) );
         }
 
        fileManager.close();
@@ -316,7 +321,7 @@ public class RyzC {
                     return;
                 } else {
                     logger.info( collector.getDiagnostics().toString());
-                    logger.info(numberedContent(generatedSourceCode));
+                    sourceLogger.info(numberedContent(generatedSourceCode));
                 }
             }
         }

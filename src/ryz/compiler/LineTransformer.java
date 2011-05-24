@@ -382,13 +382,13 @@ class ClosingKeyTransformer extends LineTransformer {
             String indentation;
             if( currentClass().state() instanceof InsideBlockState ) { 
                  indentation = "/*ib*/";
-                generatedSource.add("    return null;"+lineSeparator);
+                 generatedSource.add("    return null;"+lineSeparator);
                  this.currentClass().closeKey();
                  generatedSource.add(indentation +line + ";"+lineSeparator);
             } else if( currentClass().state() instanceof InsideMethodState ) { 
                 indentation = "    ";
                 generatedSource.add(indentation +line + lineSeparator);
-                 this.currentClass().closeKey();
+                this.currentClass().closeKey();
              }  else { 
                  indentation = "/**/";
              generatedSource.add(indentation +line + lineSeparator);

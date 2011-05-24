@@ -62,7 +62,7 @@ public class InsideClassState extends RyzClassState {
     @Override
     public boolean addVariable(String accessModifier, String variableName, String variableType) {
         String variable = variableName + ":"+ variableType;
-        //TODO: extract parameterType ( an object of type "variable" insteand of all these )
+        //TODO: introduce value object
         ensureVariablesHolderInitialized("instance");
         return !ryzClass().variables().get("instance").contains(variable)
                 && ryzClass().variables().get("instance").add(variable);
