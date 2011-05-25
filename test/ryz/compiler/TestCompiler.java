@@ -72,7 +72,7 @@ public class TestCompiler {
 
     @BeforeMethod
     void init() throws MalformedURLException {
-        testUtil = TestUtil.createWith( new File("./test-resources/output/"));
+        testUtil = TestUtil.createWith( new File("./test-samples/output/"));
     }
 
     @AfterMethod
@@ -90,7 +90,7 @@ public class TestCompiler {
         String testFile   = spec.getProperty("fileName").trim();
         String sourcePath = spec.getProperty("sourcePath").trim();
 
-        testUtil.addSourceDir(new File("./test-resources/"+sourcePath+"/"));
+        testUtil.addSourceDir(new File("./test-samples/"+sourcePath+"/"));
 
         try {
 
@@ -162,14 +162,14 @@ public class TestCompiler {
     }
 
     /**
-     * Walks through the "test-resources" directory and from all its sub-directories
+     * Walks through the "test-samples" directory and from all its sub-directories
      * and loads those files ending with .ryz extension.
      * @return  - A list of files found ending with "Spec.ryz"
      */
     private List<File> collectSourceFiles() {
         List<File> files = new ArrayList<File>();
         // just search at first level
-        File[] testFiles = new File("./test-resources").listFiles();
+        File[] testFiles = new File("./test-samples").listFiles();
         for( File file : testFiles) if( file.isDirectory() ) {
             files.addAll( Arrays.asList(file.listFiles(new FileFilter(){
                 public boolean accept(File pathname) {

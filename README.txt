@@ -24,18 +24,18 @@ run configuration "ryz.compiler"
 
 /src
 /test
-/test-resources
+/test-samples
 
 src: Contains Java source files to compile Ryz source code.
 tes: Contains Java source file to test the RyzC 
-test-resources: Contains sample of the language.
+test-samples: Contains sample of the language.
 
 
 If test source file name ends in "Spec.ryz" it will be loaded by the
 testing framework, compiled and "asserted" against the specification
 defined in the file header.
 
-(See /test-resources/spec-definition-readme.txt for a definition of the test spec)
+(See /test-samples/spec-definition-readme.txt for a definition of the test spec)
 
 
 ===3rd party libraries===

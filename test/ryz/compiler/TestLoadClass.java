@@ -54,7 +54,7 @@ public class TestLoadClass {
 
     @BeforeMethod
     void init() throws MalformedURLException {
-        testUtil = TestUtil.createWith(new File("./test-resources/output/"));
+        testUtil = TestUtil.createWith(new File("./test-samples/output/"));
     }
 
     @AfterMethod
@@ -102,7 +102,7 @@ public class TestLoadClass {
      */
     public void compileAndLoad() throws IOException, ClassNotFoundException {
         String className = "load.test.First";
-        testUtil.addSourceDir(new File("./test-resources/00.loading/"));
+        testUtil.addSourceDir(new File("./test-samples/00.loading/"));
         testUtil.assertMissing(className);
         testUtil.compile("First.ryz");
         testUtil.assertExists(className);
