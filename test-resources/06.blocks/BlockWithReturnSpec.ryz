@@ -21,6 +21,15 @@ blocks.BlockWithReturn {
             out.println( list.remove(0) )
         }
         whileTrue( cond , action )
+        /* same as: 
+        whileTrue(():Boolean{ list.size() .> ( 0 ) }, {
+            out.println( list.remove( 0 ) )
+        })
+        TODO: work on return type inference to have:
+        whileTrue({list.size() .> ( 0 ) }, {
+          list.remove(0)
+        })
+        */
     }
     main() {
         testBlockWithReturn()
