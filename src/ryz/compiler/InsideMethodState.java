@@ -95,12 +95,24 @@ public class InsideMethodState extends RyzClassState {
         logger.finest("variable = "+ variableName);
         logger.finest("ryzClass().variables().get(method) = " + ryzClass().variables().get(method));
         logger.finest("ryzClass().variables().get(\"instance\") = " +ryzClass().variables().get("instance"));
-        logger.finest("ryzClass().variables().get(method).contains(variable) = " + ryzClass().variables().get(method).contains(variableName));
-        logger.finest("ryzClass().variables().get(\"instance\").contains(variable) = " + ryzClass().variables().get("instance").contains(variable));
-        return !ryzClass().variables().get(method).contains(variable)
-                && !ryzClass().variables().get("instance").contains(variable)
+        logger.finest("ryzClass().variables().get(method).contains(variable) = " + containsVariable(method, variableName));
+        logger.finest("ryzClass().variables().get(\"instance\").contains(variable) = " + containsVariable("instance", variable));
+        //TODO: New local var may be ommited. This change introduces a new problem, if a local variable is declared
+        return !containsVariable(method, variable)
+                && !containsVariable("instance", variable)
                 && ryzClass().variables().get(method).add(variable);
+    }
 
+    private boolean containsVariable(String scope, String variable) {
+        String vn = variable.split(":")[0];
+        for(String name : ryzClass().variables().get(scope) )  {
+            String cvn = name.split(":")[0];
+            if( cvn.equals( vn )) {
+                return true;
+            }
+        }
+        return false;
+        //return ryzClass().variables().get(scope).contains(variable);
     }
 
     @Override

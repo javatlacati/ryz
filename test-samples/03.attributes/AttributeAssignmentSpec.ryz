@@ -1,0 +1,20 @@
+/*
+className: attributes.AttributeAssignmentSpec
+classFile: attributes/AttributeAssignmentSpec.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testAttributeAssignmentSpec: void
+behavior : 
+*/
+attributes.AttributeAssignmentSpec {
+    s : String
+    t = "String"
+
+    testAttributeAssignmentSpec() {
+        // add Ryz code here...
+        s = t.toString()
+        t : String = "local"
+    }
+}

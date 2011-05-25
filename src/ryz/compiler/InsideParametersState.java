@@ -84,8 +84,10 @@ public class InsideParametersState extends RyzClassState {
         logger.finest("ryzClass().variables().get(method) = " + ryzClass().variables().get(method));
         logger.finest("ryzClass().variables().get(\"instance\") = " +ryzClass().variables().get("instance"));
         logger.finest("ryzClass().variables().get(method).contains(variable) = " + ryzClass().variables().get(method).contains(variable));
-        return !ryzClass().variables().get(method).contains(variable)
-                && ryzClass().variables().get(method).add(variable);
+        //TODO: findout if this is needed, otherwise just remove it
+        //return !ryzClass().variables().get(method).contains(variable)
+        //        && ryzClass().variables().get(method).add(variable);
+          return    ryzClass().variables().get(method).add(variable);
 
     }
 

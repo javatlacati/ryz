@@ -1,12 +1,12 @@
 /*
-className: methods.invoke.InvokeStatement
-classFile: methods/invoke/InvokeStatement.class
+className: methods.BehaviorSpec
+classFile: methods/BehaviorSpec.class
 extends: java.lang.Object
 implements: 
 attributes:  
 methods: public-instance main(): void,\
          public-static main([Ljava.lang.String;):void,\
-         public-static createInstance() :  methods.invoke.InvokeStatement, \
+         public-static createInstance() :  methods.BehaviorSpec, \
          public-instance hashCode() : int, \
          public-instance modifyNumber() : int, \
          public-instance increment() : void
@@ -14,23 +14,23 @@ methods: public-instance main(): void,\
 
 
 behavior : new,  invokestatic main([Ljava.lang.String;) | stdout=Hello Oscar%n,\
-          invokestatic createInstance() | result=methods.invoke.InvokeStatement@0,\
-          invokevirtual toString() | result=methods.invoke.InvokeStatement@0,\
+          invokestatic createInstance() | result=methods.BehaviorSpec@0,\
+          invokevirtual toString() | result=methods.BehaviorSpec@0,\
           invokevirtual modifyNumber() | result=2
 */
-methods.invoke.InvokeStatement{
+methods.BehaviorSpec{
 
   number : Int = 0
 
   main(){
     out.println("Hello Oscar") // TODO: change to:  out.print "Hello world"
   }
-  __ createInstance():InvokeStatement {
-    InvokeStatement()
+  __ createInstance():BehaviorSpec {
+    BehaviorSpec()
   }
   /**
    * Needed to validate if the creation of an instance
-   * of this class is always: methods.invoke.InvokeStatement@0
+   * of this class is always: methods.BehaviorSpec@0
     */
   hashCode(): Int  {
      0

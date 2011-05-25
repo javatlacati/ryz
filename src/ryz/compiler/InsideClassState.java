@@ -64,9 +64,10 @@ public class InsideClassState extends RyzClassState {
         String variable = variableName + ":"+ variableType;
         //TODO: introduce value object
         ensureVariablesHolderInitialized("instance");
-        return !ryzClass().variables().get("instance").contains(variable)
-                && ryzClass().variables().get("instance").add(variable);
-
+        // TODO: Think on an scenario where we need to know if a variable was already declared.
+        //return !ryzClass().variables().get("instance").contains(variable)
+        //        && ryzClass().variables().get("instance").add(variable);
+        return ryzClass().variables().get("instance").add(variable);
     }
 
     @Override
