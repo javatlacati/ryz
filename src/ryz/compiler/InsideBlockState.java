@@ -39,10 +39,12 @@ import java.util.Arrays;
  */
 public class InsideBlockState extends InsideMethodState {
     private final RyzClassState previousState;
-    public InsideBlockState(RyzClass ryzClass, RyzClassState state) {
+    private final String blockSignature;
+
+    public InsideBlockState(RyzClass ryzClass, RyzClassState state, String blockSignature) {
         super( ryzClass );
 
-
+        this.blockSignature = blockSignature;
         transformers(Arrays.asList(
                 new AttributeTransformer(this, false),
                 new CommentTransformer(this),
@@ -63,6 +65,7 @@ public class InsideBlockState extends InsideMethodState {
 
     @Override
     void previousState() {
+        ryzClass().markLastLineAsReturn(this.blockSignature.split(":")[1]);
         ryzClass().state(previousState);
     }
 

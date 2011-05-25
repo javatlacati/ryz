@@ -86,8 +86,8 @@ public abstract class RyzClassState {
         ryzClass().state().previousState();
     }
 
-    public void insideBlock(){
-        ryzClass.state(new InsideBlockState(ryzClass(), this));
+    public void insideBlock(String blockSignature){
+        ryzClass.state(new InsideBlockState(ryzClass(), this, blockSignature));
     }
     public void keyClosed() {
         ryzClass().state().previousState();

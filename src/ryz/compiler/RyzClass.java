@@ -199,16 +199,24 @@ class RyzClass {
     public void markLastLineAsReturn() {
         String lastMethod = methods().get(methods().size() - 1);
         String type = lastMethod.split(":")[1];
-        if( !type.equals("void") ){
-            int lastElementIndex = generatedSource.size() - 2;
-            String lastLine = generatedSource.remove(lastElementIndex);
-
-            generatedSource.add( lastElementIndex, "        return "+ lastLine );
+        markLastLineAsReturn(type);
+    }
+    public void markLastLineAsReturn(String returnType) {
+        if(returnType.equals("void")) {
+           return;
         }
+         int lastElementIndex = generatedSource.size() - 2;
+         String lastLine = generatedSource.remove(lastElementIndex);
+        generatedSource.add( lastElementIndex,
+                String.format(returnType.equals("Void") ?
+                                    "%s%nreturn null;%n":
+                                     "return %s%n",
+                        lastLine));
     }
 
-    public void insideBlock() {
-        state().insideBlock();
+
+    public void insideBlock(String blockSignature) {
+        state().insideBlock(blockSignature);
     }
 
     public void insideMultilineString(int indentation) {

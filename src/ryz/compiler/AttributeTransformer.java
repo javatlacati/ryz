@@ -71,8 +71,6 @@ class AttributeTransformer extends LineTransformer {
             Match.initialization(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
             // + __ hola : String = a
             Match.typeAndInit(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+)")),
-            // + __ hola : String = a() // not used yet
-            Match.typeAndInit(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*:\\s*(\\w+)\\s*=\\s*(.+\\s*\\(.*\\))")),
             // + __ hola = 1
             Match.literal(Pattern.compile("[+#~-]??\\s*(__)?\\s*(\\w+)\\s*=\\s*(\\d+)"), "int", literalInitialValue),
             // + __ hola = "uno
@@ -134,13 +132,15 @@ class AttributeTransformer extends LineTransformer {
                     type,
                     variable.name,
                     variable.initialValue));
+            if (blockPattern.matcher(line).matches()  ) {
+                currentClass().insideBlock(String.format("%s:%s", variable.parameters, variable.returnType));
+            }
 
         }
 
+
         // and change the class state
-        if (blockPattern.matcher(line).matches()) {
-            currentClass().insideBlock();
-        } else if( multilineString.matcher(line).matches()){
+        if( multilineString.matcher(line).matches()){
             //If a multiline string is found
             //get the identation to be used in the
             // new lines
@@ -320,8 +320,7 @@ class BlockLiteralMatcher extends LiteralMatcher {
                         returnType,
                         types,
                         returnType,
-                        parameters));
-        //parametersAndReturnType.replaceAll("\\\\", "\\\\\\\\")));// only for regex
+                        parameters),parameters,returnType);
     }
 
 
@@ -333,6 +332,8 @@ class Variable {
     final String type;
     String staticOrInstance = "";
     String initialValue = ";";
+    public String parameters;
+    public String returnType;
 
 
     private Variable(String name, String type) {
@@ -347,4 +348,10 @@ class Variable {
         this.initialValue = initialValue;
     }
 
+    Variable(String name, String type, String staticOrInstance, String initialValues, String parameters, String returnType) {
+        this(name, type, staticOrInstance, initialValues);
+        this.parameters = parameters;
+        this.returnType = returnType;
+
+    }
 }

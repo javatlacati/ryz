@@ -4,20 +4,25 @@ classFile: blocks/BlockWithReturn.class
 otherClasses: blocks/BlockWithReturn$1.class, blocks/BlockWithReturn$2.class
 extends: java.lang.Object
 implements: 
-attributes:
-methods:
-behavior:
+attributes: private-instance list: java.util.List
+methods:  public-instance testBlockWithReturn : void
+behavior: invokestatic main([Ljava.lang.String;) | stdout=1%n2%n3%n
 */
+import ( java.util.* )
 blocks.BlockWithReturn {
-    testBlockWithReturn(){
+
+    list : List = ArrayList(Arrays.asList("1","2","3"))
+
+    testBlockWithReturn() {
         cond = () : Boolean {
-             f = false
-             //f
+            list.size() .> ( 0 )
         }
         action = {
-            out.println("Ni queria")
+            out.println( list.remove(0) )
         }
         whileTrue( cond , action )
     }
+    main() {
+        testBlockWithReturn()
+    }
 }
-

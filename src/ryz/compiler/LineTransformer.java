@@ -382,7 +382,6 @@ class ClosingKeyTransformer extends LineTransformer {
             String indentation;
             if( currentClass().state() instanceof InsideBlockState ) { 
                  indentation = "/*ib*/";
-                 generatedSource.add("    return null;"+lineSeparator);
                  this.currentClass().closeKey();
                  generatedSource.add(indentation +line + ";"+lineSeparator);
             } else if( currentClass().state() instanceof InsideMethodState ) { 
@@ -570,7 +569,7 @@ class InlineBlockTransformer extends LineTransformer {
             List<ParameterInfo> parameterInfo = ParameterInfo.parse(parameters);
             logger.fine("parameters " + parameters);
             logger.fine("line matched " + line);
-            currentClass().insideBlock();
+            currentClass().insideBlock(String.format("%s:%s",parameters,returnType));
             generatedSource.add(String.format(
                     "    /*invocationwithblock*/ %s(new ryz.lang.block.Block%s<%s %s>(){%n    public %s run(%s){%n",
                     m.group(1),

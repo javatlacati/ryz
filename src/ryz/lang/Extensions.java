@@ -53,9 +53,9 @@ public final class Extensions {
         return Bool.valueOf(condition).ifTrue(b);
     }
     public static void whileTrue(Block0<Boolean> condition, Block0<Void> b  ) {
-        //while( condition.run() ) {
-        //    b.run();
-        //}
+        while( condition.run() ) {
+            b.run();
+        }
     }
 
     public static <T> void each(List<T> list,Block1<Void,T> b ) {
@@ -70,16 +70,15 @@ public final class Extensions {
         System.out.println( s );
     }
 
-    public static <T> void sort$em( Comparable[] array,
+    public static <T extends Comparable<T>> void sort$em( T[] array,
                                  final Block2<Integer,T,T> blockComparator ) {
         Comparator<T> c = new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {
-                blockComparator.run(o1,o2);  //To change body of implemented methods use File | Settings | File Templates.
-                return 1;
+                return blockComparator.run(o1,o2);  //To change body of implemented methods use File | Settings | File Templates.
             }
         };
-        Arrays.sort(array, (Comparator<? super Comparable>) c);
+        Arrays.sort(array, c);
     }
     public static <T> int $lt$eq$gt( Comparable<T> a, T b ) {
         return a.compareTo(b);
