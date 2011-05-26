@@ -31,8 +31,7 @@ extension.methods.LanguageExtensionsSpec {
     }
     // TODO: support "Hello".print() 
     testPrint() {
-        a = "Hola"
-        a.print()
+        "Hola".println()
     }
     testIsTrue() {
         b = true
