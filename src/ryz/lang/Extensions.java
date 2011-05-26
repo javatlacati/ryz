@@ -59,6 +59,18 @@ public final class Extensions {
     public static Bool ifTrue( Boolean condition , Block0<Void> b ) {
         return Bool.valueOf(condition).ifTrue(b);
     }
+    //TODO add test to isFalse? ifFalse y not
+    public static Bool isFalse$qm( Boolean condition , Block0<Void> b ) {
+        return ifFalse( condition, b );
+    }
+
+    private static Bool ifFalse(Boolean condition, Block0<Void> b) {
+        return Bool.valueOf(condition).ifFalse(b);
+    }
+
+    public static Bool not( Boolean value ) {
+        return Bool.valueOf(!value);
+    }
     public static void whileTrue(Block0<Boolean> condition, Block0<Void> b  ) {
         while( condition.run() ) {
             b.run();

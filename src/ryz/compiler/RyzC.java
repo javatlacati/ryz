@@ -404,49 +404,21 @@ public class RyzC {
         int startPosition = (int) diagnostic.getStartPosition();
         int position      = (int) diagnostic.getPosition();
         int endPosition   = (int) diagnostic.getEndPosition();
-        System.out.println("diagnostic.getColumnNumber() = " + diagnostic.getColumnNumber());
-        System.out.println("diagnostic.getClass() = " + diagnostic.getClass());
-        System.out.println("startPosition = " + startPosition);
-        System.out.println("position = " + position);
-        System.out.println("endPosition = " + endPosition);
+        logger.finest("diagnostic.getColumnNumber() = " + diagnostic.getColumnNumber());
+        logger.finest("diagnostic.getClass() = " + diagnostic.getClass());
+        logger.finest("startPosition = " + startPosition);
+        logger.finest("position = " + position);
+        logger.finest("endPosition = " + endPosition);
         String substring = sb.substring(startPosition, endPosition);
-        System.out.println("sb.substring(startPosition,endPosition) = " + substring);
-        System.out.println("sb.substring(startPosition,endPosition) = " + sb.substring(startPosition, position));
-        System.out.println("substring.replace(\"throws Exception\",\"\") = " + substring.replace("throws Exception", "/*rows Excepti*/"));
-        sb.replace( startPosition, endPosition , substring.replace("throws Exception", "/*rows Excepti*/"));
+        logger.finest("sb.substring(startPosition,endPosition) = " + substring);
+        logger.finest("sb.substring(startPosition,endPosition) = " + sb.substring(startPosition, position));
+        logger.finest("substring.replace(\"throws Exception\",\"\") = " + substring.replace("throws Exception", "/*rows Excepti*/"));
+        sb.replace( startPosition, endPosition , substring.replace(" throws Exception { ", " /*te*/ {"));
         currentClass.markError( sb.toString(),
                 diagnostic.getCode(),
                 startPosition, position);
 
         return currentClass;
-        /*
-        // put the receiver as the first parameter of the method
-        String pieceInQuestion = sb.substring(startPosition, endPosition);
-        String receiver = pieceInQuestion.substring(0, position - startPosition);
-        String method = pieceInQuestion.substring(position - startPosition + 1);
-        sb.replace(startPosition, endPosition, method + "(" + receiver);
-
-        // remove the opening parenthesis
-        int p = endPosition;
-        while (true) {
-            char c = sb.charAt(p);
-            if( Character.isSpaceChar(c)) {
-                p++;
-            } else if (c == '('  ) {
-                sb.replace(p,++p, " ");
-            } else if (c == ')') {
-                break;
-            } else {
-                sb.insert(p, ',');
-                break;
-            }
-        }
-        // and finally let the current class take the new source code.
-        currentClass.markError( sb.toString(),
-                diagnostic.getCode(),
-                startPosition, position);
-        return currentClass;
-           */
      }
 
 

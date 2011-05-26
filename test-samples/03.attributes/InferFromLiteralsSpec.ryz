@@ -1,4 +1,5 @@
 /*
+/*
 className: attributes.inference.FromLiteral
 classFile: attributes/inference/FromLiteral.class
 extends: java.lang.Object

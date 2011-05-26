@@ -237,7 +237,7 @@ class RyzClass {
     RyzClass reportExceptions() { 
        for( int i = 0 ; i < generatedSource.size() ; i++ ) {
            String s = generatedSource.get(i);
-           if( s.startsWith("    /*method*/") || s.startsWith("    /*constructor*/")){
+           if( s.startsWith("    /*method*/") || s.startsWith("    /*constructor*/") && ! s.endsWith("throws Exception {") ){
                generatedSource.set( i ,
                     s.substring( 0, s.length() - LineTransformer.lineSeparator.length() - 1 )
                      + " throws Exception { " + LineTransformer.lineSeparator

@@ -438,11 +438,11 @@ class MethodTransformer extends LineTransformer {
     // hola( *parameter_list_goes_here* ):String{
     private final Pattern methodPattern      = Pattern.compile("[+#~-]??\\s*([\\$\\w]+)\\s*\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
     // __ hola() : String {
-    private final Pattern classMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
+    private final Pattern classMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\s*\\((.*)\\)\\s*:\\s*(\\w+)\\s*\\{");
     // hola() {
-    private final Pattern voidMethodPattern  = Pattern.compile("[+#~-]??\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
+    private final Pattern voidMethodPattern  = Pattern.compile("[+#~-]??\\s*([\\$\\w]+)\\s*\\((.*)\\)\\s*\\{");
     // __ hola() {
-    private final Pattern voidClassMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\((.*)\\)\\s*\\{");
+    private final Pattern voidClassMethodPattern = Pattern.compile("[+#~-]??\\s*_{2}\\s*([\\$\\w]+)\\s*\\((.*)\\)\\s*\\{");
 
     MethodTransformer(RyzClassState state) {
         super(state);

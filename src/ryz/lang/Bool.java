@@ -42,6 +42,9 @@ public class Bool {
     public Bool ifTrue( Block0<Void> b ) {
         return this;
     }
+    public Bool ifFalse( Block0<Void> b ) {
+        return this;
+    }
     private static class True extends Bool { 
     	private True(){}
     	@Override
@@ -52,6 +55,12 @@ public class Bool {
     }
     private static class False extends Bool { 
     	private False(){}
+
+        @Override
+        public Bool ifFalse(Block0<Void> b) {
+            b.run();
+            return super.ifFalse(b);
+        }
     }
 }
 
