@@ -1,6 +1,6 @@
 /*
-className: classes.UseCheckedException
-classFile: classes/UseCheckedException.class
+className: methods.UseCheckedException
+classFile: methods/UseCheckedException.class
 otherClasses:
 extends: java.lang.Object
 implements: 
@@ -9,7 +9,7 @@ methods:  public test: void
 behavior : 
 #invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, it is true%n
 */
-classes.UseCheckedException { 
+methods.UseCheckedException {
     import( java.io.File )
 
     test() { 

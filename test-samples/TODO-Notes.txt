@@ -34,3 +34,6 @@ STARTED - Extension methods
       be
   "
   Should yield: "   This%n     will%n       be"
+- Identify when a constructor has arguments so:
+   dialog = JDialog( frame ) doesn't create:
+   JDialog( frame dialog = new JDialog( frame )

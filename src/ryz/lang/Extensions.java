@@ -46,8 +46,15 @@ import java.util.List;
 @SuppressWarnings({"UnusedDeclaration"})
 public final class Extensions {
 
+
+    public static void notNull$qm( Object value, Block0<Void> b ) {
+        Bool.valueOf( value != null ).ifTrue(b);
+    }
     public static void isNull$qm( Object value, Block0<Void> b ) {
         Bool.valueOf( value == null ).ifTrue(b);
+    }
+    public static Bool isTrue$qm( Boolean condition , Block0<Void> b ) {
+        return ifTrue( condition, b );
     }
     public static Bool ifTrue( Boolean condition , Block0<Void> b ) {
         return Bool.valueOf(condition).ifTrue(b);

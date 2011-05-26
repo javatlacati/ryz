@@ -1,0 +1,21 @@
+/*
+className: methods.CheckedAndImplementSpec
+classFile: methods/CheckedAndImplementSpec.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:
+methods: public-instance testCheckedAndImplementSpec(): void
+behavior : 
+*/
+methods.CheckedAndImplementSpec : Runnable {
+    import( java.io.File )
+    testCheckedAndImplementSpec() {
+        // Ryz code here..
+        f = File("./x")
+        f.createNewFile()
+    }
+    // Run should not throw exception
+    run() {
+    }
+}

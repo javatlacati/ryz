@@ -279,7 +279,7 @@ public class RyzC {
         //TODO: parameterize options
         Iterable<String> options = logger.isLoggable(Level.FINEST) ? Arrays.asList("-verbose") : null ;
         //TODO: parameterize CLASSPATH
-        List<File> classPath = Arrays.asList(new File("./lib/"), new File("./out/build/"),
+        List<File> classPath = Arrays.asList(new File("."),new File("./lib/"), new File("./out/build/"),
                 new File(getClass().getProtectionDomain().getCodeSource().getLocation().getFile()));
         fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(output));
         fileManager.setLocation(StandardLocation.CLASS_PATH, classPath);
@@ -317,10 +317,14 @@ public class RyzC {
                 } else if ( ("compiler.err.cant.resolve.location".equals( diagnostic.getCode())
                              || "compiler.err.cant.deref".equals( diagnostic.getCode()))
                                  && isDifferentProblem(currentClass, diagnostic)) {
-                    createClassDefinition(resolveSymbol( currentClass,  diagnostic ));
+                    createClassDefinition(resolveSymbol(currentClass, diagnostic));
+                    return;
+                } else if("compiler.err.override.meth.doesnt.throw".equals(diagnostic.getCode())) {
+                    createClassDefinition(removeException(currentClass, diagnostic));
                     return;
                 } else {
                     logger.info( collector.getDiagnostics().toString());
+                    logger.info( diagnostic.getCode());
                     sourceLogger.info(numberedContent(generatedSourceCode));
                 }
             }
@@ -333,7 +337,7 @@ public class RyzC {
 
     }
 
-  /**
+    /**
      * Createa a string from the current class.
      * @param currentClass - The class where to take the source code from.
      * @return a string with the generated source code.
@@ -385,6 +389,66 @@ public class RyzC {
         return currentClass.isNewProblem(diagnostic.getCode(),
                 diagnostic.getStartPosition(), diagnostic.getPosition());
     }
+    //TODO add testcase for this method
+    private RyzClass removeException(RyzClass currentClass, Diagnostic<? extends JavaFileObject> diagnostic) {
+        //currentClass.generatedSource()
+        // Take the source code from the diagnostic
+        StringBuilder sb;
+        try {
+            sb = new StringBuilder(diagnostic.getSource().getCharContent(true));
+        } catch (IOException e) {
+            sb = new StringBuilder();
+        }
+        //sb.diagnostic.getLineNumber();
+        // take information of the error.
+        int startPosition = (int) diagnostic.getStartPosition();
+        int position      = (int) diagnostic.getPosition();
+        int endPosition   = (int) diagnostic.getEndPosition();
+        System.out.println("diagnostic.getColumnNumber() = " + diagnostic.getColumnNumber());
+        System.out.println("diagnostic.getClass() = " + diagnostic.getClass());
+        System.out.println("startPosition = " + startPosition);
+        System.out.println("position = " + position);
+        System.out.println("endPosition = " + endPosition);
+        String substring = sb.substring(startPosition, endPosition);
+        System.out.println("sb.substring(startPosition,endPosition) = " + substring);
+        System.out.println("sb.substring(startPosition,endPosition) = " + sb.substring(startPosition, position));
+        System.out.println("substring.replace(\"throws Exception\",\"\") = " + substring.replace("throws Exception", "/*rows Excepti*/"));
+        sb.replace( startPosition, endPosition , substring.replace("throws Exception", "/*rows Excepti*/"));
+        currentClass.markError( sb.toString(),
+                diagnostic.getCode(),
+                startPosition, position);
+
+        return currentClass;
+        /*
+        // put the receiver as the first parameter of the method
+        String pieceInQuestion = sb.substring(startPosition, endPosition);
+        String receiver = pieceInQuestion.substring(0, position - startPosition);
+        String method = pieceInQuestion.substring(position - startPosition + 1);
+        sb.replace(startPosition, endPosition, method + "(" + receiver);
+
+        // remove the opening parenthesis
+        int p = endPosition;
+        while (true) {
+            char c = sb.charAt(p);
+            if( Character.isSpaceChar(c)) {
+                p++;
+            } else if (c == '('  ) {
+                sb.replace(p,++p, " ");
+            } else if (c == ')') {
+                break;
+            } else {
+                sb.insert(p, ',');
+                break;
+            }
+        }
+        // and finally let the current class take the new source code.
+        currentClass.markError( sb.toString(),
+                diagnostic.getCode(),
+                startPosition, position);
+        return currentClass;
+           */
+     }
+
 
   /**
      * Tries to resolve the symbol by replacing the receiver as the first argument of the given method.

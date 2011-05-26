@@ -61,8 +61,11 @@ class ClassInstrumentation {
             for( CtMethod method : cc.getDeclaredMethods() ) { 
                 logger.finest("method: "+ method );
                 logger.finest("method info : " +  method.getMethodInfo() );
-                logger.finest("exceptions  : " +  java.util.Arrays.toString( method.getMethodInfo().getExceptionsAttribute().getExceptions() ) );
-                method.getMethodInfo().removeExceptionsAttribute();
+                //TODO: test when a class has a block.
+                if( method.getMethodInfo().getExceptionsAttribute() != null ) {
+                    logger.finest("exceptions  : " +  java.util.Arrays.toString( method.getMethodInfo().getExceptionsAttribute().getExceptions() ) );
+                    method.getMethodInfo().removeExceptionsAttribute();
+                }
                 logger.finest("method info : " +  method.getMethodInfo() );
             }
             logger.finest(" generetedClassFile.delete()" +  generetedClassFile.delete() );
