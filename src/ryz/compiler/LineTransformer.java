@@ -202,7 +202,7 @@ abstract class LineTransformer {
     }
 }
 class ImportTransformer extends LineTransformer {
-    private final Pattern importPattern = Pattern.compile("import\\s*\\((.+)\\s*\\)");
+    private final Pattern importPattern = Pattern.compile("(import|import(Static))\\s*\\((.+)\\s*\\)");
 
     ImportTransformer(RyzClassState state) {
         super(state);
@@ -214,7 +214,7 @@ class ImportTransformer extends LineTransformer {
         Matcher m = importPattern.matcher(line);
         if( m.matches() ){
             if( m.matches() ) {
-                generatedSource.add( String.format("import %s;%n", m.group(1)));
+                generatedSource.add( String.format("%s %s;%n", m.group(2) == null ? "import" : "import static",m.group(3)));
             }
         }
     }
@@ -359,7 +359,7 @@ class CommentTransformer extends LineTransformer {
           || line.startsWith("//")
           || line.endsWith("*/") ){
                 generatedSource.add(line + lineSeparator);
-        }else if( currentClass().state() instanceof InsideCommentState  ) { 
+        }else if( currentClass().state() instanceof InsideCommentState  ) {
                 generatedSource.add(line + lineSeparator);
         }
         if( line.startsWith("/*")){

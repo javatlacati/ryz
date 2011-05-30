@@ -1,0 +1,18 @@
+/*
+className: import$.ImportStaticSpec
+classFile: import$/ImportStaticSpec.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testImportStaticSpec: java.lang.String
+behavior : invokevirtual testImportStaticSpec() | result=10000
+*/
+importStatic(  java.lang.Integer.toBinaryString )
+import.ImportStaticSpec {
+    testImportStaticSpec() : String {
+        // add Ryz code here...
+        a = 16
+        a.toBinaryString()
+    }
+}
