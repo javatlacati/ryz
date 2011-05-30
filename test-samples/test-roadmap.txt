@@ -11,6 +11,7 @@
 08.embedding     - To replace inheritance with composition
 09.nullObject    - Probably using an annotation @NullObjecteable ?
 10.Java interoperability - primitives, java.util. etc.
+  10.1 Arrays
 11.expressions   -
 12.reflection    -  o["name"] // returns x
 13.extension methods - __ java.util.List.each( l : List,  (e:E) )

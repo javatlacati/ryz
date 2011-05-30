@@ -1,0 +1,18 @@
+/*
+className: import$.IgnoreImportInComment
+classFile: import$/IgnoreImportInComment.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testIgnoreImportInComment: void
+behavior :
+*/
+import.IgnoreImportInComment {
+    testIgnoreImportInComment() {
+        // add Ryz code here... 
+    }
+}
+/*
+importNatural( escenes )
+*/
