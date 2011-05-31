@@ -169,13 +169,20 @@ public class TestCompiler {
     private List<File> collectSourceFiles() {
         List<File> files = new ArrayList<File>();
         // just search at first level
-        File[] testFiles = new File("./test-samples").listFiles();
+        File useSamples = new File(System.getProperty("use.samples","./test-samples"));
+        if( useSamples.isFile() && useSamples.getName().endsWith("Spec.ryz")) {
+            files.add( useSamples );
+            return files;
+        }
+        File[] testFiles = useSamples.listFiles();
         for( File file : testFiles) if( file.isDirectory() ) {
             files.addAll( Arrays.asList(file.listFiles(new FileFilter(){
                 public boolean accept(File pathname) {
                     return pathname.getName().endsWith("Spec.ryz");
                 }
             })));
+        } else if( file.getName().endsWith("Spec.ryz") ) {
+            files.add(file );
         }
         return files;
     }

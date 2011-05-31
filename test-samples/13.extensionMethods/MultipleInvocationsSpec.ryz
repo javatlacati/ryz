@@ -1,0 +1,19 @@
+/*
+className: extension.methods.MultipleInvocationsSpec
+classFile: extension/methods/MultipleInvocationsSpec.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testMultipleInvocationsSpec: void
+behavior : 
+*/
+importStatic( java.lang.Integer.* )
+extension.methods.MultipleInvocationsSpec {
+    testMultipleInvocationsSpec() {
+        // add Ryz code here...
+        i = 0
+        i   .    toBinaryString    (      )
+        "".println()
+    }
+}

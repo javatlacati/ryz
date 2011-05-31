@@ -120,7 +120,7 @@ class RyzClass {
     public void transformSourceCode() {
 
         logger.fine("Processing " + sourceFile );
-        generatedSource.add(String.format("//-- Create from: %s %n" , sourceFile()));
+        generatedSource.add(String.format("//-- Created from: %s %n" , sourceFile()));
         int lineno = 0;
         for( String line : sourceLines ) {
             lineno++;

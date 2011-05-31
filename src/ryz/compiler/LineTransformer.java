@@ -360,7 +360,7 @@ class CommentTransformer extends LineTransformer {
           || line.endsWith("*/") ){
                 generatedSource.add(line + lineSeparator);
         }else if( currentClass().state() instanceof InsideCommentState  ) {
-                generatedSource.add("-"+line + lineSeparator);
+                generatedSource.add(line.startsWith("import") ? "-":""+line + lineSeparator);
         }
         if( line.startsWith("/*")){
             currentClass().insideComment();
