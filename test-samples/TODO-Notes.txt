@@ -37,3 +37,4 @@ STARTED - Extension methods
 - Identify when a constructor has arguments so:
    dialog = JDialog( frame ) doesn't create:
    JDialog( frame dialog = new JDialog( frame )
+- Split ryz.lang into its own library so the IDE may use it to commpile. Today we need to compile via ant first.
