@@ -1,0 +1,18 @@
+/*
+className: extension.methods.StringFormatSpec
+classFile: extension/methods/StringFormatSpec.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testStringFormatSpec: java.lang.String
+behavior : invokevirtual testStringFormatSpec() | result=Number: 3\\, Date: 02-06-11\\, Boolean: false
+*/
+extension.methods.StringFormatSpec {
+    testStringFormatSpec() : String  {
+        i  = 3
+        b = false
+        f = 2011-06-02
+        "Number: %d, Date: %2$td-%2$tm-%2$ty, Boolean: %3$b".%(i,f,b)
+    }
+}

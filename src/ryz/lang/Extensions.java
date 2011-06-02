@@ -124,7 +124,9 @@ public final class Extensions {
         return a / b;
     }
 
-
+    public static String $percent( String format, Object ... values ) {
+        return String.format( format , values );
+    }
     public static int $percent( int a, int b ) {
         return a % b;
     }
