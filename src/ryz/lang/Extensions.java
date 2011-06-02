@@ -68,8 +68,9 @@ public final class Extensions {
         return Bool.valueOf(condition).ifFalse(b);
     }
 
-    public static Bool not( Boolean value ) {
-        return Bool.valueOf(!value);
+    public static Boolean not( Boolean value ) {
+        //return Bool.valueOf(!value);
+        return !value;
     }
     public static void whileTrue(Block0<Boolean> condition, Block0<Void> b  ) {
         while( condition.run() ) {
@@ -145,19 +146,18 @@ public final class Extensions {
         return a > b;
     }
 
-    public static boolean $eq$eq( int a, int b ) {
-        return a == b;
+    public static boolean $eq$eq( Object a, Object b ) {
+        return a .equals( b );
     }
 
     public static boolean $em$eq( int a, int b ) {
         return a != b;
     }
 
-    /*
-    public static boolean $amp$amp( int a, int b ) {
+    public static boolean $amp$amp( boolean a, boolean b ) {
         return a && b;
     }
-
+    /*
     public static int $bar$bar( int a, int b ) {
         return a || b;
     }

@@ -38,3 +38,14 @@ STARTED - Extension methods
    dialog = JDialog( frame ) doesn't create:
    JDialog( frame dialog = new JDialog( frame )
 - Split ryz.lang into its own library so the IDE may use it to commpile. Today we need to compile via ant first.
+- Allow inline invocation of constructor like in:
+
+   addItem( Item() )
+- Need to fix accessing variables inside blocks, like they need to be final and so.
+- Add args to instance main method
+- Fix constructor parameter parsing
+- Consider adding stuff like:
+
+a.equals?(b,{
+ //stuff
+})
