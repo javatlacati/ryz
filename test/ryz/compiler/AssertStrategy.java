@@ -28,10 +28,15 @@
 
 package ryz.compiler;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -462,6 +467,50 @@ class ExtendsAssertionStrategy extends AssertStrategy {
     @Override
     int getModifiers(Object o) {
         throw new UnsupportedOperationException();
+    }
+}
+/**
+ * Validates against "annotations" entry in the spec.
+ */
+class AnnotationsAssertStrategy extends ExtendsAssertionStrategy {
+
+    @Override
+    public boolean  assertSpec(Object itemUnderReview, String elementDescription) {
+        return  itemUnderReview != null && ((Annotation) itemUnderReview).toString().equals(elementDescription);
+    }
+
+
+    @Override
+    protected String propertyToValidate() {
+        return "annotations";
+    }
+
+    @Override
+    public Object[] getObjectsToValidate(Class clazz) {
+        //TODO: This only validates annotations whose retention type is "SOURCE" see: SO/6461161
+
+        List<Annotation> annotations
+                = new ArrayList<Annotation>(Arrays.asList(clazz.getAnnotations()));
+
+        List<AnnotatedElement> elements = new ArrayList<AnnotatedElement>();
+        elements.addAll( Arrays.asList(clazz.getDeclaredClasses()));
+        elements.addAll( Arrays.asList(clazz.getDeclaredConstructors()));
+        elements.addAll( Arrays.asList(clazz.getDeclaredFields()));
+        elements.addAll( Arrays.asList(clazz.getDeclaredMethods()));
+        for( AnnotatedElement ae : elements ) {
+            for( Annotation a : Arrays.asList(ae.getAnnotations())) {
+                if( a != null ) {
+                    annotations.add(a);
+                }
+            }
+        }
+        return annotations.toArray(new Annotation[elements.size()]);
+    }
+
+
+    @Override
+    String getName(Object o) {
+        return o.toString();
     }
 }
 

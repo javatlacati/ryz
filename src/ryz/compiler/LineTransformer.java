@@ -267,7 +267,7 @@ class PackageClassTransformer extends LineTransformer {
                 generatedSource.add(String.format("/*import static*/import static java.lang.System.out;%n"));
                 generatedSource.add(String.format(
                         "public class %s %s %s { %n" +
-                        "    private final %s self = this;%n",
+                        "    private final %s self = this;%n@Deprecated public String foo;",
                         className,
                         extendsOrImplements,
                         scapeName(possibleSuperClass),

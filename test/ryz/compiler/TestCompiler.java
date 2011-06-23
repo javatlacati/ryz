@@ -63,6 +63,7 @@ public class TestCompiler {
     private TestUtil testUtil;
     
 
+    private final AssertStrategy annotationsAssertion = new AnnotationsAssertStrategy();
     private final AssertStrategy attributesAssertion = new AttributesAssertStrategy();
     private final AssertStrategy methodsAssertion    = new MethodsAssertStrategy();
     private final AssertStrategy implementsAssertion = new ImplementsAssertStrategy();
@@ -103,6 +104,7 @@ public class TestCompiler {
             attributesAssertion.assertDefinition(clazz, spec, testFile);
             methodsAssertion.assertDefinition(clazz, spec, testFile);
             assertBehaviour.assertDefinition(clazz, spec, testFile );
+            annotationsAssertion.assertDefinition(clazz, spec,testFile );
 
         } finally {
             testUtil.deleteFromOutput(spec.getProperty("classFile"));
@@ -170,6 +172,10 @@ public class TestCompiler {
         List<File> files = new ArrayList<File>();
         // just search at first level
         File useSamples = new File(System.getProperty("use.samples","./test-samples"));
+        if( useSamples.isFile() && !useSamples.getName().endsWith("Spec.ryz")) {
+            throw new IllegalArgumentException("Value of system property:" +
+                    " [use.samples] should end with \"Spec.ryz\"");
+        }
         if( useSamples.isFile() && useSamples.getName().endsWith("Spec.ryz")) {
             files.add( useSamples );
             return files;
