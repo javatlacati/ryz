@@ -256,6 +256,14 @@ class PackageClassTransformer extends LineTransformer {
                 }
                 sb.delete(sb.length()-1, sb.length());
                 String packageName = sb.toString();
+                String previousLine = generatedSource.get(generatedSource.size() - 1);
+                String putBeforeClass = "";
+                if( previousLine.startsWith("/*annotation*/")){
+                    generatedSource.remove(generatedSource.size()-1);
+                    putBeforeClass = previousLine;
+
+
+                }
                 generatedSource.add(String.format("package %s;%n", packageName));
                 String extendsOrImplements = isInterface( possibleSuperClass ) ?
                         "implements" :
@@ -266,8 +274,10 @@ class PackageClassTransformer extends LineTransformer {
                 generatedSource.add(String.format("/*import static*/import static ryz.lang.Extensions.*;%n"));
                 generatedSource.add(String.format("/*import static*/import static java.lang.System.out;%n"));
                 generatedSource.add(String.format(
+                        "%s" + // probably a class annotation
                         "public class %s %s %s { %n" +
-                        "    private final %s self = this;%n@Deprecated public String foo;",
+                        "    private final %s self = this;%n",
+                        putBeforeClass,
                         className,
                         extendsOrImplements,
                         scapeName(possibleSuperClass),
@@ -685,6 +695,22 @@ class SingleValueLineTransformer extends LineTransformer {
         Matcher m = singleValuePattern.matcher(line);
         if(m.matches()){
             generatedSource.add( String.format("/*expression*/ %s;%n", checkObjectInitialization(line))) ;
+        }
+    }
+}
+
+class AnnotationTransformer extends LineTransformer {
+    private final Pattern annotationPattern = Pattern.compile("@[A-Z]\\w+\\s*(\\(.*\\))?");
+
+    AnnotationTransformer(RyzClassState state) {
+        super(state);
+    }
+
+    @Override
+    public void transform(String line, List<String> generatedSource) {
+        Matcher m = annotationPattern.matcher( line );
+        if( m.matches()){
+            generatedSource.add( String.format("/*annotation*/ %s%n", line));
         }
     }
 }

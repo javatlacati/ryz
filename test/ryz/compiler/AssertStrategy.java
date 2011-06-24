@@ -65,7 +65,7 @@ abstract class AssertStrategy {
     private final static int STATIC     = 0xcacdce6e;  // static
     private final static int INSTANCE   = 0x21169495; // instance
     //used to debug
-    private String methodMessage;
+    String methodMessage;
 
     /**
      * Asserts the given class fulfils the definition on the spec.
@@ -476,7 +476,15 @@ class AnnotationsAssertStrategy extends ExtendsAssertionStrategy {
 
     @Override
     public boolean  assertSpec(Object itemUnderReview, String elementDescription) {
-        return  itemUnderReview != null && ((Annotation) itemUnderReview).toString().equals(elementDescription);
+        methodMessage = new StringBuilder()
+                .append("itemUnderReview = ")
+                .append(itemUnderReview).append("\n")
+                .append("comparing to    = ")
+                .append(elementDescription).append("\n")
+                .append("\n")
+                .toString();
+
+        return  ((Annotation) itemUnderReview).toString().equals(elementDescription);
     }
 
 
@@ -504,7 +512,7 @@ class AnnotationsAssertStrategy extends ExtendsAssertionStrategy {
                 }
             }
         }
-        return annotations.toArray(new Annotation[elements.size()]);
+        return annotations.toArray(new Annotation[annotations.size()]);
     }
 
 

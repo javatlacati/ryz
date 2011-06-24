@@ -43,7 +43,8 @@ class InitialState extends RyzClassState {
                 new PackageClassTransformer(this),
                 new ImportTransformer(this),
                 new CommentTransformer(this),
-                new ClosingKeyTransformer(this)//,
+                new ClosingKeyTransformer(this),
+                new AnnotationTransformer(this)//,
         ));
     }
 

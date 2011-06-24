@@ -46,7 +46,8 @@ public class InsideClassState extends RyzClassState {
             new CommentTransformer(this),
             new ClosingKeyTransformer(this),
             new MethodTransformer(this),
-            new ConstructorTransformer(this)
+            new ConstructorTransformer(this),
+            new AnnotationTransformer(this)
         ));
         
     }
