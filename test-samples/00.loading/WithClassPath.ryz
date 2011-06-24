@@ -1,0 +1,16 @@
+
+/**
+ * The class: some.TestClass is located inside the jar: test-samples/someTest.jar
+ * This source file declares a variable of type "TestClass" and the compiler
+ * is tested to see if it can load this class.
+ * The test exercises this file is: test/ryz.compiler.TestClassPath.
+ */
+test.classpath.WithClassPath {
+
+    import ( some.TestClass  )
+
+
+    testWithClassPath() {
+        testinstance = TestClass()
+    }
+}

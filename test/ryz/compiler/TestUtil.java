@@ -97,4 +97,8 @@ class TestUtil {
     public void addSourceDir(File sourceDir) {
         ryzc.sourceDirs(sourceDir);
     }
+
+    public void classPath(String ... classPath) {
+        ryzc.classPath(classPath);
+    }
 }

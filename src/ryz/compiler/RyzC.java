@@ -92,6 +92,11 @@ public class RyzC {
         RyzC c = RyzC.getCompiler();
         c.sourceDirs(new File("."));
         c.outDir(new File("."));
+        // fixed to 2nd position
+        if( "-cp".equals(args[0])) {
+            c.classPath(args[1].split(System.getProperty("path.separator")));
+            args = Arrays.copyOfRange(args,2,args.length);
+        }
         c.compile(args);
     }
 
@@ -109,13 +114,26 @@ public class RyzC {
      * Where to find .ryz source class default to current directory
      */
     private File[] sourceDirs = new File[]{ new File("") };
+    /**
+     * Classpath for the compiler.
+     */
+    private File[] classPath = new File[]{
+            new File("."),
+            new File("./lib/"),
+            new File("./out/build/"),
+            new File(getClass()
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .getFile())
+    };
 
     /**
      * Where to put the output, default to current directory.
      */
     private File output = new File("");
 
-  /**
+   /**
      * Holds a representation of the Ryz classes compiled during this session.
      */
     private final List<RyzClass> classes = new ArrayList<RyzClass>();
@@ -128,6 +146,19 @@ public class RyzC {
     public void sourceDirs(File ... dirs) {
         sourceDirs = dirs.clone();
 
+    }
+
+    /**
+     * Specity the classpath for the compiler to use.
+     * @param filesName a list of files where to find classes for the compilation
+     */
+    public void classPath( String ... filesName ) {
+        List<File> cp = new ArrayList<File>();
+        cp.addAll(Arrays.asList(classPath));
+        for (String aFile : filesName) {
+            cp.add( new File(aFile));
+        }
+        classPath = cp.toArray(new File[cp.size()]);
     }
 
     /**
@@ -279,10 +310,8 @@ public class RyzC {
         //TODO: parameterize options
         Iterable<String> options = logger.isLoggable(Level.FINEST) ? Arrays.asList("-verbose") : null ;
         //TODO: parameterize CLASSPATH
-        List<File> classPath = Arrays.asList(new File("."),new File("./lib/"), new File("./out/build/"),
-                new File(getClass().getProtectionDomain().getCodeSource().getLocation().getFile()));
         fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(output));
-        fileManager.setLocation(StandardLocation.CLASS_PATH, classPath);
+        fileManager.setLocation(StandardLocation.CLASS_PATH, Arrays.asList(classPath));
 
         DiagnosticCollector<JavaFileObject> collector = new DiagnosticCollector<JavaFileObject>();
         // Compile the file

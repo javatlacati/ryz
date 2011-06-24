@@ -700,7 +700,7 @@ class SingleValueLineTransformer extends LineTransformer {
 }
 
 class AnnotationTransformer extends LineTransformer {
-    private final Pattern annotationPattern = Pattern.compile("@[A-Z]\\w+\\s*(\\(.*\\))?");
+    private final Pattern annotationPattern = Pattern.compile("@[A-Z]\\w+\\s*(\\(.*\\))?.*");
 
     AnnotationTransformer(RyzClassState state) {
         super(state);

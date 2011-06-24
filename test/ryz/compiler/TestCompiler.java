@@ -29,18 +29,14 @@
 package ryz.compiler;
 
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +69,7 @@ public class TestCompiler {
 
     @BeforeMethod
     void init() throws MalformedURLException {
-        testUtil = TestUtil.createWith( new File("./test-samples/output/"));
+        testUtil = TestUtil.createWith( new File("test-samples/output/"));
     }
 
     @AfterMethod
@@ -91,7 +87,7 @@ public class TestCompiler {
         String testFile   = spec.getProperty("fileName").trim();
         String sourcePath = spec.getProperty("sourcePath").trim();
 
-        testUtil.addSourceDir(new File("./test-samples/"+sourcePath+"/"));
+        testUtil.addSourceDir(new File("test-samples/"+sourcePath+"/"));
 
         try {
 
