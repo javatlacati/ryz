@@ -276,7 +276,7 @@ class PackageClassTransformer extends LineTransformer {
                 generatedSource.add(String.format(
                         "%s" + // probably a class annotation
                         "public class %s %s %s { %n" +
-                        "    private final %s self = this;%n",
+                        "    //private final %s self = this;%n",
                         putBeforeClass,
                         className,
                         extendsOrImplements,

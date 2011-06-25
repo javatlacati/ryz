@@ -197,7 +197,8 @@ public class RyzC {
      */
     private List<String> cleanLines(List<String> input) {
         List<String> result = trimLines(input);
-        result  = splitLineComments(result);
+        result = replaceSelfWithThis( result );
+        result = splitLineComments(result);
         result = substituteNonTextMethodsDefinitions(result);
         result = substituteNonTextMethodsInvocations(result);
         return result;
@@ -283,6 +284,13 @@ public class RyzC {
             }
         }
         return trimmed;
+    }
+    private List<String> replaceSelfWithThis( List<String> input ) {
+        List<String> result = new ArrayList<String>();
+        for( String line : input ) {
+            result.add( line.replaceAll("self\\.", "this.").replaceAll("^self$","this"));
+        }
+        return result;
     }
 
   /**
