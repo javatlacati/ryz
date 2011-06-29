@@ -1,16 +1,17 @@
-summary About Ryz
+# About Ryz 
 
-= Introduction =
+## Introduction 
 
-ryz.programming.Language {
-  staticallyType = true
-  paradigm = "Object Oriented"
-  runsOn( jvm = True) {
-      compilesTo = "Java bytecode"
-  }
-}
+    ryz.programming.Language {
+      staticallyType = true
+      paradigm = "Object Oriented"
+      runsOn( jvm = True) {
+          compilesTo = "Java bytecode"
+      }
+    }
 
-= Details =
+## Details 
+
 
 Currently Ryz uses Intellj IDEA 10 CE and TestNG 
 testing framework plugin included with the IDE.
@@ -18,44 +19,53 @@ testing framework plugin included with the IDE.
 http://www.jetbrains.com/idea/download/index.html
 
 After loading the project, execute the option: 
-run configuration "ryz.compiler" 
 
-===Project structure===
+run > configuration > `ryz.compiler`
+ 
 
-/src
-/test
-/test-samples
+### Project structure
 
-src: Contains Java source files to compile Ryz source code.
-tes: Contains Java source file to test the RyzC 
-test-samples: Contains sample of the language.
+    /src
+    /test
+    /test-samples
 
 
-If test source file name ends in "Spec.ryz" it will be loaded by the
+`src`: Contains Java source files to compile Ryz source code.
+
+`test`: Contains Java source file to test the RyzC 
+
+`test-samples` : Contains samples of the language.
+
+
+If test source file name ends in `Spec.ryz` it will be loaded by the
 testing framework, compiled and "asserted" against the specification
 defined in the file header.
 
-(See /test-samples/spec-definition-readme.txt for a definition of the test spec)
+(See [/test-samples/spec-definition-readme.txt](https://github.com/OscarRyz/Ryz/blob/master/test-samples/spec-definition-readme.txt) for a definition of the test spec)
 
 
-===3rd party libraries===
+### 3rd party libraries
 
-Testgn
+TestNG
+
 This project uses TesNG http://testng.org testing framework
 redistributed under Apache 2.0 license.
-You may find a copy of the license in lib/APACHE-LICENSE.txt
+
+You may find a copy of the license in [lib/APACHE-LICENSE.txt](https://github.com/OscarRyz/Ryz/blob/master/lib/APACHE-LICENSE.txt)
 
 
-javassist
+Javassist
+
 This project uses Javassit http://www.jboss.org/javassist bytecode manipulation library
 redistributed under Mozilla Public License v1.1 
-You may find a copyt fo the license in lib/MZL-License.html
+
+You may find a copy fo the license in [lib/MZL-License.html](https://github.com/OscarRyz/Ryz/blob/master/lib/MZL-License.html)
 
 
 
-===Links===
+### Links
 
   * Docs: http://code.google.com/p/ryz/w/list
   * Issues: http://code.google.com/p/ryz/issues/list
   * Mailing list: http://groups.google.com/group/ryz-lang
-  * Twitter: @ryz_language
+  * Twitter: [@RyzLang](https://twitter.com/#!/RyzLang "Ryz Lang on twitter")
