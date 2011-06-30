@@ -1,0 +1,19 @@
+/*
+This spec is not used because this file doesn't ends with Spec.ryz
+className: test.two.files.CompileTwo
+classFile: test/two/files/CompileTwo.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testCompileTwo: void
+behavior : 
+*/
+test.two.files.CompileTwo {
+    // Change it for "CompileOne()" to really test they are both compiled
+    // in the same go.
+    one = CompileTwo()
+    testCompileTwo() {
+        // add Ryz code here... 
+    }
+}

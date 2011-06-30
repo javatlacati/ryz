@@ -1,0 +1,16 @@
+/*
+This spec is not used because this file doesn't ends with Spec.ryz
+className: test.two.files.CompileOne
+classFile: test/two/files/CompileOne.class
+otherClasses:
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testCompileOne: void
+behavior : 
+*/
+test.two.files.CompileOne {
+    testCompileOne() {
+        // add Ryz code here... 
+    }
+}

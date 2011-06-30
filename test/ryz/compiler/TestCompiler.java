@@ -61,6 +61,8 @@ public class TestCompiler {
     @AfterMethod
     void cleanUp() {
         testUtil.deleteFromOutput("test/classpath/WithClassPath.class");
+        testUtil.deleteFromOutput("test/two/files/CompileOne.class");
+        testUtil.deleteFromOutput("test/two/files/CompileTwo.class");
     }
 
     /**
@@ -75,5 +77,17 @@ public class TestCompiler {
         testUtil.assertMissing(className);
         testUtil.compile("WithClassPath.ryz");
         testUtil.assertExists(className);
+    }
+    @Test
+    public void compileTwoFiles() throws ClassNotFoundException, IOException {
+        String first = "test.two.files.CompileOne";
+        String second = "test.two.files.CompileTwo";
+
+        testUtil.addSourceDir(new File("test-samples/00.loading/"));
+        testUtil.assertMissing(first);
+        testUtil.assertMissing(second);
+        testUtil.compile("CompileOne.ryz", "CompileTwo.ryz");
+        testUtil.assertExists(first);
+        testUtil.assertExists(second);
     }
 }

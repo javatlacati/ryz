@@ -83,8 +83,8 @@ class TestUtil {
         }
     }
 
-    public void compile(String file) throws IOException {
-        ryzc.compile(file);
+    public void compile(String ... files) throws IOException {
+        ryzc.compile( files );
     }
 
     @SuppressWarnings({"ResultOfMethodCallIgnored"})
