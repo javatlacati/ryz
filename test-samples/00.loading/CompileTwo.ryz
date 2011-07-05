@@ -12,7 +12,7 @@ behavior :
 test.two.files.CompileTwo {
     // Change it for "CompileOne()" to really test they are both compiled
     // in the same go.
-    one = CompileTwo()
+    one = CompileOne()
     testCompileTwo() {
         // add Ryz code here... 
     }

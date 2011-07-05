@@ -54,6 +54,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.System.err;
+import static java.lang.System.out;
 
 
 /**
@@ -129,9 +130,9 @@ public class RyzC {
     };
 
     /**
-     * Where to put the output, default to current directory.
+     * Where to put the outputDir, default to current directory.
      */
-    private File output = new File("");
+    private File outputDir = new File("");
 
    /**
      * Holds a representation of the Ryz classes compiled during this session.
@@ -145,7 +146,6 @@ public class RyzC {
      */
     public void sourceDirs(File ... dirs) {
         sourceDirs = dirs.clone();
-
     }
 
     /**
@@ -163,10 +163,10 @@ public class RyzC {
 
     /**
      * Specify where to put the generated .class files
-     * @param output - Specify the output directory for the generated .class files
+     * @param output - Specify the outputDir directory for the generated .class files
      */
     public void outDir(File output) {
-        this.output = output;
+        this.outputDir = output;
     }
 
     /**
@@ -179,11 +179,11 @@ public class RyzC {
             File toCompile = validateExists(file);
             if (toCompile == null) { return; }
 
-            RyzClass currentClass = new RyzClass( file, cleanLines(readLines(toCompile)));
-            classes.add( currentClass );
-            currentClass.transformSourceCode();
-            createClassDefinition( currentClass );
+            RyzClass ryzclass = new RyzClass( file, cleanLines(readLines(toCompile)));
+            classes.add( ryzclass );
+            ryzclass.transformSourceCode();
         }
+        createClassDefinition( classes );
     }
 
 
@@ -295,13 +295,11 @@ public class RyzC {
 
   /**
      * Compiles a java source code file from the given RyzClass
-      * @param currentClass  - The class to be transformed into .class file
-     * @throws IOException   - If it is not possible to write the file
+      *
+   * @param currentClasses  - The class to be transformed into .class file
+  * @throws IOException   - If it is not possible to write the file
      */
-    private void createClassDefinition( RyzClass currentClass ) throws IOException {
-        String generatedSourceCode = getGeneratedSourceCodeFrom(currentClass);
-
-        JavaFileObject source = new JavaSourceFromString(currentClass.className(), generatedSourceCode);
+    private void createClassDefinition( List<RyzClass> currentClasses ) throws IOException {
 
         // Get the java compiler for this platform
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -317,13 +315,21 @@ public class RyzC {
 
         //TODO: parameterize options
         Iterable<String> options = logger.isLoggable(Level.FINEST) ? Arrays.asList("-verbose") : null ;
-        //TODO: parameterize CLASSPATH
-        fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(output));
+        fileManager.setLocation(StandardLocation.CLASS_OUTPUT, Arrays.asList(outputDir));
         fileManager.setLocation(StandardLocation.CLASS_PATH, Arrays.asList(classPath));
 
         DiagnosticCollector<JavaFileObject> collector = new DiagnosticCollector<JavaFileObject>();
         // Compile the file
-        Iterable<? extends JavaFileObject> compilationUnits = Arrays.asList(source);
+        List<JavaSourceFromString> compilationUnits = new ArrayList<JavaSourceFromString>();//Arrays.asList(source);
+
+        for( RyzClass currentClass : currentClasses) {
+            JavaSourceFromString javaSourceFromString = new JavaSourceFromString(currentClass.className(), getGeneratedSourceCodeFrom(currentClass));
+            compilationUnits.add(javaSourceFromString);
+            //String generatedSourceCode = ;
+            //JavaFileObject source = new JavaSourceFromString(currentClass.className(), generatedSourceCode);
+        }
+
+
         boolean succesfullCompilation =
                 compiler
                     .getTask(null,
@@ -334,17 +340,28 @@ public class RyzC {
                             compilationUnits)
                 .call();
         if( sourceLogger.isLoggable( Level.FINEST ) ) {
-            sourceLogger.finest(generatedSourceCode);
+            //sourceLogger.finest(generatedSourceCode);
         }
         if( (!succesfullCompilation
                 && logger.isLoggable(Level.FINE))
                 || logger.isLoggable( Level.FINEST ) ) {
             logger.fine( collector.getDiagnostics().toString());
-            sourceLogger.fine( numberedContent(generatedSourceCode) );
+            //sourceLogger.fine( numberedContent(generatedSourceCode) );
         }
 
        fileManager.close();
+
          if( !succesfullCompilation ) {
+             Map<String, List<Diagnostic<? extends JavaFileObject>>> diagnosticsMap = toMap(collector.getDiagnostics());
+             logger.warning(diagnosticsMap.toString());
+             reportException(currentClasses, diagnosticsMap.get("compiler.err.unreported.exception.need.to.catch.or.throw"));
+             resolveSymbol(currentClasses, diagnosticsMap.get("compiler.err.cant.deref"));
+             resolveSymbol(currentClasses, diagnosticsMap.get("compiler.err.cant.resolve.location"));
+             removeException(currentClasses, diagnosticsMap.get("compiler.err.override.meth.doesnt.throw"));
+             createClassDefinition(currentClasses);
+             cleanCheckedExceptions( currentClasses );
+         }
+/*
             for ( Diagnostic<? extends JavaFileObject> diagnostic : collector.getDiagnostics() ) {
                 if("compiler.err.unreported.exception.need.to.catch.or.throw".equals(diagnostic.getCode())){
                     createClassDefinition(currentClass.reportExceptions());
@@ -365,12 +382,54 @@ public class RyzC {
                 }
             }
         }
+*/
 
 
         // delete the file
         //sourceFile.deleteOnExit();
 
 
+    }
+
+    private void cleanCheckedExceptions(List<RyzClass> currentClasses) throws IOException {
+        for( RyzClass ryzClass : currentClasses ) {
+            ClassInstrumentation.removeCheckedExceptions(ryzClass, outputDir);
+        }
+    }
+
+    private void reportException(List<RyzClass> currentClasses, List<Diagnostic<? extends JavaFileObject>> diagnostics) {
+        if( diagnostics != null ) for (RyzClass ryzClass : currentClasses ) {
+            ryzClass.reportExceptions();
+        }
+
+    }
+
+    private void removeException(List<RyzClass> currentClasses, List<Diagnostic<? extends JavaFileObject>> diagnostics) {
+        for( RyzClass  ryzClass : currentClasses ) {
+            removeException( ryzClass,  diagnostics );
+        }
+    }
+
+    private void resolveSymbol(List<RyzClass> currentClasses, List<Diagnostic<? extends JavaFileObject>> diagnostics) {
+        for( RyzClass ryzClass : currentClasses ) {
+            resolveSymbol(ryzClass, diagnostics);
+        }
+    }
+
+    private Map<String, List<Diagnostic<? extends JavaFileObject>>> toMap(List<Diagnostic<? extends JavaFileObject>> diagnostics) {
+        Map<String,List<Diagnostic<? extends JavaFileObject>>> result = new HashMap<String, List<Diagnostic<? extends JavaFileObject>>>();
+        for( Diagnostic<? extends JavaFileObject> d : diagnostics ) {
+            List<Diagnostic<? extends JavaFileObject>> list = null;
+            if(!result.containsKey(d.getCode()) ) {
+                list = new ArrayList<Diagnostic<? extends JavaFileObject>>();
+                result.put( d.getCode(), list );
+            } else {
+                list = result.get( d.getCode() );
+            }
+            assert list != null;
+            list.add( d );
+        }
+        return result;
     }
 
     /**
@@ -427,8 +486,8 @@ public class RyzC {
     }
     //TODO add testcase for this method
     private RyzClass removeException(RyzClass currentClass,
-                                     Diagnostic<? extends JavaFileObject> a,
                                      List<Diagnostic<? extends JavaFileObject>> diagnostics) {
+        if( diagnostics == null ) { return currentClass; }
         for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics) {
         //currentClass.generatedSource()
         // Take the source code from the diagnostic
@@ -476,13 +535,15 @@ public class RyzC {
    * @return the instance of currentClass with fixed source code.
      */
     private RyzClass resolveSymbol(RyzClass currentClass,  List<Diagnostic<? extends JavaFileObject>> diagnostics) {
+        if( diagnostics == null  ) { return currentClass; }
         for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics) {
             if ("compiler.err.cant.resolve.location".equals( diagnostic.getCode())||
                 "compiler.err.cant.deref".equals( diagnostic.getCode())) {
+
                 // Take the source code from the diagnostic
                 StringBuilder sb;
                 try {
-                    sb =  new StringBuilder( getGeneratedSourceCodeFrom(currentClass) ); // new StringBuilder(diagnostic.getSource().getCharContent(true));
+                    sb =  new StringBuilder( getGeneratedSourceCodeFrom(currentClass) );
                 } catch (IOException e) {
                     sb = new StringBuilder();
                 }
@@ -578,7 +639,7 @@ public class RyzC {
     }
 
   /**
-     * Utility method to read all all the input into the output. Use by the
+     * Utility method to read all all the input into the outputDir. Use by the
      * "readFile" method
      * @param input - The input to read from.
      * @param output - Where to copy the data to.

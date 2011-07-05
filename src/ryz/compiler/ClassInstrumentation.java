@@ -60,6 +60,7 @@ class ClassInstrumentation {
             //TODO: possible bug, this also removed from my Constructors
             for( CtMethod method : cc.getDeclaredMethods() ) { 
                 logger.finest("method: "+ method );
+                cc.defrost();
                 logger.finest("method info : " +  method.getMethodInfo() );
                 //TODO: test when a class has a block.
                 if( method.getMethodInfo().getExceptionsAttribute() != null ) {
