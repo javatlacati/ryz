@@ -344,14 +344,16 @@ public class RyzC {
                 compiler.getStandardFileManager( null, null, null );
 
         //TODO: parameterize options
-        Iterable<String> options = logger.isLoggable( Level.FINEST ) ?
-                                         Arrays.asList( "-verbose" ) :
-                                         null;
-        fileManager.setLocation( StandardLocation.CLASS_OUTPUT,
-                                 Arrays.asList( outputDir ) );
+        Iterable<String> options =
+                logger.isLoggable( Level.FINEST ) ? Arrays.asList( "-verbose" ) : null;
 
-        fileManager.setLocation( StandardLocation.CLASS_PATH,
-                                 Arrays.asList( classPath ) );
+        fileManager.setLocation(
+                StandardLocation.CLASS_OUTPUT, Arrays.asList( outputDir )
+        );
+
+        fileManager.setLocation(
+                StandardLocation.CLASS_PATH, Arrays.asList( classPath )
+        );
 
         DiagnosticCollector<JavaFileObject> collector
                                     = new DiagnosticCollector<JavaFileObject>();
@@ -371,8 +373,9 @@ public class RyzC {
         }
 
 
-        boolean succesfullCompilation = compiler.getTask( null, fileManager,
-                collector, options, null, compilationUnits ).call();
+        boolean succesfullCompilation =
+                compiler.getTask( null, fileManager, collector, options,
+                                  null, compilationUnits ).call();
 
         if ( sourceLogger.isLoggable( Level.FINEST ) ) {
             //sourceLogger.finest(generatedSourceCode);
@@ -386,7 +389,7 @@ public class RyzC {
         fileManager.close();
 
         if ( !succesfullCompilation ) {
-            Map<String, List<Diagnostic<? extends JavaFileObject>>> diagnosticsMap = toMap( collector.getDiagnostics() );
+            Map<String, DiagnosticList> diagnosticsMap = toMap( collector.getDiagnostics() );
             logger.warning( diagnosticsMap.toString() );
             reportException( currentClasses, diagnosticsMap.get( CATCH_OR_THROW ) );
             resolveSymbol(   currentClasses, diagnosticsMap.get( CANT_DEREF ) );
@@ -456,19 +459,14 @@ public class RyzC {
         }
     }
 
-    private Map<String, List<Diagnostic<? extends JavaFileObject>>> toMap( List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
-        Map<String, List<Diagnostic<? extends JavaFileObject>>> result
-            = new HashMap<String, List<Diagnostic<? extends JavaFileObject>>>();
-
+    static final class DiagnosticList extends ArrayList<Diagnostic<? extends JavaFileObject>>{}
+    private Map<String, DiagnosticList> toMap( List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
+        Map<String, DiagnosticList> result = new HashMap<String, DiagnosticList>();
         for ( Diagnostic<? extends JavaFileObject> d : diagnostics ) {
-            List<Diagnostic<? extends JavaFileObject>> list = null;
-            if ( !result.containsKey( d.getCode() ) ) {
-                list = new ArrayList<Diagnostic<? extends JavaFileObject>>();
-                result.put( d.getCode(), list );
-            } else {
-                list = result.get( d.getCode() );
+            DiagnosticList list = result.get(d.getCode());
+            if( list == null ) {
+              result.put( d.getCode(), (list = new DiagnosticList()));
             }
-            assert list != null;
             list.add( d );
         }
         return result;
@@ -524,7 +522,9 @@ public class RyzC {
      * @return true if the class have already had the same problem.
      */
     private boolean isDifferentProblem( RyzClass currentClass, Diagnostic<? extends JavaFileObject> diagnostic ) {
-        return currentClass.isNewProblem( diagnostic.getCode(), diagnostic.getStartPosition(), diagnostic.getPosition() );
+        return currentClass.isNewProblem( diagnostic.getCode(),
+                                          diagnostic.getStartPosition(),
+                                          diagnostic.getPosition() );
     }
 
     //TODO add testcase for this method
