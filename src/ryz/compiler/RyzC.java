@@ -391,9 +391,10 @@ public class RyzC {
         if ( !succesfullCompilation ) {
             Map<String, DiagnosticList> diagnosticsMap = toMap( new DiagnosticList(collector.getDiagnostics()) );
             logger.warning( diagnosticsMap.toString() );
+            failForRemaining( diagnosticsMap, numberedContent( getGeneratedSourceCodeFrom( currentClasses ) ));
             reportException( currentClasses, diagnosticsMap.get( CATCH_OR_THROW ) );
-            resolveSymbol(   currentClasses, diagnosticsMap.get( CANT_DEREF ) );
-            resolveSymbol(   currentClasses, diagnosticsMap.get( CANT_RESOLVE) );
+            resolveSymbol( currentClasses, diagnosticsMap.get( CANT_DEREF ) );
+            resolveSymbol( currentClasses, diagnosticsMap.get( CANT_RESOLVE ) );
             removeException( currentClasses, diagnosticsMap.get( METH_DOESNT_THROW ) );
             createClassDefinition( currentClasses );
             cleanCheckedExceptions( currentClasses );
@@ -426,6 +427,36 @@ public class RyzC {
         //sourceFile.deleteOnExit();
 
 
+    }
+
+    private String getGeneratedSourceCodeFrom( List<RyzClass> currentClasses ) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        for( RyzClass c : currentClasses ) {
+            sb.append( getGeneratedSourceCodeFrom( c ) );
+        }
+        return sb.toString();
+    }
+
+    private void failForRemaining( Map<String, DiagnosticList> diagnosticsMap, String sourceCode ) {
+        List<String> handled = Arrays.asList(CANT_DEREF ,CATCH_OR_THROW, CANT_RESOLVE, METH_DOESNT_THROW );
+        StringBuilder b = new StringBuilder(  );
+        for( String key : diagnosticsMap.keySet() ){
+            if(handled.contains( key  )){
+                continue;
+            }
+            for( Diagnostic<? extends JavaFileObject> d : diagnosticsMap.get(key)){
+                if( d.getKind() == Diagnostic.Kind.NOTE  ) {
+                    continue;
+                }
+                b.append(d.toString() );
+                b.append(String.format( "%n" ));
+            }
+        }
+        if( b.length() > 0 ) {
+            b.append( sourceCode );
+            logger.info( b.toString() );
+            throw new RuntimeException("");
+        }
     }
 
     private void cleanCheckedExceptions( List<RyzClass> currentClasses )

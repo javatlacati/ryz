@@ -1,0 +1,21 @@
+/*
+className: loading.TwoClassesOneFile
+classFile: loading/TwoClassesOneFile.class
+otherClasses: loading/TwoClassesOneFile2.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:  public testTwoClassesOneFile: void
+behavior : 
+*/
+loading.TwoClassesOneFile {
+    testTwoClassesOneFile() {
+        // add Ryz code here... 
+    }
+}
+//TODO: handle two public source files
+//loading.TwoClassesOneFile2 {
+//    testTwoClassesOneFile() {
+        // add Ryz code here...
+//    }
+//}
