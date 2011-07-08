@@ -389,7 +389,7 @@ public class RyzC {
         fileManager.close();
 
         if ( !succesfullCompilation ) {
-            Map<String, DiagnosticList> diagnosticsMap = toMap( collector.getDiagnostics() );
+            Map<String, DiagnosticList> diagnosticsMap = toMap( new DiagnosticList(collector.getDiagnostics()) );
             logger.warning( diagnosticsMap.toString() );
             reportException( currentClasses, diagnosticsMap.get( CATCH_OR_THROW ) );
             resolveSymbol(   currentClasses, diagnosticsMap.get( CANT_DEREF ) );
@@ -459,8 +459,13 @@ public class RyzC {
         }
     }
 
-    static final class DiagnosticList extends ArrayList<Diagnostic<? extends JavaFileObject>>{}
-    private Map<String, DiagnosticList> toMap( List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
+    static final class DiagnosticList extends ArrayList<Diagnostic<? extends JavaFileObject>>{
+        public DiagnosticList(){}
+        public DiagnosticList( List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
+            super( diagnostics);
+        }
+    }
+    private Map<String, DiagnosticList> toMap( DiagnosticList diagnostics ) {
         Map<String, DiagnosticList> result = new HashMap<String, DiagnosticList>();
         for ( Diagnostic<? extends JavaFileObject> d : diagnostics ) {
             DiagnosticList list = result.get(d.getCode());
