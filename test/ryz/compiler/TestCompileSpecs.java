@@ -37,20 +37,18 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import java.net.MalformedURLException;
+
 /**
  * This test class will load from the filesystem all the .ryz source files
  * and it will compile them and assert they match the specification
  * described by the properties object loaded from that same file.
- *
- * User: oscarryz
- * Date: Sep 8, 2010
- * Time: 8:21:57 PM
  */
 @Test
 public class TestCompileSpecs {
@@ -60,11 +58,11 @@ public class TestCompileSpecs {
     
 
     private final AssertStrategy annotationsAssertion = new AnnotationsAssertStrategy();
-    private final AssertStrategy attributesAssertion = new AttributesAssertStrategy();
-    private final AssertStrategy methodsAssertion    = new MethodsAssertStrategy();
-    private final AssertStrategy implementsAssertion = new ImplementsAssertStrategy();
-    private final AssertStrategy extendsAssertion    = new ExtendsAssertionStrategy();
-    private final AssertStrategy assertBehaviour     = new BehaviorAssertionStrategy();
+    private final AssertStrategy attributesAssertion  = new AttributesAssertStrategy();
+    private final AssertStrategy methodsAssertion     = new MethodsAssertStrategy();
+    private final AssertStrategy implementsAssertion  = new ImplementsAssertStrategy();
+    private final AssertStrategy extendsAssertion     = new ExtendsAssertionStrategy();
+    private final AssertStrategy assertBehaviour      = new BehaviorAssertionStrategy();
 
 
     @BeforeMethod
@@ -83,11 +81,11 @@ public class TestCompileSpecs {
     @Test(dataProvider="sourceFiles")
     public void runTests(Properties spec) throws IOException, ClassNotFoundException {
 
-        String className  = spec.getProperty("className").trim();
-        String testFile   = spec.getProperty("fileName").trim();
-        String sourcePath = spec.getProperty("sourcePath").trim();
+        String className  = spec.getProperty( "className" ).trim();
+        String testFile   = spec.getProperty( "fileName"  ).trim();
+        String sourcePath = spec.getProperty("sourcePath" ).trim();
 
-        testUtil.addSourceDir(new File("test-samples/"+sourcePath+"/"));
+        testUtil.addSourceDir( new File("test-samples/"+sourcePath+"/"));
 
         try {
 
@@ -95,23 +93,23 @@ public class TestCompileSpecs {
             testUtil.compile(testFile);
             Class clazz = testUtil.assertExists(className);
 
-            extendsAssertion.assertDefinition(clazz,  spec, testFile);
-            implementsAssertion.assertDefinition(clazz, spec, testFile);
-            attributesAssertion.assertDefinition(clazz, spec, testFile);
-            methodsAssertion.assertDefinition(clazz, spec, testFile);
-            assertBehaviour.assertDefinition(clazz, spec, testFile );
-            annotationsAssertion.assertDefinition(clazz, spec,testFile );
+            extendsAssertion    .assertDefinition(clazz, spec, testFile);
+            implementsAssertion .assertDefinition(clazz, spec, testFile);
+            attributesAssertion .assertDefinition(clazz, spec, testFile);
+            methodsAssertion    .assertDefinition(clazz, spec, testFile);
+            assertBehaviour     .assertDefinition(clazz, spec, testFile);
+            annotationsAssertion.assertDefinition(clazz, spec, testFile);
 
         } finally {
             testUtil.deleteFromOutput(spec.getProperty("classFile"));
             String otherClasses = spec.getProperty("otherClasses");
             if( otherClasses != null ) {
-                for( String otherClassFile : otherClasses.split(",")){
+                for( String otherClassFile : otherClasses.split(",") ) {
                     testUtil.deleteFromOutput(otherClassFile.trim());
                 }
             }
         }
-
+        
     }
 
 
@@ -131,7 +129,7 @@ public class TestCompileSpecs {
         }
         return  sourceProperties.toArray(
                     new Properties[sourceProperties.size()][]
-                );
+                 );
     }
 
 
@@ -153,7 +151,7 @@ public class TestCompileSpecs {
                 inStream.close();
             } catch (IOException ioe ){}
         }
-        p.setProperty("fileName", testFile.getName());
+        p.setProperty("fileName"  , testFile.getName());
         p.setProperty("sourcePath", testFile.getParentFile().getName());
         return p;
 
@@ -168,13 +166,15 @@ public class TestCompileSpecs {
         List<File> files = new ArrayList<File>();
         // just search at first level
         File useSamples = new File(System.getProperty("use.samples","./test-samples"));
-        if( useSamples.isFile() && !useSamples.getName().endsWith("Spec.ryz")) {
+        if(    useSamples.isFile() 
+           && !useSamples.getName().endsWith("Spec.ryz")) {
             throw new IllegalArgumentException("Value of system property:" +
                     " [use.samples] should end with \"Spec.ryz\"");
         }
-        if( useSamples.isFile() && useSamples.getName().endsWith("Spec.ryz")) {
-            files.add( useSamples );
-            return files;
+        if( useSamples.isFile() 
+         && useSamples.getName().endsWith("Spec.ryz")) {
+                files.add( useSamples );
+                return files;
         }
         File[] testFiles = useSamples.listFiles();
         for( File file : testFiles) if( file.isDirectory() ) {
