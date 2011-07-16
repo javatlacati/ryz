@@ -168,7 +168,7 @@ public class TestCompileSpecs {
         File useSamples = new File(System.getProperty("use.samples","./test-samples"));
         if(    useSamples.isFile() 
            && !useSamples.getName().endsWith("Spec.ryz")) {
-            throw new IllegalArgumentException("Value of system property:" +
+                throw new IllegalArgumentException("Value of system property:" +
                     " [use.samples] should end with \"Spec.ryz\"");
         }
         if( useSamples.isFile() 
