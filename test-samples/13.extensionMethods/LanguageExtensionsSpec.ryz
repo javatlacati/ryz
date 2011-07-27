@@ -3,12 +3,15 @@ className: extension.methods.LanguageExtensionsSpec
 classFile: extension/methods/LanguageExtensionsSpec.class
 otherClasses: extension/methods/LanguageExtensionsSpec$1.class,\
               extension/methods/LanguageExtensionsSpec$2.class,\
-              extension/methods/LanguageExtensionsSpec$3.class
+              extension/methods/LanguageExtensionsSpec$3.class,\
+              extension/methods/LanguageExtensionsSpec$4.class,\
+              extension/methods/LanguageExtensionsSpec$5.class
 extends: java.lang.Object
 behavior: invokevirtual testNull() | stdout=a is null%n, \
 invokevirtual testSort() | stdout=[1\\, 2\\, 3\\, 5\\, 6\\, 8]%n,\
-invokevirtual testPrint() | stdout=Hola%n,\
-invokevirtual testIsTrue() | stdout=Yes\\, it is true%n
+invokevirtual testPrint() | stdout=Hola%nHello,\
+invokevirtual testIsTrue() | stdout=Yes\\, it is true%n,\
+invokevirtual testIsFalse() | stdout=It is false%n
 */
 extension.methods.LanguageExtensionsSpec {
     testNull()  {
@@ -16,8 +19,8 @@ extension.methods.LanguageExtensionsSpec {
         a.isNull?((){
             // nothing
         })
-        a . isNull? ( {
-            out.println("a is null")
+        a . isNull? ({
+            "a is null".println()
         })
     }
     import( java.util.* )
@@ -29,15 +32,28 @@ extension.methods.LanguageExtensionsSpec {
        a.sort!()
        out.println( a )
     }
-    // TODO: support "Hello".print() 
     testPrint() {
         "Hola".println()
+        "Hello".print()
     }
     testIsTrue() {
         b = true
         // alternative to "ifTrue"
         b.isTrue?({
-            out.println("Yes, it is true")
+            "Yes, it is true".println()
+        })
+    }
+    testIsFalse() {
+        b = false
+        b.isFalse?({
+            "It is false".println()
+        })
+    }
+    testNot() {
+        b = true
+        c : Boolean = b.not()
+        c.isFalse?({
+            "Yes it is false"
         })
     }
 }
