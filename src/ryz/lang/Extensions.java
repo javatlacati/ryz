@@ -36,6 +36,7 @@ import ryz.lang.block.Block2;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by IntelliJ IDEA.
@@ -77,12 +78,12 @@ public final class Extensions {
             b.run();
         }
     }
-
-    public static <T> void each(List<T> list,Block1<Void,T> b ) {
-        for( T e : list ) {
+    public static <T> void each( Collection<T> collection, Block1<Void,T> b ) {
+        for( T e : collection ) {
             b.run( e );
         }
     }
+
     public static <T> void each( T[] array, Block1<Void,T> b ){
         each( Arrays.asList(array), b);
     }
