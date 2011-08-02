@@ -49,14 +49,13 @@
   </target>
 
   <target name="dist" depends="test">
-    <jar destfile="${dist}/ryzc-${DSTAMP}.jar">
-    <fileset dir="${build}"/>
-    <zipfileset includes="**/*.class" src="lib/javassist.jar"/>
-    <manifest>
-      <attribute name="Main-Class"
-            value="ryz.compiler.RyzC"/>
-    </manifest>
-  </jar>
+      <jar destfile="${dist}/ryzc-${DSTAMP}.jar">
+          <fileset dir="${build}"/>
+          <zipfileset includes="**/*.class" src="lib/javassist.jar"/>
+          <manifest>
+              <attribute name="Main-Class" value="ryz.compiler.RyzC"/>
+          </manifest>
+      </jar>
   </target>
 
 
