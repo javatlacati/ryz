@@ -391,7 +391,7 @@ public class RyzC {
         if ( !succesfullCompilation ) {
             Map<String, DiagnosticList> diagnosticsMap = toMap( new DiagnosticList(collector.getDiagnostics()) );
             logger.warning( diagnosticsMap.toString() );
-            failForRemaining( diagnosticsMap, numberedContent( getGeneratedSourceCodeFrom( currentClasses ) ));
+            compilationException(diagnosticsMap, numberedContent(getGeneratedSourceCodeFrom(currentClasses)));
             reportException( currentClasses, diagnosticsMap.get( CATCH_OR_THROW ) );
             resolveSymbol( currentClasses, diagnosticsMap.get( CANT_DEREF ) );
             resolveSymbol( currentClasses, diagnosticsMap.get( CANT_RESOLVE ) );
@@ -437,7 +437,7 @@ public class RyzC {
         return sb.toString();
     }
 
-    private void failForRemaining( Map<String, DiagnosticList> diagnosticsMap, String sourceCode ) {
+    private void compilationException(Map<String, DiagnosticList> diagnosticsMap, String sourceCode) {
         List<String> handled = Arrays.asList(CANT_DEREF ,CATCH_OR_THROW, CANT_RESOLVE, METH_DOESNT_THROW );
         StringBuilder b = new StringBuilder(  );
         for( String key : diagnosticsMap.keySet() ){
@@ -455,7 +455,7 @@ public class RyzC {
         if( b.length() > 0 ) {
             b.append( sourceCode );
             logger.info( b.toString() );
-            throw new RuntimeException("");
+            throw new CompilationException();
         }
     }
 
@@ -801,3 +801,6 @@ class JavaSourceFromString extends SimpleJavaFileObject {
         return code;
     }
 }
+
+class CompilationException extends RuntimeException {}
+
