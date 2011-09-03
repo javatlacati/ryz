@@ -29,6 +29,13 @@ run > configuration > `ryz.compiler`
     /test
     /test-samples
 
+    /resources
+    /lib
+    LICENSE.txt
+    README.txt
+    README.md
+    build.xml
+
 
 `src`: Contains Java source files to compile Ryz source code.
 
@@ -36,8 +43,13 @@ run > configuration > `ryz.compiler`
 
 `test-samples` : Contains samples of the language.
 
+`resources` : Support file as logging configuration
+`lib` : 3rd party libraries and their licences
+`LICENSE.txt`: Ryz license
+`README.[txt|md]`: This file
+`build.xml` : Ant build file
 
-If test source file name ends in `Spec.ryz` it will be loaded by the
+If a test source file name ends in `Spec.ryz` it will be loaded by the
 testing framework, compiled and "asserted" against the specification
 defined in the file header.
 
