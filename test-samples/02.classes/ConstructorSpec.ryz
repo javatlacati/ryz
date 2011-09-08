@@ -10,9 +10,6 @@ behavior : invokestatic main([Ljava.lang.String;) | stdout=Construido lo eh%n,\
 
 */
 classes.ClassConstructor {
-    __ main( args : String* ) {
-        c = ClassConstructor("Construido lo eh")
-    }
     ClassConstructor( s : String ) {
         out.println( s )
     }
@@ -21,4 +18,8 @@ classes.ClassConstructor {
         file = File("sample")
         file.createNewFile()
     }
+    __ main( args : String* ) {
+        c = ClassConstructor("Construido lo eh")
+    }
+
 }

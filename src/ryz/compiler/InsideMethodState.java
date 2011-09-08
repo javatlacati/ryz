@@ -88,7 +88,7 @@ public class InsideMethodState extends RyzClassState {
          */
         String variable = variableName + ":"+ variableType;
         //TODO: consider scenarios where the variable was added as attribute but a local var is needed and when the variable was added as a parameter
-        String method = ryzClass().methods().get( ryzClass().methods().size()-1);
+        String method = ryzClass().lastElementAdded();// ryzClass().methods().get( ryzClass().methods().size()-1);
         ensureVariablesHolderInitialized(method);
         ensureVariablesHolderInitialized("instance");
 

@@ -157,12 +157,18 @@ class RyzClass {
         this.state().keyClosed();
     }
 
+    private String lastElementAdded;
+    public String lastElementAdded(){
+        return this.lastElementAdded;
+    }
     public void addMethod(String methodName, String methodType) {
-        this.methods.add(methodName + ":" + methodType );// TODO: add args
+        this.lastElementAdded = methodName + ":" + methodType;
+        this.methods.add(lastElementAdded);// TODO: add args
         state().nextState();
     }
     public void addConstructor(String constructorName) {
         this.constructors.add( constructorName );
+        this.lastElementAdded = constructorName;
         state().nextState();
         // TODO: change it for insideConstructor()
     }
@@ -197,16 +203,20 @@ class RyzClass {
     }
 
     public void markLastLineAsReturn() {
-        String lastMethod = methods().get(methods().size() - 1);
-        String type = lastMethod.split(":")[1];
+        String lastMethod = lastElementAdded();//methods().get(methods().size() - 1);
+        String[] split = lastMethod.split(":");
+        if ( split.length == 1 ){
+            return ;
+        }
+        String type = split[1];
         markLastLineAsReturn(type);
     }
     public void markLastLineAsReturn(String returnType) {
         if(returnType.equals("void")) {
            return;
         }
-         int lastElementIndex = generatedSource.size() - 2;
-         String lastLine = generatedSource.remove(lastElementIndex);
+        int lastElementIndex = generatedSource.size() - 2;
+        String lastLine = generatedSource.remove(lastElementIndex);
         generatedSource.add( lastElementIndex,
                 String.format(returnType.equals("Void") ?
                                     "%s%nreturn null;%n":

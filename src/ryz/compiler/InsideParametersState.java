@@ -77,13 +77,13 @@ public class InsideParametersState extends RyzClassState {
         String variable = variableName+":"+variableType;
 
         //TODO: consider scenarios where the variable was added as attribute but a local var is needed and when the variable was added as a parameter
-        String method = ryzClass().methods().get( ryzClass().methods().size()-1);
+        String method = ryzClass().lastElementAdded(); //;ryzClass().methods().get( ryzClass().methods().size()-1);
         ensureVariablesHolderInitialized(method);
 
-        logger.finest("variable = "+ variable);
-        logger.finest("ryzClass().variables().get(method) = " + ryzClass().variables().get(method));
-        logger.finest("ryzClass().variables().get(\"instance\") = " +ryzClass().variables().get("instance"));
-        logger.finest("ryzClass().variables().get(method).contains(variable) = " + ryzClass().variables().get(method).contains(variable));
+        //logger.finest("variable = "+ variable);
+        //logger.finest("ryzClass().variables().get(method) = " + ryzClass().variables().get(method));
+        //logger.finest("ryzClass().variables().get(\"instance\") = " +ryzClass().variables().get("instance"));
+        //logger.finest("ryzClass().variables().get(method).contains(variable) = " + ryzClass().variables().get(method).contains(variable));
         //TODO: findout if this is needed, otherwise just remove it
         //return !ryzClass().variables().get(method).contains(variable)
         //        && ryzClass().variables().get(method).add(variable);
