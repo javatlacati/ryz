@@ -125,9 +125,6 @@ public final class Extensions {
         return a / b;
     }
 
-    public static String $percent( String format, Object ... values ) {
-        return String.format( format , values );
-    }
     public static int $percent( int a, int b ) {
         return a % b;
     }
@@ -135,18 +132,18 @@ public final class Extensions {
     public static boolean $lt( int a, int b ) {
         return a < b;
     }
-    public static boolean $lt( String a, String b ) {
-        return a.compareTo(b) < 0;
+
+    public static boolean $lt$eq( int a, int b ) {
+        return a <= b;
     }
-    public static boolean $gt$eq( String a, String b ) {
-        return a.compareTo(b) >= 0;
-    }
-    public static <T1,T2> void max(T1 t1, T2 t2, Block2<Void,T1,T2> b) {
-        b.run(t1, t2);
-    }
+
 
     public static boolean $gt( int a, int b ) {
         return a > b;
+    }
+
+    public static boolean $gt$eq( int a, int b ) {
+        return a >= b;
     }
 
     public static boolean $eq$eq( Object a, Object b ) {
@@ -160,10 +157,27 @@ public final class Extensions {
     public static boolean $amp$amp( boolean a, boolean b ) {
         return a && b;
     }
-    /*
-    public static int $bar$bar( int a, int b ) {
+
+    public static <T1,T2> void max(T1 t1, T2 t2, Block2<Void,T1,T2> b) {
+        b.run(t1, t2);
+    }
+
+    public static boolean $lt( String a, String b ) {
+        return a.compareTo(b) < 0;
+    }
+
+    public static boolean $gt$eq( String a, String b ) {
+        return a.compareTo(b) >= 0;
+    }
+
+    public static String $percent( String format, Object ... values ) {
+        return String.format( format , values );
+    }
+    
+    public static boolean $bar$bar( boolean a, boolean b ) {
         return a || b;
     }
+    /*
 
     public static int $qm( int a, int b ) {
         return a ? b;

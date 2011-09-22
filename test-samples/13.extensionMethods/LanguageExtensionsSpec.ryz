@@ -5,12 +5,15 @@ otherClasses: extension/methods/LanguageExtensionsSpec$1.class,\
               extension/methods/LanguageExtensionsSpec$2.class,\
               extension/methods/LanguageExtensionsSpec$3.class,\
               extension/methods/LanguageExtensionsSpec$4.class,\
-              extension/methods/LanguageExtensionsSpec$5.class
+              extension/methods/LanguageExtensionsSpec$5.class,\
+              extension/methods/LanguageExtensionsSpec$6.class
 extends: java.lang.Object
 behavior: invokevirtual testNull() | stdout=a is null%n, \
 invokevirtual testSort() | stdout=[1\\, 2\\, 3\\, 5\\, 6\\, 8]%n,\
 invokevirtual testPrint() | stdout=Hola%nHello,\
 invokevirtual testIsTrue() | stdout=Yes\\, it is true%n,\
+invokevirtual testNot() | stdout=Yes it is false%n,\
+invokevirtual testOr() | stdout=Or working%n,\
 invokevirtual testIsFalse() | stdout=It is false%n
 */
 extension.methods.LanguageExtensionsSpec {
@@ -53,7 +56,16 @@ extension.methods.LanguageExtensionsSpec {
         b = true
         c : Boolean = b.not()
         c.isFalse?({
-            "Yes it is false"
+            "Yes it is false".println()
         })
     }
+    testOr() {
+        b = true
+        c = false
+        d : Boolean = b.||(c)
+        d.isTrue?({
+            "Or working".println()
+        })
+    }
+        
 }
