@@ -76,6 +76,8 @@ abstract class LineTransformer {
             return name + "$";
         } else if( "Int".equals(name)){ //TODO: Int should be a user defined type, not a keyword
             return "int";
+        } else if ( name.equals("Bool") ) { // TODO: Bool should be a user defined type, not a keyword
+            return "Boolean";
         } else if( name.endsWith("*")) {
             return name.substring(0,name.length()-1) + " ... ";
         }

@@ -390,7 +390,7 @@ public class RyzC {
 
         if ( !succesfullCompilation ) {
             Map<String, DiagnosticList> diagnosticsMap = toMap( new DiagnosticList(collector.getDiagnostics()) );
-            logger.warning( diagnosticsMap.toString() );
+            logger.fine( diagnosticsMap.toString() );
             compilationException(diagnosticsMap, numberedContent(getGeneratedSourceCodeFrom(currentClasses)));
             reportException( currentClasses, diagnosticsMap.get( CATCH_OR_THROW ) );
             resolveSymbol( currentClasses, diagnosticsMap.get( CANT_DEREF ) );

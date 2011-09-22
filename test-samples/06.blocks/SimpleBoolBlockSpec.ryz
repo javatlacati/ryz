@@ -1,0 +1,20 @@
+/*
+className: blocks.SimpleBoolBlock
+classFile: blocks/SimpleBoolBlock.class
+otherClasses: blocks/SimpleBoolBlock$1.class
+extends: java.lang.Object
+implements: 
+attributes:  
+methods:
+behavior : invokestatic main([Ljava.lang.String;) | stdout=Hello from a block%n
+*/
+blocks.SimpleBoolBlock {
+  a =() : Bool {
+    out.println("Hello from a block")
+    true
+  }
+  main(){
+    a()
+    //((){out.println("Hello from a block")})()
+  }
+}

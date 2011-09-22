@@ -303,7 +303,7 @@ class BlockLiteralMatcher extends LiteralMatcher {
         if (matcher.group(3) != null ) {
             int paramsIndex = 4;
             if( matcher.group(6) != null ) {
-                returnType = matcher.group(6);
+                returnType = scapeName( matcher.group(6) );
                 paramsIndex = 5;
             }
             params = matcher.group(paramsIndex);
