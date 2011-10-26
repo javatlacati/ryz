@@ -1,0 +1,17 @@
+/*
+className: classes.SelfAsParam
+classFile: classes/SelfAsParam.class
+otherClasses: 
+extends: java.lang.Object
+implements: 
+attributes:
+methods: public-instance testSelfAsParam(): void
+behavior : 
+*/
+classes.SelfAsParam {
+    testSelfAsParam() {
+        asParam( self )
+    }
+    asParam( a : SelfAsParam ) {
+    }
+}

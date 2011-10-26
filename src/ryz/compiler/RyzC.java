@@ -316,8 +316,10 @@ public class RyzC {
     private List<String> replaceSelfWithThis( List<String> input ) {
         List<String> result = new ArrayList<String>();
         for ( String line : input ) {
-            result.add( line.replaceAll( "self\\.", "this." )
-                       .replaceAll( "^self$", "this" )
+            result.add(line
+                    .replaceAll("(?!.*\\s+self\\s+.*\\\")\\s+self\\s+", " this ")
+                    .replaceAll("self\\.", "this.")
+                    .replaceAll("^self$", "this")
             );
         }
         return result;
