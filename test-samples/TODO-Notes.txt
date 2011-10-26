@@ -20,12 +20,12 @@ STARTED - Block parameters:
 
 STARTED - Extension methods
     - For core libraries ( if, for, while etc )
-- Infer type from expresion ie:
+- Infer type from expression ie:
    result = some.method() // method type = int "result" should be declared as "int"
 - Casts // java int i = ( int ) 0L -> i : Int = Int( 0L )
 - Exception handling is broken when using "main(){}"
 - Add literal as expression "11".toString() or true.isTrue?((){})
-- Multiline string to honor the identation
+- Multiline string to honor the indentation
 - Multilie string to support:
   // There are three spaces after the "
   a = "
