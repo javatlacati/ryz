@@ -49,3 +49,18 @@ STARTED - Extension methods
 a.equals?(b,{
  //stuff
 })
+
+//Random notes:
+
+- Agregar "named parameters"
+- Acceder a variables locales dentro de un block
+- Poder definir cosas en linea
+    Ejemplo, esto aún no es posible en Ryz y debería ser de primera prioridad:
+
+    a = SomeClass( { someBlock } )
+    b : Boolean = EsVerdad( otraCosa() )
+
+    Etc.
+- Agregar soporte para el tipo "Block"
+- Soportar "inline" block
+
