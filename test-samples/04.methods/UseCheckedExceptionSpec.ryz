@@ -10,6 +10,7 @@ behavior :
 #invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, it is true%n
 */
 methods.UseCheckedException {
+
     import( java.io.File )
 
     test() { 

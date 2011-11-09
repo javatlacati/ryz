@@ -9,6 +9,7 @@ methods: public-instance testAccessVarInBlockSpec(): void
 behavior : 
 */
 blocks.AccessVarInBlockSpec {
+
     testAccessVarInBlockSpec() {
 
         i = 0

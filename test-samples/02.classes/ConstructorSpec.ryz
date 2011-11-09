@@ -10,14 +10,17 @@ behavior : invokestatic main([Ljava.lang.String;) | stdout=Construido lo eh%n,\
 
 */
 classes.ClassConstructor {
+
     ClassConstructor( s : String ) {
         out.println( s )
     }
+
     import(java.io.File)
     ClassConstructor( a : Boolean ) {
         file = File("sample")
         file.createNewFile()
     }
+
     __ main( args : String* ) {
         c = ClassConstructor("Construido lo eh")
     }

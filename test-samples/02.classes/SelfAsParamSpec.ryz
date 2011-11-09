@@ -9,9 +9,11 @@ methods: public-instance testSelfAsParam(): void
 behavior : 
 */
 classes.SelfAsParam {
+
     testSelfAsParam() {
         asParam( self )
     }
+
     asParam( a : SelfAsParam ) {
     }
 }

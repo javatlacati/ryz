@@ -7,11 +7,14 @@ attributes:
 methods: 
 behavior :
 */
-method.Return{
+method.Return {
+
   voidMethod() {
     i : Int = intMethod()
   }
+
   intMethod() : Int {
     0
   }
+
 }

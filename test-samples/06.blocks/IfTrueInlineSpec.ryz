@@ -9,13 +9,14 @@ methods:
 behavior : invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, still true%nStill true%n
 */
 blocks.IfTrueInline {
+
     main() { 
-        value = true
-        value.ifTrue(( ){
+      value = true
+      value.ifTrue(( ){
             out.println("Yeap!, still true")
-        })
-        true.ifTrue({
-            out.println("Still true")
-        })
+      })
+      true.ifTrue({
+         out.println("Still true")
+      })
    }
 }

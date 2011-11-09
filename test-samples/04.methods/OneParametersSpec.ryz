@@ -11,8 +11,10 @@ methods: public-instance hello(java.lang.String) : void,\
 behavior : invokevirtual doReverse() | result=Hola!
 */
 methods.parameters.OneParametersTest {
+
   hello( who : String ) {
   }
+
   reverse( aString  : String ) : String {
     sb = StringBuilder( aString )
     sb.reverse()
@@ -32,8 +34,10 @@ methods.parameters.OneParametersTest {
   __ otherClassMethod( a : String ) {
 
   }
+
   doReverse(): String {
     //reverse( "!aloH" )
     reverseTwo("!aloH")
   }
+
 }

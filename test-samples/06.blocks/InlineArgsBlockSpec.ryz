@@ -12,19 +12,23 @@ behavior : invokevirtual oneArgTest() | stdout=I'm getting closer%n
 behavior : invokevirtual twoArgTest() | stdout=I'm getting closer%nAnd closer%n
 */
 blocks.InlineArgsBlockSpec {
+
     oneArgTest() {
        call((s:String) {
            out.println(s)
        })
     }
+
     twoArgTest() {
        call((s:String, t: String ) {
            out.println(s)
            out.println(t)
        })
     }
+
     varArgsTest() {
        callVarArgs((t: String* ) {
        })
+
     }
 }

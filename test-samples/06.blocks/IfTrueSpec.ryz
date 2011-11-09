@@ -9,6 +9,7 @@ methods:
 behavior : invokestatic main([Ljava.lang.String;) | stdout=Yeap!\\, it is true%n
 */
 blocks.IfTrue {
+
     main() {
         r = (){
             out.println("Yeap!, it is true")
@@ -17,4 +18,5 @@ blocks.IfTrue {
         value = true 
         value.ifTrue( r )
     }
+
 }

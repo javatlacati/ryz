@@ -6,12 +6,15 @@ attributes: private s:java.lang.String,\
 classFile: attribute/package$/ObjectIntString.class
 */
 attribute.package.ObjectIntString {
+
     /**
      * a String
      */
     s:String = "Hello"
+
     // a name
     name: String
+
     // some object
     other: Object
 }

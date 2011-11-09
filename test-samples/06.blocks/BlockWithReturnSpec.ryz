@@ -31,7 +31,9 @@ blocks.BlockWithReturn {
         })
         */
     }
+
     main() {
         testBlockWithReturn()
     }
+
 }

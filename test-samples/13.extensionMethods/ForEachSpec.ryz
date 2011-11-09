@@ -11,6 +11,7 @@ behavior : invokevirtual testForEachSpec() | stdout=Oscar%nReyes%nde la Cruz%n
 
 */
 extension.methods.ForEachSpec {
+
     import( java.util.* )
     testForEachSpec() {
         // add Ryz code here...
@@ -19,6 +20,7 @@ extension.methods.ForEachSpec {
             out.println( name )
         })
     }
+
     /*
     TODO: Work on scopes for variables
     a : Integer = 0

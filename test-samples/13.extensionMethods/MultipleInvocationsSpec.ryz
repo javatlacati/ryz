@@ -10,10 +10,12 @@ behavior :
 */
 importStatic( java.lang.Integer.* )
 extension.methods.MultipleInvocationsSpec {
+
     testMultipleInvocationsSpec() {
         // add Ryz code here...
         i = 0
         i   .    toBinaryString    (      )
         "".println()
     }
+
 }

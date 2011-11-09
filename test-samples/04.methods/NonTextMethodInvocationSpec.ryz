@@ -9,6 +9,7 @@ methods:
 behavior: invokestatic main([Ljava.lang.String;) | stdout=adding self to other%nquestioning self to other%n
 */
 methods.NonTextMethodInvocation {
+
     i = 0
     + ( other : NonTextMethodInvocation ) : NonTextMethodInvocation {
         out.println("adding self to other")
@@ -19,10 +20,12 @@ methods.NonTextMethodInvocation {
         out.println("questioning self to other")
         self
     }
+
     main(){
        a = NonTextMethodInvocation()
        b = NonTextMethodInvocation()
        a . + ( b )
        a . ? ( b )
     }
+
 }

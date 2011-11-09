@@ -26,15 +26,18 @@ extension.methods.LanguageExtensionsSpec {
             "a is null".println()
         })
     }
+
     import( java.util.* )
     sort!(other : List )  {
       Collections.sort( other )
     }
+
     testSort() {
        a : List = Arrays.asList( 5,2,6,1,8,3 )
        a.sort!()
        out.println( a )
     }
+
     testPrint() {
         "Hola".println()
         "Hello".print()
@@ -46,12 +49,14 @@ extension.methods.LanguageExtensionsSpec {
             "Yes, it is true".println()
         })
     }
+
     testIsFalse() {
         b = false
         b.isFalse?({
             "It is false".println()
         })
     }
+
     testNot() {
         b = true
         c : Boolean = b.not()
@@ -59,6 +64,7 @@ extension.methods.LanguageExtensionsSpec {
             "Yes it is false".println()
         })
     }
+
     testOr() {
         b = true
         c = false

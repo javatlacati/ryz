@@ -10,6 +10,7 @@ methods:  public testCompileTwo: void
 behavior : 
 */
 test.two.files.CompileTwo {
+
     // Change it for "CompileOne()" to really test they are both compiled
     // in the same go.
     one = CompileOne()

@@ -9,9 +9,11 @@ methods:  public testTwoClassesOneFile: void
 behavior : 
 */
 loading.TwoClassesOneFile {
+
     testTwoClassesOneFile() {
         // add Ryz code here... 
     }
+
 }
 //TODO: handle two public source files
 //loading.TwoClassesOneFile2 {

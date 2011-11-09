@@ -9,11 +9,13 @@ methods:
 behavior :  invokestatic main([Ljava.lang.String;) | stdout=Ryz%n
 */
 extension.methods.StringReverse {
+
   main() {
      word = "zyR"
      out.println(  word.reverse    ())
 
   }
+
   __ reverse( s : String ) : String {
     StringBuilder( s ).reverse().toString()
   }

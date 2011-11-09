@@ -35,6 +35,7 @@ behavior : invokevirtual ml()|stdout= hola%n,\
            invokevirtual getMultiline2() | result=Yet%nOne%nMore
 */
 attributes.inference.FromLiteral{
+
     ml() {
         ml = " hola
         "
@@ -120,6 +121,5 @@ attributes.inference.FromLiteral{
     "
     oneMore
   }
-
 
 }

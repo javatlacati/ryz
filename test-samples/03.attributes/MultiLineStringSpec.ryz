@@ -9,6 +9,7 @@ methods:
 behavior : invokevirtual testMultiLineString() | stdout=   SELECT *%n   FROM users%n   WHERE clue > 0%n
 */
 attributes.MultiLineString {
+
    testMultiLineString() {
        query = "   SELECT *
        FROM users

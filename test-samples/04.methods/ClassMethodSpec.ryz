@@ -7,12 +7,14 @@ methods:  public name: java.lang.String ,\
           public-static count: java.lang.Integer
 classFile: methods/class$/ClassMethod.class
 */
-methods.class.ClassMethod{
+methods.class.ClassMethod {
+
     name:String
     name(): String {
         name.toString()
         name
     }
+
     main() {
     }
     __ count() : Integer {

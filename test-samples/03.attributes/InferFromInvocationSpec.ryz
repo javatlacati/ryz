@@ -9,13 +9,16 @@ methods:  public-instance name: java.lang.String
 behavior : 
 */
 attributes.InferFromInvocation {
+
     name() : String {
        a = "name"
        a
     }
+
     other() {
         b = name()
     }
+
     name = name()
 
 }

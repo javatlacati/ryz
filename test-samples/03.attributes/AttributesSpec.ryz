@@ -5,6 +5,7 @@ methods: public assignName() : void, public name() : java.lang.String
 classFile: attributes/instance/InstanceAttributes.class
 */
 attributes.instance.InstanceAttributes {
+
   name : String = ""
 
   assignName() {

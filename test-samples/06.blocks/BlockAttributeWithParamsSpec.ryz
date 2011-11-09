@@ -19,6 +19,7 @@ blocks.BlockWithParam {
        }
        b("Ok, now what?")
     }
+
     testBlockWithTwoParams() {
        b = (s:String, t: String ) {
           out.println(s)
@@ -26,7 +27,9 @@ blocks.BlockWithParam {
        }
        b("Ok, now what?", "Now this")
     }
+
     import( java.util.* )
+
     __ main( args : String* ) {
         b = ( ss: String* ) {
            out.println( Arrays.toString( ss )  )

@@ -9,6 +9,7 @@ methods:
 behavior :
 */
 other.sample.MainClass {
+
   validationSample( name = "", lastName = "" ) {
     result = "Ok"
     ( name .== lastName ) .isTrue?({

@@ -4,9 +4,11 @@ attributes:  private name:java.lang.String
 methods: public name: java.lang.String
 classFile: methods/package$/First.class
 */
-methods.package.First{
+methods.package.First {
+
     name:String
     name(): String {
       name
     }
+
 }

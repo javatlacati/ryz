@@ -6,7 +6,9 @@ attributes: private s:java.lang.String,\
 classFile: attribute/package$/Class.class
 */
 attribute.package.Class {
+
     s:String
     name:String
     lastName: String
+
 }

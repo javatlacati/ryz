@@ -25,9 +25,11 @@ methods.BehaviorSpec{
   main(){
     out.println("Hello Oscar") // TODO: change to:  out.print "Hello world"
   }
+
   __ createInstance():BehaviorSpec {
     BehaviorSpec()
   }
+
   /**
    * Needed to validate if the creation of an instance
    * of this class is always: methods.BehaviorSpec@0
@@ -40,6 +42,7 @@ methods.BehaviorSpec{
     self.increment()
      number
   }
+
   increment() {
     number = 2
   }

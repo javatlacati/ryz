@@ -6,12 +6,16 @@ attributes: private-instance i : java.lang.Integer, private-instance s: java.lan
 classFile: attribute/initialized/Second.class
 */
 attribute.initialized.Second {
+
     i : Integer =  Integer(0)
     s : String  =  String("s")
     second : Second = Second()
     ns : String = "some string"
+
     __ ni : Integer = Integer(1)
-    __ o : Integer
+    __ o  : Integer
+
     p : String = ns
     q : String = p
+
 }

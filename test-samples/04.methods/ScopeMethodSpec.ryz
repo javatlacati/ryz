@@ -29,6 +29,7 @@ methods: private-instance privateMethod:void, \
 behavior :
 */
 methods.MethodScope{
+
       s : String = "Otro"
   __ anString : String = "anString"
 
@@ -126,12 +127,5 @@ methods.MethodScope{
   -__ privateDateClassMethod() : Date {
     Date()
   }
-
-
-
-
-
-
-
 
 }

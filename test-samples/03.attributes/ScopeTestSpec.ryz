@@ -8,10 +8,12 @@ attributes: private-instance s:java.lang.String,\
 classFile: access/test/ScopeTest.class
 */
 access.test.ScopeTest {
+
       s:String
     + a:String = ":D"
     # b:String = ":P"
     - c:String = ":S"
     ~ d:String = ":("
+
 }
 //:)

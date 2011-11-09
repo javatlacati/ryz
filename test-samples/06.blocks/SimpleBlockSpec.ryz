@@ -9,12 +9,14 @@ methods:
 behavior : invokestatic main([Ljava.lang.String;) | stdout=Hello from a block%n
 */
 blocks.SimpleBlock {
+
   a =(){
     out.println("Hello from a block")
   }
-  main(){
 
+  main(){
     a()
     //((){out.println("Hello from a block")})()
   }
+
 }

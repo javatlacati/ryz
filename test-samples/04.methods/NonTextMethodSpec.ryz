@@ -30,12 +30,15 @@ methods.NonTextMethodSpec {
     +(other : NonTextMethodSpec) : NonTextMethodSpec  {
         NonTextMethodSpec()
     }
+
     -(other : NonTextMethodSpec) : NonTextMethodSpec  {
         NonTextMethodSpec()
     }
+
     *(other : NonTextMethodSpec) : NonTextMethodSpec  {
         NonTextMethodSpec()
     }
+
     /(other : NonTextMethodSpec) : NonTextMethodSpec  {
         NonTextMethodSpec()
     }
@@ -90,13 +93,16 @@ methods.NonTextMethodSpec {
 
     __ one!(other : NonTextMethodSpec) {
     }
+
     __ two!(other : NonTextMethodSpec) : NonTextMethodSpec  {
         NonTextMethodSpec()
     }
+
     three!(other : NonTextMethodSpec) {
     }
 
     four!(other : NonTextMethodSpec) : NonTextMethodSpec  {
         NonTextMethodSpec()
     }
+
 }

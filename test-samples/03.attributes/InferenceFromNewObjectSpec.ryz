@@ -5,7 +5,7 @@ attributes:  private-instance i : java.lang.Integer, private-instance s: java.la
 classFile: attribute/initialized/Third.class
 Featuring type inference
 */
-attribute.initialized.Third{
+attribute.initialized.Third {
     i     =  Integer(0)
     s     = String("s")
     third = Third()

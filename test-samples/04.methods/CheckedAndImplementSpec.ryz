@@ -9,12 +9,15 @@ methods: public-instance testCheckedAndImplementSpec(): void
 behavior : 
 */
 methods.CheckedAndImplementSpec : Runnable {
+
     import( java.io.File )
+
     testCheckedAndImplementSpec() {
         // Ryz code here..
         f = File("./x")
         f.createNewFile()
     }
+
     // Run should not throw exception
     run() {
     }

@@ -12,6 +12,8 @@ classes.Comment { // this is a comment
 Not anymore.
 */
 classes.Comment { // this is a comment
+
   method() {  // use to break with this comment, not anymore
   }
+
 }

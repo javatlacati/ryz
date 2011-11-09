@@ -6,6 +6,7 @@ attributes: private a:java.lang.Date
 classFile: attributes/local/LocalVars.class
 */
 attributes.instance.Vars {
+
   import( java.util.Date ) 
 
   a = Date()
