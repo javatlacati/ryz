@@ -1,7 +1,7 @@
 /*
 className: blocks.AccessVarInBlockSpec
 classFile: blocks/AccessVarInBlockSpec.class
-otherClasses: 
+otherClasses: blocks/AccessVarInBlockSpec$1.class
 extends: java.lang.Object
 implements: 
 attributes:
