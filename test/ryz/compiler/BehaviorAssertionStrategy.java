@@ -63,10 +63,10 @@ class BehaviorAssertionStrategy extends AssertStrategy {
     //TODO: clean up this method
     private boolean assertMethodInvocation(String elementDescription, Class c) {
         /*
-   1.- Get the method name with args types
-   2.- invoke it
-   3.- assert the expected output
-    */
+        1.- Get the method name with args types
+        2.- invoke it
+        3.- assert the expected output
+        */
         // replace %n in the properties
         // currently java.util.Properties ( from which the behavior spec is read) 
         elementDescription = elementDescription.replaceAll("%n" ,
