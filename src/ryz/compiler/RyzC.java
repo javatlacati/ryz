@@ -77,7 +77,7 @@ public class RyzC {
     private static final String METH_DOESNT_THROW = "compiler.err.override.meth.doesnt.throw";
     private static final String NEEDS_FINAL       = "compiler.err.local.var.accessed.from.icls.needs.final";
 
-    private static final List<String> HANDLED_EXCEPTIONS = Arrays.asList(CANT_DEREF,
+    private static final List<String> HANDLED_COMPILATION_ERRORS = Arrays.asList(CANT_DEREF,
                                                                          CATCH_OR_THROW,
                                                                          CANT_RESOLVE,
                                                                          METH_DOESNT_THROW);
@@ -404,11 +404,12 @@ public class RyzC {
             logger.fine( diagnosticsMap.toString() );
             // See if the compilation error is "expected"
             compilationException(diagnosticsMap, numberedContent(getGeneratedSourceCodeFrom(currentClasses)));
-            // if it is, handle it
+            // if it is, handle it ( or at least, try to )
             reportException( currentClasses, diagnosticsMap.get(CATCH_OR_THROW));
             resolveSymbol(   currentClasses, diagnosticsMap.get(CANT_DEREF));
             resolveSymbol(   currentClasses, diagnosticsMap.get(CANT_RESOLVE));
             removeException( currentClasses, diagnosticsMap.get(METH_DOESNT_THROW));
+            wrapLocalVars(   currentClasses, diagnosticsMap.get(NEEDS_FINAL));
 
             // create a new file version and recompile
             createClassDefinition(currentClasses);
@@ -429,7 +430,7 @@ public class RyzC {
     private void compilationException(Map<String, DiagnosticList> diagnosticsMap, String sourceCode) {
         StringBuilder b = new StringBuilder();
         for ( String key : diagnosticsMap.keySet() ) {
-            if (HANDLED_EXCEPTIONS.contains(key)) {
+            if (HANDLED_COMPILATION_ERRORS.contains(key)) {
                 continue;
             }
             for ( Diagnostic<? extends JavaFileObject> d : diagnosticsMap.get(key)) {
@@ -466,17 +467,23 @@ public class RyzC {
 
     }
 
-    private void removeException( List<RyzClass> currentClasses,
-                                  List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
-        for ( RyzClass ryzClass : currentClasses ) {
-            removeException( ryzClass, diagnostics );
-        }
-    }
-
     private void resolveSymbol( List<RyzClass> currentClasses,
                                 List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
         for ( RyzClass ryzClass : currentClasses ) {
-            resolveSymbol( ryzClass, diagnostics );
+            handleCompilationError(ryzClass, diagnostics, new ResolveSymbolCompilationErrorHandler());
+        }
+    }
+
+    private void removeException( List<RyzClass> currentClasses,
+                                  List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
+        for ( RyzClass ryzClass : currentClasses ) {
+            handleCompilationError(ryzClass, diagnostics, new RemoveExceptionCompilationErrorHandler());
+        }
+    }
+
+    private void wrapLocalVars( List<RyzClass> currentClasses, DiagnosticList diagnostics ) {
+        for ( RyzClass ryzClass : currentClasses ) {
+            handleCompilationError(ryzClass, diagnostics, new WrapLocalVarsCompilationErrorHandler());
         }
     }
 
@@ -553,77 +560,17 @@ public class RyzC {
                                           diagnostic.getPosition() );
     }
 
-    //TODO add testcase for this method
-    private RyzClass removeException( RyzClass currentClass, List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
+    private RyzClass handleCompilationError(RyzClass currentClass,
+                                            List<Diagnostic<? extends JavaFileObject>> diagnostics,
+                                            CompilationErrorHandler handler) {
         if ( diagnostics == null ) {
             return currentClass;
         }
         for ( Diagnostic<? extends JavaFileObject> diagnostic : diagnostics ) {
-            //currentClass.generatedSource()
-            // Take the source code from the diagnostic
-            StringBuilder sb;
-            try {
-                sb = new StringBuilder( diagnostic.getSource().getCharContent( true ) );
-            } catch ( IOException e ) {
-                sb = new StringBuilder();
-            }
-            //sb.diagnostic.getLineNumber();
-            // take information of the error.
-            int startPosition = (int) diagnostic.getStartPosition();
-            int position = (int) diagnostic.getPosition();
-            int endPosition = (int) diagnostic.getEndPosition();
-            String substring = logDiagnostic( diagnostic, sb, startPosition, position, endPosition );
-            logger.finest( "substring.replace(\"throws Exception\",\"\") = "
-                    + substring.replace( "throws Exception", "/*rows Excepti*/" ) );
-            sb.replace( startPosition, endPosition,
-                    substring.replace( " throws Exception { ", " /*te*/ {" ) );
-            currentClass.markError( sb.toString(),
-                    diagnostic.getCode(),
-                    startPosition, position );
-        }
-        return currentClass;
-    }
-
-    private String logDiagnostic( Diagnostic<? extends JavaFileObject> diagnostic,
-                                  StringBuilder sb,
-                                  int startPosition,
-                                  int position,
-                                  int endPosition ) {
-        logger.fine( "diagnostic.getColumnNumber() = " + diagnostic.getColumnNumber() );
-        //logger.fine("diagnostic.getClass() = " + diagnostic.getClass());
-        logger.fine( "startPosition = " + startPosition );
-        logger.fine( "position = " + position );
-        logger.fine( "endPosition = " + endPosition );
-        String substring = sb.substring( startPosition, endPosition );
-        logger.fine( "sb.substring(startPosition,endPosition) = " + substring );
-        logger.fine( "sb.substring(startPosition,endPosition) = "
-                    + sb.substring( startPosition, position ) );
-        return substring;
-    }
-
-
-    /**
-     * Tries to resolve the symbol by replacing the receiver as the first argument of the given method.
-     * For instance if the symbol not found is "string.reverse()" tries to replace it for "reverse(string)"
-     * and ask the current class to take the fixed source code and remember this error  to avoid it.
-     *
-     * @param currentClass - The class being fixed.
-     * @param diagnostics  -
-     * @return the instance of currentClass with fixed source code.
-     */
-    private RyzClass resolveSymbol( RyzClass currentClass,
-                                    List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
-        if ( diagnostics == null ) {
-            return currentClass;
-        }
-        for ( Diagnostic<? extends JavaFileObject> diagnostic : diagnostics ) {
-            if ( CANT_RESOLVE.equals( diagnostic.getCode() )
-              || CANT_DEREF.equals( diagnostic.getCode() ) ) {
-
                 // Take the source code from the diagnostic
                 StringBuilder sb;
                 try {
-                    sb = new StringBuilder( getGeneratedSourceCodeFrom( currentClass ) );
+                    sb = new StringBuilder( diagnostic.getSource().getCharContent( true ) );
                 } catch ( IOException e ) {
                     sb = new StringBuilder();
                 }
@@ -633,49 +580,25 @@ public class RyzC {
                 int position      = (int) diagnostic.getPosition();
                 int endPosition   = (int) diagnostic.getEndPosition();
 
-                // put the receiver as the first parameter of the method
-                String pieceInQuestion = sb.substring( startPosition, endPosition );
-                logger.fine( "Size of source before "
-                        + sb.toString().length()
-                        + " pieceInQuestion[" + pieceInQuestion + "]" );
-                String receiver = pieceInQuestion.substring( 0, position - startPosition );
-                String method = pieceInQuestion.substring( position - startPosition + 1 );
-                logger.fine( "pieceInQuestion = [" + pieceInQuestion + "]" );
-                logger.fine( "receiver = [" + receiver + "]" );
-                logger.fine( "method = [" + method + "]" );
-                sb.replace( startPosition, endPosition, method + "(" + receiver );
+                String pieceInQuestion  = sb.substring(startPosition, endPosition);
 
-                // remove the opening parenthesis
-                int p = endPosition;
-                while ( true ) {
-                    char c = sb.charAt( p );
-                    if ( Character.isSpaceChar( c ) ) {
-                        p++;
-                    } else if ( c == '(' ) {
-                        sb.deleteCharAt( p );
-                    } else if ( c == ')' ) {
-                        sb.insert( p, " " );
-                        break;
-                    } else {
-                        sb.insert( p, ',' );
-                        break;
-                    }
-                }
+                logger.fine( "diagnostic.getColumnNumber() = "            + diagnostic.getColumnNumber() );
+                logger.fine( "startPosition = "                           + startPosition );
+                logger.fine( "position = "                                + position );
+                logger.fine( "endPosition = "                             + endPosition );
+                logger.fine( "sb.substring(startPosition,endPosition) = " + pieceInQuestion );
+                logger.fine( "sb.substring(startPosition,endPosition) = " + sb.substring(startPosition, position ) );
+
+
+                handler.handle(sb, startPosition, position, endPosition, pieceInQuestion );
+
                 // and finally let the current class take the new source code.
                 currentClass.markError( sb.toString(),
                                         diagnostic.getCode(),
                                         startPosition, position );
-                try {
-                    logger.fine( "Size of source after  "
-                            + getGeneratedSourceCodeFrom( currentClass ).length()
-                            + " pieceInQuestion[" + pieceInQuestion + "]" );
-                } catch ( IOException e ) {
-                }
-            }
         }
         return currentClass;
     }
-
 
     /**
      * Adds line number to the passed string.
@@ -772,6 +695,73 @@ public class RyzC {
     }
 
 
+    private abstract class CompilationErrorHandler {
+        public abstract void handle(StringBuilder sb,
+                                    int startPosition,
+                                    int position,
+                                    int endPosition,
+                                    String pieceInQuestion);
+
+    }
+    /**
+     * Tries to resolve the symbol by replacing the receiver as the first argument of the given method.
+     * For instance if the symbol not found is "string.reverse()" tries to replace it for "reverse(string)"
+     * and ask the current class to take the fixed source code and remember this error  to avoid it.
+     *
+     * Returns the instance of currentClass with fixed source code.
+     */
+    private class ResolveSymbolCompilationErrorHandler extends CompilationErrorHandler {
+
+        public void handle(StringBuilder sb, int startPosition, int position, int endPosition, String pieceInQuestion) {
+            // Put the receiver as the first parameter of the method
+            String receiver         = pieceInQuestion.substring( 0, position - startPosition);
+            String method           = pieceInQuestion.substring(position - startPosition + 1);
+
+
+            logger.fine( "Size of source before " + sb.toString().length()
+                       + " pieceInQuestion[" + pieceInQuestion + "]" );
+            logger.fine( "pieceInQuestion = [" + pieceInQuestion + "]" );
+            logger.fine( "receiver = [" + receiver + "]" );
+            logger.fine( "method = [" + method + "]" );
+            sb.replace(startPosition, endPosition, method + "(" + receiver );
+
+            // remove the opening parenthesis
+            int p = endPosition;
+            while ( true ) {
+                char c = sb.charAt( p );
+                if ( Character.isSpaceChar( c ) ) {
+                    p++;
+                } else if ( c == '(' ) {
+                    sb.deleteCharAt( p );
+                } else if ( c == ')' ) {
+                    sb.insert( p, " " );
+                    break;
+                } else {
+                    sb.insert( p, ',' );
+                    break;
+                }
+            }
+        }
+    }
+
+    private class RemoveExceptionCompilationErrorHandler extends CompilationErrorHandler {
+        @Override
+        public void handle(StringBuilder sb, int startPosition, int position, int endPosition, String pieceInQuestion) {
+            logger.finest( "substring.replace(\"throws Exception\",\"\") = "
+                    + pieceInQuestion.replace( "throws Exception", "/*rows Excepti*/" ) );
+            sb.replace( startPosition, endPosition,
+                    pieceInQuestion.replace( " throws Exception { ", " /*te*/ {" ) );
+
+        }
+    }
+
+
+    private class WrapLocalVarsCompilationErrorHandler extends CompilationErrorHandler {
+        @Override
+        public void handle(StringBuilder sb, int startPosition, int position, int endPosition, String pieceInQuestion) {
+
+        }
+    }
 }
 
 //http://www.java2s.com/Tutorial/Java/0120__Development/CompilingfromMemory.htm
