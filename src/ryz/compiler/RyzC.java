@@ -581,13 +581,14 @@ public class RyzC {
                 int endPosition   = (int) diagnostic.getEndPosition();
 
                 String pieceInQuestion  = sb.substring(startPosition, endPosition);
-
-                logger.fine( "diagnostic.getColumnNumber() = "            + diagnostic.getColumnNumber() );
-                logger.fine( "startPosition = "                           + startPosition );
-                logger.fine( "position = "                                + position );
-                logger.fine( "endPosition = "                             + endPosition );
-                logger.fine( "sb.substring(startPosition,endPosition) = " + pieceInQuestion );
-                logger.fine( "sb.substring(startPosition,endPosition) = " + sb.substring(startPosition, position ) );
+                StringBuilder log = new StringBuilder();
+                log.append( "\ndiagnostic.getColumnNumber() = "            + diagnostic.getColumnNumber() );
+                log.append( "\nstartPosition = "                           + startPosition );
+                log.append( "\nposition = "                                + position );
+                log.append( "\nendPosition = "                             + endPosition );
+                log.append( "\nsb.substring(startPosition,endPosition) = " + pieceInQuestion );
+                log.append( "\nsb.substring(startPosition,endPosition) = " + sb.substring(startPosition, position ) );
+                logger.fine( log.toString() );
 
 
                 handler.handle(sb, startPosition, position, endPosition, pieceInQuestion );
@@ -759,6 +760,7 @@ public class RyzC {
     private class WrapLocalVarsCompilationErrorHandler extends CompilationErrorHandler {
         @Override
         public void handle(StringBuilder sb, int startPosition, int position, int endPosition, String pieceInQuestion) {
+            sb.replace(startPosition, endPosition, pieceInQuestion + "._" );
 
         }
     }

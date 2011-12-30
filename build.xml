@@ -43,11 +43,9 @@
         <javac classpathref="cp" srcdir="${test}" destdir="${build-test}"  debug="true"/>
         <testng classpathref="cp">
             <classfileset dir="${build-test}" includes="**/*.class" />
-            <!-- 
-            <jvmarg line="-Duser.language=EN -Djava.util.logging.config.file=resources/logging.properties -Duse.samples=./test-samples/13.extensionMethods/LanguageExtensionsSpec.ryz" />
-            -->
+            <!--<jvmarg line="-Duser.language=EN -Djava.util.logging.config.file=resources/logging.properties -Duse.samples=./test-samples/06.blocks/AccessVarInBlockSpec.ryz" />-->
             <jvmarg line="-Duser.language=EN -Djava.util.logging.config.file=resources/logging.properties" />
-            <!-- --> 
+            <!-- -->
         </testng>
   </target>
 

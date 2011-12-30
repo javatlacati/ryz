@@ -12,9 +12,10 @@ blocks.AccessVarInBlockSpec {
 
     testAccessVarInBlockSpec() {
 
-        i = 0
+        bigger = "Hola"
         a  = (s : String ) {
-            out.println( i )
+            out.println( bigger )
+            bigger = "Adios"
         }
         // Ryz code here.. 
     }
