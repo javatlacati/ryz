@@ -2,7 +2,7 @@ syntax:glob
 
 test-output/
 out/
-.idea/workspace.xml
+.idea/
 .DS_Store
 .git/
 .gitignore
