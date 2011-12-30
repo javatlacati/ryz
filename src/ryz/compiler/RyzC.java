@@ -71,9 +71,17 @@ import static java.lang.System.err;
  */
 public class RyzC {
 
-    private static final String CATCH_OR_THROW = "compiler.err.unreported.exception.need.to.catch.or.throw";
-    private static final String CANT_DEREF     = "compiler.err.cant.deref";
-    private static final String CANT_RESOLVE   = "compiler.err.cant.resolve.location";
+    private static final String CATCH_OR_THROW    = "compiler.err.unreported.exception.need.to.catch.or.throw";
+    private static final String CANT_DEREF        = "compiler.err.cant.deref";
+    private static final String CANT_RESOLVE      = "compiler.err.cant.resolve.location";
+    private static final String METH_DOESNT_THROW = "compiler.err.override.meth.doesnt.throw";
+    private static final String NEEDS_FINAL       = "compiler.err.local.var.accessed.from.icls.needs.final";
+
+    private static final List<String> HANDLED_EXCEPTIONS = Arrays.asList(CANT_DEREF,
+                                                                         CATCH_OR_THROW,
+                                                                         CANT_RESOLVE,
+                                                                         METH_DOESNT_THROW);
+
 
     private static final Logger logger = Logger.getLogger( RyzC.class.getName() );
     private static Logger sourceLogger = Logger.getLogger(
@@ -95,7 +103,6 @@ public class RyzC {
         put( ':', "$colon" );
         //+ - * / % < > = ! & ^ | ? :
     }};
-    private static final String METH_DOESNT_THROW = "compiler.err.override.meth.doesnt.throw";
 
     public static void main( String[] args ) throws IOException {
         RyzC c = RyzC.getCompiler();
@@ -377,7 +384,8 @@ public class RyzC {
 
         boolean succesfullCompilation =
                 compiler.getTask( null, fileManager, collector, options,
-                                  null, compilationUnits ).call();
+                                  null, compilationUnits )
+                        .call();
 
         if ( sourceLogger.isLoggable( Level.FINEST ) ) {
             //sourceLogger.finest(generatedSourceCode);
@@ -390,44 +398,23 @@ public class RyzC {
 
         fileManager.close();
 
+        // If there was a compilation error
         if ( !succesfullCompilation ) {
             Map<String, DiagnosticList> diagnosticsMap = toMap( new DiagnosticList(collector.getDiagnostics()) );
             logger.fine( diagnosticsMap.toString() );
+            // See if the compilation error is "expected"
             compilationException(diagnosticsMap, numberedContent(getGeneratedSourceCodeFrom(currentClasses)));
-            reportException( currentClasses, diagnosticsMap.get( CATCH_OR_THROW ) );
-            resolveSymbol( currentClasses, diagnosticsMap.get( CANT_DEREF ) );
-            resolveSymbol( currentClasses, diagnosticsMap.get( CANT_RESOLVE ) );
-            removeException( currentClasses, diagnosticsMap.get( METH_DOESNT_THROW ) );
-            createClassDefinition( currentClasses );
-            cleanCheckedExceptions( currentClasses );
+            // if it is, handle it
+            reportException( currentClasses, diagnosticsMap.get(CATCH_OR_THROW));
+            resolveSymbol(   currentClasses, diagnosticsMap.get(CANT_DEREF));
+            resolveSymbol(   currentClasses, diagnosticsMap.get(CANT_RESOLVE));
+            removeException( currentClasses, diagnosticsMap.get(METH_DOESNT_THROW));
+
+            // create a new file version and recompile
+            createClassDefinition(currentClasses);
+            // and remove checked exceptions at the end
+            cleanCheckedExceptions(currentClasses);
         }
-        /*
-                    for ( Diagnostic<? extends JavaFileObject> diagnostic : collector.getDiagnostics() ) {
-                        if("compiler.err.unreported.exception.need.to.catch.or.throw".equals(diagnostic.getCode())){
-                            createClassDefinition(currentClass.reportExceptions());
-                            ClassInstrumentation.removeCheckedExceptions( currentClass, output );
-                            return;
-                        } else if ( ("compiler.err.cant.resolve.location".equals( diagnostic.getCode())
-                                     || "compiler.err.cant.deref".equals( diagnostic.getCode()))
-                                         && isDifferentProblem(currentClass, diagnostic)) {
-                            createClassDefinition(resolveSymbol(currentClass, collector.getDiagnostics()));
-                            return;
-                        } else if("compiler.err.override.meth.doesnt.throw".equals(diagnostic.getCode())) {
-                            createClassDefinition(removeException(currentClass, diagnostic,collector.getDiagnostics()));
-                            return;
-                        } else {
-                            logger.info( collector.getDiagnostics().toString());
-                            logger.info( diagnostic.getCode());
-                            sourceLogger.info(numberedContent(generatedSourceCode));
-                        }
-                    }
-                }
-        */
-
-
-        // delete the file
-        //sourceFile.deleteOnExit();
-
 
     }
 
@@ -440,21 +427,22 @@ public class RyzC {
     }
 
     private void compilationException(Map<String, DiagnosticList> diagnosticsMap, String sourceCode) {
-        List<String> handled = Arrays.asList(CANT_DEREF ,CATCH_OR_THROW, CANT_RESOLVE, METH_DOESNT_THROW );
-        StringBuilder b = new StringBuilder(  );
-        for( String key : diagnosticsMap.keySet() ){
-            if(handled.contains( key  )){
+        StringBuilder b = new StringBuilder();
+        for ( String key : diagnosticsMap.keySet() ) {
+            if (HANDLED_EXCEPTIONS.contains(key)) {
                 continue;
             }
-            for( Diagnostic<? extends JavaFileObject> d : diagnosticsMap.get(key)){
-                if( d.getKind() == Diagnostic.Kind.NOTE  ) {
+            for ( Diagnostic<? extends JavaFileObject> d : diagnosticsMap.get(key)) {
+                if ( d.getKind() == Diagnostic.Kind.NOTE  ) {
                     continue;
                 }
+                b.append( key );
+                b.append( String.format( "%n" ) );
                 b.append(d.toString() );
                 b.append(String.format( "%n" ));
             }
         }
-        if( b.length() > 0 ) {
+        if ( b.length() > 0 ) {
             b.append( sourceCode );
             logger.info( b.toString() );
             throw new CompilationException();
@@ -492,7 +480,7 @@ public class RyzC {
         }
     }
 
-    static final class DiagnosticList extends ArrayList<Diagnostic<? extends JavaFileObject>>{
+    private static final class DiagnosticList extends ArrayList<Diagnostic<? extends JavaFileObject>>{
         public DiagnosticList(){}
         public DiagnosticList( List<Diagnostic<? extends JavaFileObject>> diagnostics ) {
             super( diagnostics);
@@ -642,8 +630,8 @@ public class RyzC {
 
                 // take information of the error.
                 int startPosition = (int) diagnostic.getStartPosition();
-                int position = (int) diagnostic.getPosition();
-                int endPosition = (int) diagnostic.getEndPosition();
+                int position      = (int) diagnostic.getPosition();
+                int endPosition   = (int) diagnostic.getEndPosition();
 
                 // put the receiver as the first parameter of the method
                 String pieceInQuestion = sb.substring( startPosition, endPosition );
